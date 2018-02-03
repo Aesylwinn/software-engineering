@@ -9,8 +9,9 @@ project(
 # Dependencies
 find_package(Qt5Widgets REQUIRED)
 
-# Qt5 generates moc files that need some setup
+# Qt5 generates moc and ui files that need some setup
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Source
