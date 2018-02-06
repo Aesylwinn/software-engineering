@@ -1,15 +1,11 @@
-#include "application.h"
-#include "main-page.h"
+#include "mainwindow.h"
+#include <QApplication>
 
-int main(int argc, char** argv) {
-    // Set up global state
-    web::Application app(argc, argv);
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
 
-    // Create and display the main window
-    web::MainPage mainPage;
-    mainPage.show();
-
-    // Run
-    return app.exec();
+    return a.exec();
 }
-

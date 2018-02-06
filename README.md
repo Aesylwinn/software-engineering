@@ -29,3 +29,20 @@ to the location you cloned the repository and open the top level CMakeLists.txt
 file. Configure the project for your environment.
 
 You should now be able to build and run the various executables and libraries.
+
+# Compiling for Android
+
+To compile with android you will need to run cmake with the following command
+in a separate directory.
+
+On Linux:
+
+`cmake -DCMAKE_TOOLCHAIN_FILE=path/to/the/android.toolchain.cmake .`
+
+On Windows:
+
+`cmake -G"MinGW Makefiles"
+      -DCMAKE_TOOLCHAIN_FILE=<qt-android-cmake>/toolchain/android.toolchain.cmake 
+      -DCMAKE_MAKE_PROGRAM="%ANDROID_NDK%/prebuilt/windows/bin/make.exe" .`
+
+
