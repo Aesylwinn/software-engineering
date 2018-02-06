@@ -32,5 +32,5 @@
 *.app
 
 # Qt Creator
-CMakeLists.txt.user
-CMakeLists.txt.user.*
+se.pro.user
+build-se*
