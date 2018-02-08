@@ -4,19 +4,22 @@
 #include <QDialog>
 
 namespace Ui {
-class InterestData;
+class interestData;
 }
 
-class InterestData : public QDialog
+class interestData : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit InterestData(QWidget *parent = 0);
-    ~InterestData();
+    explicit interestData(QWidget *parent = 0);
+    ~interestData();
+
+public slots:
+    void switchTabs();
 
 private:
-    Ui::InterestData *ui;
+    Ui::interestData *ui;
 };
 
 #endif // INTERESTDATA_H

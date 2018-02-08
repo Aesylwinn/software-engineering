@@ -1,14 +1,20 @@
 #include "interestdata.h"
 #include "ui_interestdata.h"
 
-InterestData::InterestData(QWidget *parent) :
+interestData::interestData(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::InterestData)
+    ui(new Ui::interestData)
 {
     ui->setupUi(this);
+    connect(ui->get_started, SIGNAL(clicked()), this, SLOT(switchTabs()));
 }
 
-InterestData::~InterestData()
+interestData::~interestData()
 {
     delete ui;
+}
+
+void interestData::switchTabs()
+{
+    ui->tabWidget->setCurrentWidget(ui->tab_2);
 }
