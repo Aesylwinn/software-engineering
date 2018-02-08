@@ -32,5 +32,5 @@
 *.app
 
 # Qt Creator
-se.pro.user
-build-se*
+*.pro.user
+build-*
