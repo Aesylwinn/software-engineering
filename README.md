@@ -78,3 +78,6 @@ To push a branch:
 
 `git push origin BranchName`
 
+# Class diagram
+
+https://drive.google.com/file/d/18EtRpsullT92mjS7xp_xUL_yVvVojBth/view
