@@ -13,8 +13,8 @@ public:
 
 #endif // BASEAPP_H
 
-#ifndef date.h
-#define date.h
+#ifndef date_h
+#define date_h
 
 class date{
     public:
@@ -22,18 +22,18 @@ class date{
         bool setTime(int h, int m);
     private:
         int day, month, year, hour, minute;
-}
+};
 #endif
 
-#ifndef venue.h
-#define venue.h
+#ifndef venue_h
+#define venue_h
 
 class venue{
-    public
-        void setAddress(string a);
+    public:
+        void setAddress(std::string a);
         void setPhoneNumber(int ns);
     private:
-        string address;
+        std::string address;
         int phoneNumber;
-}
+};
 #endif

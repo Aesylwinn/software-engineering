@@ -14,9 +14,9 @@ bool date::setDate(int m, int d, int y){
     if (m > 0 && m < 13)
         month = m;
     else
-        validdate = false;
+        validDate = false;
     if (m == 1 || m == 3 || m == 5 || m == 7 || m ==8 || m == 10 || m == 12){
-        (if d > 0 && d < 32)
+        if (d > 0 && d < 32)
             day = d;
     }
     else if(m == 4 || m == 6 || m ==9 || m == 11){
@@ -25,8 +25,10 @@ bool date::setDate(int m, int d, int y){
     }
     else if (m == 2){
         if (y % 4 == 0) //if its a leap year
+        {
             if (d > 0 && d < 30)
                 day = d;
+        }
         else
             if (d > 0 && d < 29)
                 day = d;
@@ -50,7 +52,7 @@ bool date::setTime(int h, int m){
     return validTime;
 }
 
-void venue::setAddress(string a){
+void venue::setAddress(std::string a){
     address = a;
 }
 void venue::setPhoneNumber(int n){
