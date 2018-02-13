@@ -164,11 +164,11 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_2">
           <attribute name="title">
-           <string>Login or Sign Up... Your Choice Bitches</string>
+           <string>Login or Sign Up</string>
           </attribute>
           <layout class="QFormLayout" name="formLayout_3">
            <item row="0" column="0">
