@@ -21,7 +21,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Tab 1</string>
+       <string>Getting Started</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -86,7 +86,7 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Pictures/party-istock-resize-600x338.jpg</pixmap>
+            <pixmap resource="utilities.qrc">:/Utilities/party-istock-resize-600x338.jpg</pixmap>
            </property>
           </widget>
          </item>
@@ -137,12 +137,12 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="crowd">
            <property name="text">
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Pictures/crowd.PNG</pixmap>
+            <pixmap resource="utilities.qrc">:/Utilities/crowd.PNG</pixmap>
            </property>
           </widget>
          </item>
@@ -160,6 +160,8 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="utilities.qrc"/>
+ </resources>
  <connections/>
 </ui>
