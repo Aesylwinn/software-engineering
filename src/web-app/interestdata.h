@@ -16,7 +16,8 @@ public:
     ~interestData();
 
 public slots:
-    void switchTabs();
+    void switchMainTabs();
+    void switchLowTabs();
 
 private:
     Ui::interestData *ui;
