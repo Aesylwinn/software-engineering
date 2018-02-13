@@ -16,5 +16,5 @@ interestData::~interestData()
 
 void interestData::switchTabs()
 {
-    ui->tabWidget->setCurrentWidget(ui->tab_2);
+    ui->tabWidget->setCurrentWidget(ui->signUp);
 }
