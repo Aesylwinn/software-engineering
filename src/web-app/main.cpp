@@ -4,7 +4,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    InterestData w;
+    interestData w;
+    w.setWindowFlags(Qt::Window);
+    int x = w.width()*1.2;
+    int y = w.height()*1.2;
+    w.setFixedSize(x,y);
     w.show();
 
     return a.exec();

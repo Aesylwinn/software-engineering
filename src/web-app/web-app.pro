@@ -21,3 +21,8 @@ else:unix: LIBS += -L$$OUT_PWD/../base-app/ -lbase-app
 
 INCLUDEPATH += $$PWD/../base-app
 DEPENDPATH += $$PWD/../base-app
+
+DISTFILES +=
+
+RESOURCES += \
+    utilities.qrc
