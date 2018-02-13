@@ -1,4 +1,3 @@
-GOOGLETEST_DIR = /home/aesylwinn/Dev/rep/googletest
 include(gtest_dependency.pri)
 
 TEMPLATE = app
