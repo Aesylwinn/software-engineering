@@ -5,13 +5,15 @@
 
 #include <string>
 
-class venue{
-    public:
-        void setAddress(std::string a);
-        void setPhoneNumber(int n);
-    private:
-        std::string address;
-        int phoneNumber;
-};
+namespace base {
+    class venue{
+        public:
+            void setAddress(std::string a);
+            void setPhoneNumber(int n);
+        private:
+            std::string address;
+            int phoneNumber;
+    };
+}
 
 #endif

@@ -1,37 +1,37 @@
-/* Implemented by Yianni and Jake */
-
-#ifndef TIME_H
-#define TIME_H
+#ifndef BASE_TIME_H
+#define BASE_TIME_H
 
 #include <string>
 #include "baseapp.h"
 
+namespace base {
+    /* Implemented by Yianni and Jake */
+    class Time {
 
-class Time {
+      public:
+    	Time();
+    	//void getDate();
+    	bool setStartTime(int hour, int minute);
+    	bool setEndTime(int hour, int minute);
+    	void setAllDay();
+    	void setReoccurr(bool o);
 
-  public:
-	Time();
-	//void getDate();
-	bool setStartTime(int hour, int minute);
-	bool setEndTime(int hour, int minute);
-	void setAllDay();
-	void setReoccurr(bool o);
-
-	void getStartTime();
-	void getEndTime();
+    	void getStartTime();
+    	void getEndTime();
 
 
-  private:
-	struct timeInfo{
-		int hour;
-		int minute;
+      private:
+    	struct timeInfo{
+    		int hour;
+    		int minute;
+        };
+
+        timeInfo start, end;
+
+    	// need to find out what days you can make it reoccur on
+    	// ex: Mon, Wed, Fri, weekly, consecutive, etc.
+    	bool reoccurr;
     };
-
-    timeInfo start, end;
-
-	// need to find out what days you can make it reoccur on
-	// ex: Mon, Wed, Fri, weekly, consecutive, etc.
-	bool reoccurr;
-};
+}
 
 #endif

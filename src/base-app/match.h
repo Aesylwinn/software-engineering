@@ -1,33 +1,35 @@
-#ifndef MATCH_H
-#define MATCH_H
+#ifndef BASE_MATCH_H
+#define BASE_MATCH_H
 
 #include <string>
 
-/* Implemented by Yianni and Kyle */
-class Match
-{
-public:
-    Match();
+namespace base {
+    /* Implemented by Yianni and Kyle */
+    class Match
+    {
+    public:
+        Match();
 
-    void confirm(std::string user);
-    void cancel(std::string user);
+        void confirm(std::string user);
+        void cancel(std::string user);
 
-private:
+    private:
 
-    void update();
+        void update();
 
-    enum ConfirmState {
-        CS_Confirmed,
-        CS_Unsure,
-        CS_Cancelled
+        enum ConfirmState {
+            CS_Confirmed,
+            CS_Unsure,
+            CS_Cancelled
+        };
+
+        struct Confirmation {
+            std::string user;
+            ConfirmState state;
+        };
+
+        Confirmation mConfirmations[2];
     };
-
-    struct Confirmation {
-        std::string user;
-        ConfirmState state;
-    };
-
-    Confirmation mConfirmations[2];
-};
+}
 
 #endif // MATCH_H
