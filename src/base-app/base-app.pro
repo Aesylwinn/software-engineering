@@ -11,6 +11,7 @@ SOURCES += \
     baseapp.cpp \
     date.cpp \
     match.cpp \
+    networkmanager.cpp \
     simpleclass.cpp \
     Time.cpp \
     venue.cpp
@@ -19,6 +20,7 @@ HEADERS += \
     baseapp.h \
     base-app_global.h \
     match.h \
+    networkmanager.h \
     simpleclass.h \
     Time.h \
     venue.cpp
