@@ -1,7 +1,5 @@
 /* Implemented by Yianni and Jake */
 
-#ifndef date.hpp
-#define date.hpp
 #include "date.h"
 
 bool date::setDate(int m, int d, int y){
@@ -13,9 +11,9 @@ bool date::setDate(int m, int d, int y){
     if (m > 0 && m < 13)
         month = m;
     else
-        validdate = false;
+        validDate = false;
     if (m == 1 || m == 3 || m == 5 || m == 7 || m ==8 || m == 10 || m == 12){
-        (if d > 0 && d < 32)
+        if (d > 0 && d < 32)
             day = d;
     }
     else if(m == 4 || m == 6 || m ==9 || m == 11){
@@ -32,11 +30,11 @@ bool date::setDate(int m, int d, int y){
     }
     else
         validDate = false;
-        
+
     return validDate;
-    
+
 }
-bool setTime(int h, int m){
+bool date::setTime(int h, int m){
     bool validTime = true;
     if (h > 0 && h < 25)
         hour = h;
@@ -48,5 +46,3 @@ bool setTime(int h, int m){
         validTime = false;
     return validTime;
 }
-
-#endif

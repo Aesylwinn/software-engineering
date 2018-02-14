@@ -1,7 +1,7 @@
 /* Implemented by Yianni and Jake */
 
-#ifndef date.h
-#define date.h
+#ifndef BASE_DATE_H
+#define BASE_DATE_H
 
 class date{
     public:
@@ -9,5 +9,6 @@ class date{
         bool setTime(int h, int m);
     private:
         int day, month, year, hour, minute;
-}
+};
+
 #endif
