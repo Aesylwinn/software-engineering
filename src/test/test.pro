@@ -10,6 +10,7 @@ QT -= gui
 SOURCES += \
 	main.cpp \
         tst_simpleclass.cpp \
+    test_timepoint.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base-app/debug/ -lbase-app
