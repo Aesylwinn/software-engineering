@@ -18,6 +18,9 @@ public:
 public slots:
     void switchMainTabs();
     void switchLowTabs();
+    void reverseLowTab();
+    void togglePassword();
+    void togglePassword2();
 
 private:
     Ui::interestData *ui;
