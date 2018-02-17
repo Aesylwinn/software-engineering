@@ -59,6 +59,14 @@ TEST(base, RecurringTime_fromString_case1) {
 	ASSERT_TRUE(obj.availableOnAll(~0));
 }
 
+TEST(base, RecurringTime_fromString_case2) {
+	RecurringTime obj;
+	obj.fromString("-------.00:00");
+	ASSERT_EQ(obj.getHour(), 0);
+	ASSERT_EQ(obj.getMinute(), 0);
+	ASSERT_FALSE(obj.availableOnAny(~0));
+}
+
 TEST(base, RecurringTime_toString) {
 	RecurringTime obj(RecurringTime::Sunday, 5, 50);
 	ASSERT_EQ(obj.toString(), QString("S------.05:50"));
