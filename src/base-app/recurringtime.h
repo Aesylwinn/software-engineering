@@ -6,15 +6,24 @@
 #include <QObject>
 
 namespace base {
-    // An example of a class for unit testing purposes
+    // A class to represent times that occur on a weekly basis
     class BASEAPPSHARED_EXPORT RecurringTime : public QObject {
         Q_OBJECT
     public:
-        enum {Sunday = 1, Monday = 2, Tuesday = 4, Wednesday = 8, Thursday = 16, Friday = 32, Saturday = 64};
+        enum { Sunday = 1, Monday = 2, Tuesday = 4, Wednesday = 8,
+                Thursday = 16, Friday = 32, Saturday = 64 };
 
+        const unsigned int AllDays = Sunday | Monday | Tuesday | Wednesday |
+                        Thursday | Friday | Saturday;
+
+        // Default ctor. Never available.
         RecurringTime();
         RecurringTime(unsigned int daysAvailable, int hour, int minute);
-        RecurringTime(QString formatedString);
+        // See fromString for the format of formattedString
+        RecurringTime(QString formattedString);
+
+        // Resets to never available.
+        void reset();
 
         int getHour();
         int getMinute();
@@ -22,10 +31,21 @@ namespace base {
 
 		void setHour(int hour);
 		void setMinute(int minute);
+        // The dayMask can be 0 to all of the days ORed together
 		void setAvailableDays(int dayMask);
+
+        void enableDays(int dayMask);
+        void disableDays(int dayMask);
 
         bool availableOnAll(unsigned int dayMask);
         bool availableOnAny(unsigned int dayMask);
+
+        // The format is expected to match SMTWRFS.02:15
+        // All days should be specified or be replaced with a '-'
+        // For example, '--T-R--.15:05'
+        RecurringTime& fromString(QString formattedString);
+        // Returns a string in the same format is fromString expects
+        QString toString();
 
     private:
         int mHour;
@@ -33,24 +53,5 @@ namespace base {
         unsigned int mDayMask;
     };
 }
-
-/*
-Constructors:
-- RecurringTime() // Never recurrs
-- RecurringTime(unsigned int daysAvailable, int hour, int minute) // daysAvailable is a bit mask
-- RecurringTime(QString formatedString) // ex: MWF.13:50
-Enums:
-- Day // Sunday=1, Monday=2, Tuesday=4, Wednesday=8, etc...
-Public methods:
-- int getHour()
-- int getMinute()
-- QString getDays()
-- void setHour(int) // throws exception if hour is out of range
-- void setMinute(int) // throws exception if minute is invalid
-- void setAvailableDays(int dayMask)
-- bool availableOnAny(int dayMask)
-- bool availableOnAll(int dayMask)
-- QString toString() // / ex: SMTWRFS.13:50
-*/
 
 #endif
