@@ -6,7 +6,6 @@ namespace base {
 	}
 
 	bool SimpleClass::alwaysFalse() {
-		// Example of a fault
-		return true;
+		return false;
 	}
 }
