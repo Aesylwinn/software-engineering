@@ -12,18 +12,18 @@ SOURCES += \
     date.cpp \
     match.cpp \
     simpleclass.cpp \
-    Time.cpp \
     venue.cpp \
-    timepoint.cpp
+    timepoint.cpp \
+    mytime.cpp
 
 HEADERS += \
     baseapp.h \
     base-app_global.h \
     match.h \
     simpleclass.h \
-    Time.h \
     venue.h \
-    timepoint.h
+    timepoint.h \
+    mytime.h
 
 unix {
     target.path = /usr/lib

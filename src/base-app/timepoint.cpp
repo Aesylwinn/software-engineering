@@ -1,5 +1,5 @@
 #include "timepoint.h"
-#include <time.h>
+#include <ctime>
 
 namespace base{
 
@@ -22,7 +22,7 @@ namespace base{
         now.tm_mday = day;
         now.tm_sec = 0;
 
-        //seconds =std::difftime(std::mktime(&now), std::mktime(&epoch));
+        seconds =std::difftime(std::mktime(&now), std::mktime(&epoch));
     }
 
     TimePoint::TimePoint(QString formattedString){ //Converts string formatted as mm/dd/yyyy.hour:min
