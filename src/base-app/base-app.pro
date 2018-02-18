@@ -1,6 +1,6 @@
 QT += widgets network testlib
 QT -= gui
-
+CONFIG += c++11
 TARGET = base-app
 TEMPLATE = lib
 
@@ -13,8 +13,9 @@ SOURCES += \
     match.cpp \
     recurringtime.cpp \
     simpleclass.cpp \
-    Time.cpp \
-    venue.cpp
+    venue.cpp \
+    timepoint.cpp \
+    mytime.cpp
 
 HEADERS += \
     baseapp.h \
@@ -22,8 +23,9 @@ HEADERS += \
     match.h \
     recurringtime.h \
     simpleclass.h \
-    Time.h \
-    venue.cpp
+    venue.h \
+    timepoint.h \
+    mytime.h
 
 unix {
     target.path = /usr/lib
