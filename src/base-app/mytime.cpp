@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include "Time.h"
+#include "mytime.h"
 
 namespace base {
 	Time::Time(){
