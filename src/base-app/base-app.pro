@@ -9,10 +9,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     baseapp.cpp \
+    clientnetworkmgr.cpp \
     date.cpp \
     match.cpp \
-    networkmanager.cpp \
     recurringtime.cpp \
+    servernetworkmgr.cpp \
     simpleclass.cpp \
     venue.cpp \
     timepoint.cpp \
@@ -21,9 +22,10 @@ SOURCES += \
 HEADERS += \
     baseapp.h \
     base-app_global.h \
+    clientnetworkmgr.h \
     match.h \
-    networkmanager.h \
     recurringtime.h \
+    servernetworkmgr.h \
     simpleclass.h \
     venue.h \
     timepoint.h \
