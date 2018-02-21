@@ -10,15 +10,19 @@ namespace base {
         Q_OBJECT
     public:
         ServerNetworkMgr(QObject* parent=NULL);
-
         void listen(int port);
     private:
         QTcpServer* mServer;
     signals:
         void logMessageRecieved(QString message);
     private slots:
+        void readyRead(QTcpSocket* socket);
+
         void newConnection();
         void acceptError(QAbstractSocket::SocketError error);
+        void acceptSocketError(QAbstractSocket::SocketError error);
+
+        void logMessage(QString message);
     };
 }
 

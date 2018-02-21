@@ -12,7 +12,7 @@
 using namespace testing;
 using namespace base;
 
-TEST(base, NetworkManager_logToServer_case1) {
+TEST(base, ClientNetworkMgr_connect_case1) {
     // Workaround for const char* to char* issue
     char AppName[] = { 'T', 'S', 'T', '\n' };
 
@@ -23,11 +23,20 @@ TEST(base, NetworkManager_logToServer_case1) {
 
     // Set up network
     ClientNetworkMgr* client = new ClientNetworkMgr(&app);
+
+    // Send a message after connecting
+    bool wasSent = false;
+    QObject::connect(client, &ClientNetworkMgr::connected, [&](){
+        client->log("Hello world!");
+        wasSent = true;
+    });
+    // Connect
     client->connect("::1", 1942);
 
-    // Quit in a second
+    // Wait no more than 1 second
     QTimer::singleShot(1000, &app, SLOT(quit()));
 
     // Run
     ASSERT_EQ(app.exec(), 0);
+    ASSERT_TRUE(wasSent);
 }

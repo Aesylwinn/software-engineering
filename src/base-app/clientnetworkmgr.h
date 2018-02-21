@@ -17,6 +17,9 @@ namespace base {
         void log(QString message);
     private:
         QTcpSocket* mSocket;
+    signals:
+        void connected();
+        void disconnected();
     };
 }
 

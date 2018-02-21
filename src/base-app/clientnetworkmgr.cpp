@@ -8,6 +8,10 @@ namespace base {
         : QObject(parent)
         , mSocket(new QTcpSocket(this))
     {
+        QObject::connect(mSocket, &QTcpSocket::connected,
+                this, &ClientNetworkMgr::connected);
+        QObject::connect(mSocket, &QTcpSocket::disconnected,
+                this, &ClientNetworkMgr::disconnected);
     }
 
     void ClientNetworkMgr::connect(QString address, int port) {
@@ -22,7 +26,8 @@ namespace base {
         QByteArray block;
         QDataStream stream(&block, QIODevice::WriteOnly);
         stream.setVersion(QDataStream::Qt_5_10);
-        // Send the message
         stream << message;
+        // Send the message
+        mSocket->write(block);
     }
 }
