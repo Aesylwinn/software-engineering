@@ -19,8 +19,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>9</y>
+     <x>0</x>
+     <y>0</y>
      <width>1262</width>
      <height>677</height>
     </rect>
@@ -770,156 +770,286 @@ Get Verified and share an experience with someone whose interests are cohesive w
       <string>Create Event</string>
      </property>
     </widget>
-    <widget class="QTableWidget" name="interestStream">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>390</y>
-       <width>581</width>
-       <height>231</height>
+       <y>250</y>
+       <width>513</width>
+       <height>223</height>
       </rect>
      </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="showGrid">
-      <bool>true</bool>
-     </property>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <row>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </row>
-     <column>
-      <property name="text">
-       <string>Event</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Location</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Time</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Tickets Available</string>
-      </property>
-     </column>
-     <item row="0" column="0">
-      <property name="text">
-       <string>Coachella</string>
-      </property>
-     </item>
-     <item row="0" column="1">
-      <property name="text">
-       <string>California</string>
-      </property>
-     </item>
-     <item row="0" column="2">
-      <property name="text">
-       <string>2/14/2018</string>
-      </property>
-     </item>
-     <item row="0" column="3">
-      <property name="text">
-       <string>12am</string>
-      </property>
-     </item>
-     <item row="0" column="4">
-      <property name="text">
-       <string>1400</string>
-      </property>
-     </item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="minimumSize">
+         <size>
+          <width>171</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>171</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>My Interest Stream</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="interestStream">
+        <property name="minimumSize">
+         <size>
+          <width>511</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>511</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>1</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>Event</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Location</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Time</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Tickets Available</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>Coachella</string>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string>California</string>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string>2/14/2018</string>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string>12am</string>
+         </property>
+        </item>
+        <item row="0" column="4">
+         <property name="text">
+          <string>1400</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>160</y>
-       <width>171</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-    <widget class="QTableWidget" name="interestStream_2">
-     <property name="geometry">
-      <rect>
-       <x>750</x>
-       <y>390</y>
+       <x>10</x>
+       <y>10</y>
        <width>411</width>
-       <height>231</height>
+       <height>223</height>
       </rect>
      </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
+     <layout class="QVBoxLayout" name="verticalLayout_29">
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="minimumSize">
+         <size>
+          <width>171</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>171</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>My Event Stream</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="interestStream_2">
+        <property name="minimumSize">
+         <size>
+          <width>409</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>409</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>1</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>Event</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Location</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Time</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>Coachella</string>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string>California</string>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string>1/1/2018</string>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string>12am</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>810</x>
+       <y>200</y>
+       <width>419</width>
+       <height>270</height>
+      </rect>
      </property>
-     <property name="showGrid">
-      <bool>true</bool>
-     </property>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <row>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </row>
-     <column>
-      <property name="text">
-       <string>Event</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Location</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Time</string>
-      </property>
-     </column>
-     <item row="0" column="0">
-      <property name="text">
-       <string>Coachella</string>
-      </property>
-     </item>
-     <item row="0" column="1">
-      <property name="text">
-       <string>California</string>
-      </property>
-     </item>
-     <item row="0" column="2">
-      <property name="text">
-       <string>1/1/2018</string>
-      </property>
-     </item>
-     <item row="0" column="3">
-      <property name="text">
-       <string>12am</string>
-      </property>
-     </item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="1">
+       <widget class="QTextEdit" name="textEdit">
+        <property name="minimumSize">
+         <size>
+          <width>331</width>
+          <height>241</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>331</width>
+          <height>241</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Get Going is of course about you and your experiences, but some experiences are better with others who have simalr interests! &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Get Verified is our way of making sure that if you want to meet new people and see new places with them, you'll only be meeting people with the same intentions. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Take a few minutes to fill out our form and you'll be on your way to a world of new experiences.. Literally!&lt;/span&gt;  &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="GetVerifiedB">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Get Verified</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_5">
