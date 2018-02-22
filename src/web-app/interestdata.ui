@@ -770,24 +770,11 @@ Get Verified and share an experience with someone whose interests are cohesive w
       <string>Create Event</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="myEvent">
-     <property name="geometry">
-      <rect>
-       <x>1170</x>
-       <y>40</y>
-       <width>80</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>My Events</string>
-     </property>
-    </widget>
     <widget class="QTableWidget" name="interestStream">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>20</y>
+       <x>10</x>
+       <y>390</y>
        <width>581</width>
        <height>231</height>
       </rect>
@@ -795,6 +782,12 @@ Get Verified and share an experience with someone whose interests are cohesive w
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
+     <property name="showGrid">
+      <bool>true</bool>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
      <row>
       <property name="text">
        <string>1</string>
@@ -812,17 +805,17 @@ Get Verified and share an experience with someone whose interests are cohesive w
      </column>
      <column>
       <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Time</string>
       </property>
      </column>
      <column>
       <property name="text">
        <string>Tickets Available</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>View Event</string>
       </property>
      </column>
      <item row="0" column="0">
@@ -837,20 +830,102 @@ Get Verified and share an experience with someone whose interests are cohesive w
      </item>
      <item row="0" column="2">
       <property name="text">
-       <string>12am</string>
+       <string>2/14/2018</string>
       </property>
      </item>
      <item row="0" column="3">
       <property name="text">
-       <string>1400</string>
+       <string>12am</string>
       </property>
      </item>
      <item row="0" column="4">
       <property name="text">
-       <string/>
+       <string>1400</string>
       </property>
      </item>
     </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="interestStream_2">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>390</y>
+       <width>411</width>
+       <height>231</height>
+      </rect>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="showGrid">
+      <bool>true</bool>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <row>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>Event</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Location</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Time</string>
+      </property>
+     </column>
+     <item row="0" column="0">
+      <property name="text">
+       <string>Coachella</string>
+      </property>
+     </item>
+     <item row="0" column="1">
+      <property name="text">
+       <string>California</string>
+      </property>
+     </item>
+     <item row="0" column="2">
+      <property name="text">
+       <string>1/1/2018</string>
+      </property>
+     </item>
+     <item row="0" column="3">
+      <property name="text">
+       <string>12am</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>Page</string>
+    </attribute>
    </widget>
   </widget>
  </widget>
