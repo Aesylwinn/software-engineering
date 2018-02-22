@@ -13,61 +13,67 @@
   <property name="windowTitle">
    <string>interestData</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Getting Started</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>1262</width>
+     <height>677</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Getting Started</string>
+    </attribute>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QTextEdit" name="title">
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>600</width>
-             <height>150</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <widget class="QTextEdit" name="title">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>600</width>
+           <height>150</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt;Get Going&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="aboutus">
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="aboutus">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -79,33 +85,33 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;About Us:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Get Going is all about living your life. Life is nothing but the sum of the things you get to experience. The people you get to share these experiences with and the places you see are the fibers from which the quilt of life is sewn. Meet new people. See new places. Slowly create your quilt with quality fibers. Let us help!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="logo">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="utilities.qrc">:/Utilities/party-istock-resize-600x338.jpg</pixmap>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="logo">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="utilities.qrc">:/Utilities/party-istock-resize-600x338.jpg</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="feature">
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <widget class="QTextEdit" name="feature">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -119,246 +125,275 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;As a host, post events and gatherings&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Keep up to date with events around your area&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QPushButton" name="get_started">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>250</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Get Started, Get Going -----&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="crowd">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="utilities.qrc">:/Utilities/crowd.PNG</pixmap>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         </property>
+        </widget>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="signUp">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <attribute name="title">
-       <string>Sign Up</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QTabWidget" name="tabWidget_2">
-         <property name="currentIndex">
-          <number>0</number>
+        <widget class="QPushButton" name="get_started">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
          </property>
-         <widget class="QWidget" name="tab_2">
-          <attribute name="title">
-           <string>Login or Sign Up</string>
-          </attribute>
-          <layout class="QFormLayout" name="formLayout_3">
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Get Started, Get Going -----&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="crowd">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="utilities.qrc">:/Utilities/crowd.PNG</pixmap>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="signUp">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <attribute name="title">
+     <string>Sign Up</string>
+    </attribute>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QTabWidget" name="tabWidget_2">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Login or Sign Up</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="0" column="0">
+          <layout class="QFormLayout" name="formLayout_2">
            <item row="0" column="0">
-            <layout class="QFormLayout" name="formLayout_2">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_5">
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QLabel" name="LEmail">
+               <property name="text">
+                <string>Email or Username</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>175</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>35</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
                <item>
-                <widget class="QLabel" name="LEmail">
+                <widget class="QLabel" name="LPass">
                  <property name="text">
-                  <string>Email or Username</string>
+                  <string>Password</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit">
+                <widget class="QLineEdit" name="lineEdit_2">
                  <property name="minimumSize">
                   <size>
-                   <width>175</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>200</width>
+                   <width>100</width>
                    <height>35</height>
                   </size>
                  </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="1">
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_6">
-                 <item>
-                  <widget class="QLabel" name="LPass">
-                   <property name="text">
-                    <string>Password</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_2">
-                   <property name="minimumSize">
-                    <size>
-                     <width>100</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>100</width>
-                     <height>35</height>
-                    </size>
-                   </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QPushButton" name="Login">
-                 <property name="minimumSize">
-                  <size>
-                   <width>75</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>75</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Login</string>
+                 <property name="echoMode">
+                  <enum>QLineEdit::Password</enum>
                  </property>
                 </widget>
                </item>
               </layout>
              </item>
-             <item row="1" column="1">
-              <widget class="QToolButton" name="togglePassword">
+             <item>
+              <widget class="QPushButton" name="Login">
+               <property name="minimumSize">
+                <size>
+                 <width>75</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>75</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
-                <string>Toggle Password</string>
+                <string>Login</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="1">
+            <widget class="QToolButton" name="togglePassword">
+             <property name="text">
+              <string>Toggle Password</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Sign Up, It's Free!</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <layout class="QFormLayout" name="formLayout">
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <item>
+              <widget class="QLabel" name="SUFName">
+               <property name="text">
+                <string>First Name</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_FN">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="1">
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <widget class="QLabel" name="SULName">
+               <property name="text">
+                <string>Last Name</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_LN">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
                </property>
               </widget>
              </item>
             </layout>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="font">
-              <font>
-               <pointsize>15</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Sign Up, It's Free!</string>
-             </property>
-             <property name="scaledContents">
-              <bool>false</bool>
-             </property>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <widget class="QLabel" name="SUEmail">
+               <property name="text">
+                <string>Email</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_5">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item row="2" column="0">
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <widget class="QLabel" name="SUFName">
-                 <property name="text">
-                  <string>First Name</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_FN">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+           <item row="1" column="1">
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <item>
+              <widget class="QLabel" name="SUPass">
+               <property name="text">
+                <string>New Password</string>
+               </property>
+              </widget>
              </item>
-             <item row="0" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QLabel" name="SULName">
-                 <property name="text">
-                  <string>Last Name</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_LN">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+             <item>
+              <widget class="QLineEdit" name="newPass">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::Password</enum>
+               </property>
+              </widget>
              </item>
-             <item row="1" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_9">
+            </layout>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <property name="spacing">
+                <number>0</number>
+               </property>
                <item>
-                <widget class="QLabel" name="SUEmail">
+                <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>Email</string>
+                  <string>Confirm Password</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_5">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_10">
-               <item>
-                <widget class="QLabel" name="SUPass">
-                 <property name="text">
-                  <string>New Password</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="newPass">
+                <widget class="QLineEdit" name="confirmPass">
                  <property name="maximumSize">
                   <size>
                    <width>150</width>
@@ -372,389 +407,371 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="2" column="0" colspan="2">
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_12">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label">
-                   <property name="text">
-                    <string>Confirm Password</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="confirmPass">
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QToolButton" name="togglePassword2">
-                 <property name="text">
-                  <string>Toggle Password</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="3" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_11">
-               <item>
-                <widget class="QLabel" name="BDay">
-                 <property name="text">
-                  <string>Birthday</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDateEdit" name="dateEdit"/>
-               </item>
-              </layout>
+             <item>
+              <widget class="QToolButton" name="togglePassword2">
+               <property name="text">
+                <string>Toggle Password</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
            <item row="3" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>600</number>
-             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_11">
              <item>
-              <widget class="QRadioButton" name="malebutt">
+              <widget class="QLabel" name="BDay">
                <property name="text">
-                <string>Male</string>
+                <string>Birthday</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="febutt">
-               <property name="text">
-                <string>Female</string>
-               </property>
-              </widget>
+              <widget class="QDateEdit" name="dateEdit"/>
              </item>
             </layout>
            </item>
-           <item row="4" column="0">
-            <widget class="QPushButton" name="SignUp">
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
+          </layout>
+         </item>
+         <item row="3" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>600</number>
+           </property>
+           <item>
+            <widget class="QRadioButton" name="malebutt">
              <property name="text">
-              <string>Create Account</string>
+              <string>Male</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="febutt">
+             <property name="text">
+              <string>Female</string>
              </property>
             </widget>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tab_3">
-          <attribute name="title">
-           <string>What Interests You?</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
+         </item>
+         <item row="4" column="0">
+          <widget class="QPushButton" name="SignUp">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Create Account</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_3">
+        <attribute name="title">
+         <string>What Interests You?</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_13">
-             <item>
-              <widget class="QLabel" name="Nam_Display">
-               <property name="minimumSize">
-                <size>
-                 <width>500</width>
-                 <height>75</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>75</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>34</pointsize>
-                </font>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPlainTextEdit" name="plainTextEdit">
-               <property name="minimumSize">
-                <size>
-                 <width>500</width>
-                 <height>500</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>500</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>19</pointsize>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-               <property name="plainText">
-                <string>Let's figure out what you're into. Get Going will match your interests to our database of places and events. From there you'll be notified whenever your favorite band is in town, whenever that secret gem resturaunt is serving that great seasonal special, and countless other events we find! There is no end to the sights and sounds in this world, but that doesn't mean we shouldn't try to experience them all!
-
-Get Verified and share an experience with someone whose interests are cohesive with yours!</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <widget class="QLabel" name="Nam_Display">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>75</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>500</width>
+               <height>75</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>34</pointsize>
+              </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_14">
+            <widget class="QPlainTextEdit" name="plainTextEdit">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>500</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>500</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>19</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="plainText">
+              <string>Let's figure out what you're into. Get Going will match your interests to our database of places and events. From there you'll be notified whenever your favorite band is in town, whenever that secret gem resturaunt is serving that great seasonal special, and countless other events we find! There is no end to the sights and sounds in this world, but that doesn't mean we shouldn't try to experience them all!
+
+Get Verified and share an experience with someone whose interests are cohesive with yours!</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <widget class="QTreeWidget" name="treeWidget">
+             <property name="lineWidth">
+              <number>1</number>
+             </property>
+             <property name="autoExpandDelay">
+              <number>-1</number>
+             </property>
+             <property name="itemsExpandable">
+              <bool>true</bool>
+             </property>
+             <property name="wordWrap">
+              <bool>false</bool>
+             </property>
+             <attribute name="headerDefaultSectionSize">
+              <number>150</number>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>Music</string>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Sports</string>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Food</string>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Leisure</string>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+             </column>
              <item>
-              <widget class="QTreeWidget" name="treeWidget">
-               <property name="lineWidth">
-                <number>1</number>
+              <property name="text">
+               <string>Hip-Hop</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Football</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Italian</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Beaches</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Rock</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Basketball</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Japaniese</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Bar Scene</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Country</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Baseball</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Thai</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+              <property name="text">
+               <string>Reading</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Classic Rock</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>400</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="accept">
+               <property name="minimumSize">
+                <size>
+                 <width>75</width>
+                 <height>20</height>
+                </size>
                </property>
-               <property name="autoExpandDelay">
-                <number>-1</number>
+               <property name="maximumSize">
+                <size>
+                 <width>75</width>
+                 <height>20</height>
+                </size>
                </property>
-               <property name="itemsExpandable">
-                <bool>true</bool>
+               <property name="text">
+                <string>Accept</string>
                </property>
-               <property name="wordWrap">
-                <bool>false</bool>
-               </property>
-               <attribute name="headerDefaultSectionSize">
-                <number>150</number>
-               </attribute>
-               <column>
-                <property name="text">
-                 <string>Music</string>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>Sports</string>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>Food</string>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>Leisure</string>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-               </column>
-               <item>
-                <property name="text">
-                 <string>Hip-Hop</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Football</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Italian</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Beaches</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Rock</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Basketball</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Japaniese</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Bar Scene</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Country</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Baseball</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Thai</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-                <property name="text">
-                 <string>Reading</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Classic Rock</string>
-                </property>
-                <property name="checkState">
-                 <enum>Unchecked</enum>
-                </property>
-               </item>
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <property name="spacing">
-                <number>0</number>
+              <widget class="QPushButton" name="cancel">
+               <property name="minimumSize">
+                <size>
+                 <width>75</width>
+                 <height>20</height>
+                </size>
                </property>
-               <property name="leftMargin">
-                <number>400</number>
+               <property name="maximumSize">
+                <size>
+                 <width>75</width>
+                 <height>20</height>
+                </size>
                </property>
-               <item>
-                <widget class="QPushButton" name="accept">
-                 <property name="minimumSize">
-                  <size>
-                   <width>75</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>75</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Accept</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="cancel">
-                 <property name="minimumSize">
-                  <size>
-                   <width>75</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>75</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Cancel</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
           </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_4">
-      <attribute name="title">
-       <string>Page</string>
-      </attribute>
-     </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>Profile</string>
+    </attribute>
+    <widget class="QPushButton" name="createEvent">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create Event</string>
+     </property>
     </widget>
-   </item>
-  </layout>
+   </widget>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

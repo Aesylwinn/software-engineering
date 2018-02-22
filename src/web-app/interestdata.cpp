@@ -1,6 +1,7 @@
 #include "interestdata.h"
 #include "ui_interestdata.h"
 
+
 interestData::interestData(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::interestData)
@@ -15,9 +16,10 @@ interestData::interestData(QWidget *parent) :
     connect(ui->Login, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
     connect(ui->SignUp, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
     connect(ui->togglePassword, SIGNAL(clicked()), this, SLOT(togglePassword()));
-    connect(ui->togglePassword2, SIGNAL(clicked()), this, SLOT(togglePassword2()));
+    connect(ui->togglePassword2, SIGNAL(clicked()), this, SLOT(togglePassword()));
     connect(ui->accept, SIGNAL(clicked()), this, SLOT(reverseLowTab()));
     connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reverseLowTab()));
+    connect(ui->createEvent, SIGNAL(clicked()), this, SLOT(popUpWindow()));
 }
 
 interestData::~interestData()
@@ -68,22 +70,31 @@ void interestData::reverseLowTab()
 
 void interestData::togglePassword()
 {
-    if (ui->lineEdit_2->echoMode() == QLineEdit::Password)
-        ui->lineEdit_2->setEchoMode(QLineEdit::Normal);
+    QObject* button = QObject::sender();
+    if (button == ui->togglePassword)
+    {
+        if (ui->lineEdit_2->echoMode() == QLineEdit::Password)
+            ui->lineEdit_2->setEchoMode(QLineEdit::Normal);
+        else
+            ui->lineEdit_2->setEchoMode(QLineEdit::Password);
+    }
     else
-        ui->lineEdit_2->setEchoMode(QLineEdit::Password);
+    {
+        if (ui->newPass->echoMode() == QLineEdit::Password)
+        {
+            ui->newPass->setEchoMode(QLineEdit::Normal);
+            ui->confirmPass->setEchoMode(QLineEdit::Normal);
+        }
+        else
+        {
+            ui->newPass->setEchoMode(QLineEdit::Password);
+            ui->confirmPass->setEchoMode(QLineEdit::Password);
+        }
+    }
 }
 
-void interestData::togglePassword2()
+void interestData::popUpWindow()
 {
-    if (ui->newPass->echoMode() == QLineEdit::Password)
-    {
-        ui->newPass->setEchoMode(QLineEdit::Normal);
-        ui->confirmPass->setEchoMode(QLineEdit::Normal);
-    }
-    else
-    {
-        ui->newPass->setEchoMode(QLineEdit::Password);
-        ui->confirmPass->setEchoMode(QLineEdit::Password);
-    }
+    eventPopUp* popInstance = new eventPopUp(this);
+    popInstance->show();
 }
