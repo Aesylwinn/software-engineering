@@ -54,12 +54,12 @@ create table Event_Exceptions(
 );
 
 create table Category(
-	id INT NOT NULL ,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	displayName VARCHAR(20)
 );
 
 create table Subcategory(
-	id INT,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_category INT,
 	displayName VARCHAR(20)
 );
