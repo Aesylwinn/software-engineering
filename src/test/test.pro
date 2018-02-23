@@ -9,6 +9,7 @@ QT -= gui
 
 SOURCES += \
     main.cpp \
+    tst_networkobject.cpp \
     tst_recurringtime.cpp \
     tst_simpleclass.cpp \
     test_timepoint.cpp \
