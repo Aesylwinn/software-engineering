@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 
 namespace base {
+    /* Implemented by Kyle and Anthony */
     class ClientNetworkMgr : public QObject {
         Q_OBJECT
     public:

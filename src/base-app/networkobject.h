@@ -5,6 +5,7 @@
 #include <QString>
 
 namespace base {
+    /* Implemented by Kyle and Anthony */
     class NetworkObject {
     public:
         // The types of payloads
