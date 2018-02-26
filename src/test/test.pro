@@ -1,21 +1,16 @@
-QT += core gui widgets network testlib
+include(gtest_dependency.pri)
 
-TARGET = mobile-app
 TEMPLATE = app
+CONFIG += console thread
+CONFIG -= app_bundle
 
-DEFINES += QT_DEPRECATED_WARNINGS
+QT += widgets network
+QT -= gui
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp
+	main.cpp \
+        tst_simpleclass.cpp \
 
-HEADERS += \
-        mainwindow.h
-
-FORMS += \
-        mainwindow.ui
-
-# base-app
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base-app/debug/ -lbase-app
 else:unix: LIBS += -L$$OUT_PWD/../base-app/ -lbase-app
