@@ -66,6 +66,7 @@ create table Subcategory(
 
 create table Venue(
 	id INT,
+	displayName VARCHAR(40),
 	address VARCHAR(40),
 	phoneNumber VARCHAR(20),
 	entryFee DOUBLE,
