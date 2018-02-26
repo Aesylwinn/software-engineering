@@ -35,11 +35,11 @@ namespace base{
         epoch.tm_mon = 0;
         epoch.tm_mday = 0;
         epoch.tm_year = 0;
-        now.tm_mon = formattedString[0] * 10 + formattedString[1];
-        now.tm_mday = formattedString[3] * 10 + formattedString[4];
-        now.tm_year = formattedString[6] * 1000 + formattedString[7] * 100 + formattedString[8] * 10 + formattedString[9];
-        now.tm_hour = formattedString[11] * 10 + formattedString[12];
-        now.tm_min = formattedString[14] * 10 + formattedString[15];
+        //now.tm_mon = formattedString[0] * 10 + formattedString[1];
+        //now.tm_mday = formattedString[3] * 10 + formattedString[4];
+        //now.tm_year = formattedString[6] * 1000 + formattedString[7] * 100 + formattedString[8] * 10 + formattedString[9];
+        //now.tm_hour = formattedString[11] * 10 + formattedString[12];
+        //now.tm_min = formattedString[14] * 10 + formattedString[15];
 
         seconds = std::difftime(std::mktime(&now), std::mktime(&epoch));
     }
@@ -100,17 +100,36 @@ namespace base{
         }
 
     }
-    int TimePoint::getDay();
-    int TimePoint::getYear();
-    int TimePoint::getHour();
-    int TimePoint::getMinute();
 
-    void TimePoint::setMonth(Month month); //throws outofbounds exception if invalid; resets day to first of month
-    void TimePoint::setDay(int day); // throws OutOfBounds exception if day is invalid
-    void TimePoint::setYear(int year);
-    void TimePoint::setHour();
-    void TimePoint::setYear();
+    int TimePoint::getDay(){
+        return 0;
+    }
 
-    QString TimePoint::toString(); // Returns a string representation as mm/dd/yyyy.hour:min
-/*
+    int TimePoint::getYear(){
+        return 0;
+    }
+
+    int TimePoint::getHour(){
+        return 0;
+    }
+
+    int TimePoint::getMinute(){
+        return 0;
+    }
+
+    void TimePoint::setMonth(Month month){ //throws outofbounds exception if invalid; resets day to first of month
+    }
+
+    void TimePoint::setDay(int day){ // throws OutOfBounds exception if day is invalid
+    }
+
+    void TimePoint::setYear(){
+    }
+
+    void TimePoint::setHour(){
+    }
+
+    QString TimePoint::toString(){ // Returns a string representation as mm/dd/yyyy.hour:min
+        return QString();
+    }
 }
