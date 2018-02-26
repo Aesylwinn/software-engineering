@@ -2,6 +2,7 @@
 #define INTERESTDATA_H
 
 #include <QDialog>
+#include "eventpopup.h"
 
 namespace Ui {
 class interestData;
@@ -18,6 +19,9 @@ public:
 public slots:
     void switchMainTabs();
     void switchLowTabs();
+    void reverseLowTab();
+    void togglePassword();
+    void popUpWindow();
 
 private:
     Ui::interestData *ui;
