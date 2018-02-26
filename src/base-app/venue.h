@@ -1,18 +1,41 @@
-/* Implemented by Yianni and Jake */
+/* Implemented by Yianni and Anthony */
 
 #ifndef BASE_VENUE_H
 #define BASE_VENUE_H
 
-#include <string>
+#include <QString>
+
+#include "base-app_global.h"
 
 namespace base {
-    class venue{
+    class BASEAPPSHARED_EXPORT venue{
         public:
-            void setAddress(std::string a);
-            void setPhoneNumber(int n);
+            venue(QString n, QString addr);
+            venue(QString n, QString addr, QString phone);
+            venue(QString n, QString addr, double fee);
+            venue(QString n, QString addr, QString phone, double fee);
+            venue(QString data);    //conversion constructor
+
+            //utility
+            QString toString();
+
+            //setters
+            bool setAddress(QString a);
+            bool setPhoneNumber(QString n);
+            bool setName(QString n);
+            bool setEntryFee(double f);
+
+            //getters
+            QString getAddress();
+            QString getPhoneNumber();
+            QString getName();
+            double getEntryFee();
         private:
-            std::string address;
-            int phoneNumber;
+            QString name;
+            QString address;
+            QString phoneNumber;
+            double entryFee;
+            QString description;
     };
 }
 
