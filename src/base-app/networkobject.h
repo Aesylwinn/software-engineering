@@ -11,13 +11,21 @@ namespace base {
         // The types of payloads
         enum PayloadType {
             PT_None,
+            PT_LoginRequest,
             PT_Message
+        };
+
+        struct LoginRequest {
+            QString username;
+            QString password;
         };
 
         // Default ctor, PT_None
         NetworkObject();
         // Parameterized ctor
         NetworkObject(PayloadType type, QByteArray payload);
+        // Login request ctor
+        NetworkObject(const LoginRequest& request);
 
         // Type and raw data retrieval
         PayloadType getPayloadType();
@@ -29,9 +37,15 @@ namespace base {
         // Converts payload to a message
         QString getMessage();
 
+        // Converts payload to a login request
+        LoginRequest getLoginRequest();
+
         // Static creators
         static NetworkObject fromMessage(QString msg);
+
     private:
+        void init(PayloadType type, QByteArray payload);
+
         PayloadType mPayloadType;
         QByteArray mPayload;
     };

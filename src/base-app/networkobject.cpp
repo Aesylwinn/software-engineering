@@ -1,6 +1,10 @@
 #include "networkobject.h"
 
+#include <QDataStream>
+
 namespace base {
+    const QDataStream::Version NetworkDataVersion = QDataStream::Qt_5_10;
+
     NetworkObject::NetworkObject()
         : mPayloadType(PT_None)
     {
@@ -10,6 +14,17 @@ namespace base {
         : mPayloadType(type)
         , mPayload(payload)
     {
+    }
+
+    NetworkObject::NetworkObject(const LoginRequest& request)
+    {
+        // Combine into a single object
+        QByteArray payload;
+        QDataStream stream(&payload, QIODevice::WriteOnly);
+        stream.setVersion(NetworkDataVersion);
+        stream << request.username << request.password;
+
+        init(PT_LoginRequest, payload);
     }
 
     NetworkObject::PayloadType NetworkObject::getPayloadType() {
@@ -38,7 +53,28 @@ namespace base {
         return QString(mPayload);
     }
 
+    NetworkObject::LoginRequest NetworkObject::getLoginRequest() {
+        // Type check
+        if (mPayloadType != PT_LoginRequest) {
+            throw std::runtime_error("Payload is not a login request!");
+        }
+
+        // Convert
+        QByteArray data = getPayload();
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setVersion(NetworkDataVersion);
+
+        LoginRequest result;
+        stream >> result.username >> result.password;
+        return result;
+    }
+
     NetworkObject NetworkObject::fromMessage(QString msg) {
         return NetworkObject(PT_Message, msg.toUtf8());
+    }
+
+    void NetworkObject::init(PayloadType type, QByteArray payload) {
+        mPayloadType = type;
+        mPayload = payload;
     }
 }

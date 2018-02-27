@@ -28,6 +28,17 @@ TEST(base, NetworkObject_parametizedCtor_case1) {
     ASSERT_EQ(netObj.getPayload(), payload);
 }
 
+TEST(base, NetworkObject_loginRequestCtor_case1) {
+    using LoginRequest = NetworkObject::LoginRequest;
+
+    const LoginRequest request{ "Bob", "password" };
+    NetworkObject netObj(request);
+
+    LoginRequest converted = netObj.getLoginRequest();
+    ASSERT_EQ(request.username, converted.username);
+    ASSERT_EQ(request.password, converted.password);
+}
+
 TEST(base, NetworkObject_fromMessage) {
     QString msg("Hello!!!");
     NetworkObject netObj = NetworkObject::fromMessage(msg);
