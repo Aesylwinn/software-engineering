@@ -20,7 +20,7 @@ TEST(base, NetworkObject_defaultCtor) {
     }
 }
 
-TEST(base, NetworkObject_parametizedCtor_case1) {
+TEST(base, NetworkObject_parametizedCtor) {
     auto type = NetworkObject::PT_Message;
     auto payload = QString("10 .. 9 .. 8 ..").toUtf8();
     NetworkObject netObj(type, payload);
@@ -28,7 +28,7 @@ TEST(base, NetworkObject_parametizedCtor_case1) {
     ASSERT_EQ(netObj.getPayload(), payload);
 }
 
-TEST(base, NetworkObject_loginRequestCtor_case1) {
+TEST(base, NetworkObject_loginRequestCtor) {
     using LoginRequest = NetworkObject::LoginRequest;
 
     const LoginRequest request{ "Bob", "password" };
@@ -39,9 +39,13 @@ TEST(base, NetworkObject_loginRequestCtor_case1) {
     ASSERT_EQ(request.password, converted.password);
 }
 
-TEST(base, NetworkObject_fromMessage) {
-    QString msg("Hello!!!");
-    NetworkObject netObj = NetworkObject::fromMessage(msg);
-    ASSERT_EQ(netObj.getPayloadType(), NetworkObject::PT_Message);
-    ASSERT_EQ(netObj.getMessage(), msg);
+TEST(base, NetworkObject_messageCtor) {
+    using Message = NetworkObject::Message;
+
+    const Message message = { "general", "Hello!!!" };
+    NetworkObject netObj(message);
+
+    Message converted = netObj.getMessage();
+    ASSERT_EQ(message.category, converted.category);
+    ASSERT_EQ(message.message, converted.message);
 }

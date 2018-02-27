@@ -15,6 +15,11 @@ namespace base {
             PT_Message
         };
 
+        struct Message {
+            QString category;
+            QString message;
+        };
+
         struct LoginRequest {
             QString username;
             QString password;
@@ -24,6 +29,8 @@ namespace base {
         NetworkObject();
         // Parameterized ctor
         NetworkObject(PayloadType type, QByteArray payload);
+        // Message ctor
+        NetworkObject(const Message& message);
         // Login request ctor
         NetworkObject(const LoginRequest& request);
 
@@ -35,13 +42,10 @@ namespace base {
         void setPayload(PayloadType type, QByteArray payload);
 
         // Converts payload to a message
-        QString getMessage();
+        Message getMessage();
 
         // Converts payload to a login request
         LoginRequest getLoginRequest();
-
-        // Static creators
-        static NetworkObject fromMessage(QString msg);
 
     private:
         void init(PayloadType type, QByteArray payload);

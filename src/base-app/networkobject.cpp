@@ -16,6 +16,16 @@ namespace base {
     {
     }
 
+    NetworkObject::NetworkObject(const Message& message) {
+        // Combine into a single object
+        QByteArray payload;
+        QDataStream stream(&payload, QIODevice::WriteOnly);
+        stream.setVersion(NetworkDataVersion);
+        stream << message.category << message.message;
+
+        init(PT_Message, payload);
+    }
+
     NetworkObject::NetworkObject(const LoginRequest& request)
     {
         // Combine into a single object
@@ -44,13 +54,19 @@ namespace base {
         mPayload = payload;
     }
 
-    QString NetworkObject::getMessage() {
+    NetworkObject::Message NetworkObject::getMessage() {
         // Type check
         if (mPayloadType != PT_Message) {
             throw std::runtime_error("Payload is not a message!");
         }
         // Convert
-        return QString(mPayload);
+        QByteArray data = getPayload();
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setVersion(NetworkDataVersion);
+
+        Message result;
+        stream >> result.category >> result.message;
+        return result;
     }
 
     NetworkObject::LoginRequest NetworkObject::getLoginRequest() {
@@ -67,10 +83,6 @@ namespace base {
         LoginRequest result;
         stream >> result.username >> result.password;
         return result;
-    }
-
-    NetworkObject NetworkObject::fromMessage(QString msg) {
-        return NetworkObject(PT_Message, msg.toUtf8());
     }
 
     void NetworkObject::init(PayloadType type, QByteArray payload) {
