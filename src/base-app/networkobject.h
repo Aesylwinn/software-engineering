@@ -2,6 +2,8 @@
 #define BASE_NETWORKOBJECT_H
 
 #include <QByteArray>
+#include <QBuffer>
+#include <QDataStream>
 #include <QString>
 
 namespace base {
@@ -48,10 +50,16 @@ namespace base {
         LoginRequest getLoginRequest();
 
     private:
+
         void init(PayloadType type, QByteArray payload);
+
+        void setupRead(QDataStream& stream);
+        void setupWrite(QDataStream& stream);
 
         PayloadType mPayloadType;
         QByteArray mPayload;
+
+        QBuffer mBuffer;
     };
 }
 

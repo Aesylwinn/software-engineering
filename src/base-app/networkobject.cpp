@@ -1,40 +1,35 @@
 #include "networkobject.h"
 
-#include <QDataStream>
-
 namespace base {
     const QDataStream::Version NetworkDataVersion = QDataStream::Qt_5_10;
 
     NetworkObject::NetworkObject()
-        : mPayloadType(PT_None)
     {
+        init(PT_None, QByteArray());
     }
 
     NetworkObject::NetworkObject(PayloadType type, QByteArray payload)
-        : mPayloadType(type)
-        , mPayload(payload)
     {
+        init(type, payload);
     }
 
     NetworkObject::NetworkObject(const Message& message) {
-        // Combine into a single object
-        QByteArray payload;
-        QDataStream stream(&payload, QIODevice::WriteOnly);
-        stream.setVersion(NetworkDataVersion);
-        stream << message.category << message.message;
+        init(PT_Message, QByteArray());
 
-        init(PT_Message, payload);
+        // Combine into a single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << message.category << message.message;
     }
 
     NetworkObject::NetworkObject(const LoginRequest& request)
     {
-        // Combine into a single object
-        QByteArray payload;
-        QDataStream stream(&payload, QIODevice::WriteOnly);
-        stream.setVersion(NetworkDataVersion);
-        stream << request.username << request.password;
+        init(PT_LoginRequest, QByteArray());
 
-        init(PT_LoginRequest, payload);
+        // Combine into a single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << request.username << request.password;
     }
 
     NetworkObject::PayloadType NetworkObject::getPayloadType() {
@@ -60,9 +55,8 @@ namespace base {
             throw std::runtime_error("Payload is not a message!");
         }
         // Convert
-        QByteArray data = getPayload();
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        stream.setVersion(NetworkDataVersion);
+        QDataStream stream;
+        setupRead(stream);
 
         Message result;
         stream >> result.category >> result.message;
@@ -76,9 +70,8 @@ namespace base {
         }
 
         // Convert
-        QByteArray data = getPayload();
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        stream.setVersion(NetworkDataVersion);
+        QDataStream stream;
+        setupRead(stream);
 
         LoginRequest result;
         stream >> result.username >> result.password;
@@ -88,5 +81,26 @@ namespace base {
     void NetworkObject::init(PayloadType type, QByteArray payload) {
         mPayloadType = type;
         mPayload = payload;
+        mBuffer.setBuffer(nullptr);
+    }
+
+    void NetworkObject::setupRead(QDataStream& stream) {
+        // Set up stream for writing
+        mBuffer.close();
+        mBuffer.setBuffer(&mPayload);
+        mBuffer.open(QIODevice::ReadOnly);
+        // Attach stream to buffer
+        stream.setDevice(&mBuffer);
+        stream.setVersion(NetworkDataVersion);
+    }
+
+    void NetworkObject::setupWrite(QDataStream& stream) {
+        // Set up buffer for writing
+        mBuffer.close();
+        mBuffer.setBuffer(&mPayload);
+        mBuffer.open(QIODevice::WriteOnly);
+        // Attach stream to buffer
+        stream.setDevice(&mBuffer);
+        stream.setVersion(NetworkDataVersion);
     }
 }
