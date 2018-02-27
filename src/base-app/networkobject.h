@@ -56,6 +56,8 @@ namespace base {
         void setupRead(QDataStream& stream);
         void setupWrite(QDataStream& stream);
 
+        void mustMatch(PayloadType type);
+
         PayloadType mPayloadType;
         QByteArray mPayload;
 

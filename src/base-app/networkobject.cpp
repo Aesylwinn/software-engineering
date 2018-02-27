@@ -50,10 +50,8 @@ namespace base {
     }
 
     NetworkObject::Message NetworkObject::getMessage() {
-        // Type check
-        if (mPayloadType != PT_Message) {
-            throw std::runtime_error("Payload is not a message!");
-        }
+        mustMatch(PT_Message);
+
         // Convert
         QDataStream stream;
         setupRead(stream);
@@ -64,10 +62,7 @@ namespace base {
     }
 
     NetworkObject::LoginRequest NetworkObject::getLoginRequest() {
-        // Type check
-        if (mPayloadType != PT_LoginRequest) {
-            throw std::runtime_error("Payload is not a login request!");
-        }
+        mustMatch(PT_LoginRequest);
 
         // Convert
         QDataStream stream;
@@ -102,5 +97,11 @@ namespace base {
         // Attach stream to buffer
         stream.setDevice(&mBuffer);
         stream.setVersion(NetworkDataVersion);
+    }
+
+    void NetworkObject::mustMatch(PayloadType type) {
+        if (type != mPayloadType) {
+            throw std::runtime_error("Payload type does not match");
+        }
     }
 }
