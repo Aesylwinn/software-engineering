@@ -22,6 +22,7 @@ public slots:
     void reverseLowTab();
     void togglePassword();
     void popUpWindow();
+    //void sendAccount();
 
 private:
     Ui::interestData *ui;
