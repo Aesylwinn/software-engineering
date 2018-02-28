@@ -16,6 +16,10 @@ Android, so be sure to select all of them. For example:
 `Android x86`
 `Android ARMv7`
 
+You will also need to have a compiler capable of compiling modern c++. On
+windows, Visual Studio seems to work the best. There have been issues with
+MinGW.
+
 ## Java
 
 The Java JDK can be found at
@@ -41,7 +45,19 @@ This project uses the google test framework available at
 `https://github.com/google/googletest`. You will need to download the repo and
 set the `GOOGLETEST_DIR` environment variable to point at the repo.
 
-`git clone https://github.com/google/googletest.git`
+On Windows:
+1. `git clone https://github.com/google/googletest.git` in whatever folder you
+    want.  **Remember where this folder is located.** You will set the
+    `GOOGLETEST_DIR` environment variable to point at this repo.
+2. In your File Explorer, right click on This PC/Computer and select Properties
+3. Under the Properties section, select Advanced System Settings
+4. Select Environment Variables
+5. In the User Variables Section, select New and type in `GOOGLETEST_DIR` for
+    the name.
+6. For the Variable Value section, you will want to find the folder where you
+    cloned the googletest repository. Enter into said folder. Copy the path by
+    right-clicking the white bar above the files. Copy this path and paste it in
+    the Variable Value section. Select OK.
 
 ## Bringing it all together
 
@@ -74,38 +90,70 @@ Once you have the code, you can then open the `se.pro` file with QtCreator.
 QtCreator will allow you to configure the project for your environment. Be sure
 to select all the `kits` you wish to build for.
 
-# Git Usage
+# Compilation
 
-Please create a new branch. Do not attempt to directly push to the master
-branch. For sanity reasons, protections have been enabled to prevent this.
-Instead, push your new branch to github. You can then create a pull request on
-github and merge the branch into master.
+Once your development environment has been setup and Qt has been configured, you
+are ready for compilation. When selecting the se.pro the Qt creator window will
+pop up When compiling, Qt creator will bring up a screen asking you to select
+the Kits wanted to configure the project.
 
-# Useful Git Commands
+To have everything working perfectly with what we tested, the user will check
+1. Android for armeabi-v7a (GCC 4.9, Qt 5.10.0 for Android armv7)
+2. Android for x86 (GCC 4.9, Qt 5.10.0 for Android x86)
+3. Desktop Qt 5.10 MSVC2017 64bit or Desktop Qt 5.10 MSVC2017 32bit (depending
+    on your computer)
 
-To create a new branch (off of the currently selected branch):
+Once those are selected, click on configure project and wait for the editor to
+finish. Once done the project will appear in the edit tab of Qt. When the
+project appears, we will need to now build the project. To build a project there
+are two different ways you can do so by:
+* Right clicking the folder called se or the top drop-down folder and selecting
+    build
+* Or hitting ctrl B
 
-`git checkout -B BranchName`
+Once it is done building we are ready to start running the code.
 
-To fetch changes without automatically merging:
+# Running the Code
 
-`git fetch origin BranchName`
+There are two primary executables that can be ran by the user. The other folders
+are for a shared library and the tests. The user can run the mobile-app and the
+web-app.
 
-To merge a fetched branch into the current one:
+To run the web-app there are two options the user can choose between.
+* They can right click the folder that says web-app and select run
+* Or they can click the bottom left button that says DEBUG
+    1. Then select Desktop Qt 5.10 MSVC2017 64bit or Desktop Qt 5.10 MSVC2017
+        32bit (depending on your computer) and in the RUN column select web-app
+    2. Select the web-app project as the one to debug.
+    3. Once that is selected click the green play button right underneath the
+        DEBUG button
 
-`git merge origin/BranchName`
+Running the mobile-app is quite similar to option 2 for running the web-app.
+Simply choose the appropriate Android kit. If using the emulator, then you
+probably need to use the x86 Arm kit. To run on the emulator, be sure to:
+1. Start the emulator from Android Studio (if you are constrained for RAM, then
+    close Android Studio afterwards)
+2. Select the Android toolkit for compilation
+3. Click the play button and go through the steps of choosing an Android device
+    to run on
 
-To stage files before a commit:
+The mobile-app can technically be ran on the Desktop if you desire. At later
+points, this is not guaranteed to continue working well, if at all.
 
-`git add file1 file2`
+To run the tests (See the Google Test Framework section above to set it up):
+1. Change your toolkit back to the Desktop toolchain.
+2. Rebuild the QT Project by right-clicking the top level folder and selecting
+    ‘rebuild’
+3. Right click on the test sub-folder and select run:
 
-To commit staged files:
+# Acceptance Testing
 
-`git commit -m "Brief and descriptive commit message"`
+1. The web-app
+    * The application opens without crashing when ran
+    * The user can choose between different pages by clicking on the tabs
 
-To push a branch:
-
-`git push origin BranchName`
+2. The mobile-app
+    * The application opens without crashing when ran
 
 # Class diagram
 
