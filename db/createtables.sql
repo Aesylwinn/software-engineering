@@ -60,24 +60,24 @@ create table Category(
 
 create table Subcategory(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	id_category INT,
+	id_category INT NOT NULL,
 	displayName VARCHAR(20)
 );
 
 create table Venue(
-	id INT,
-	displayName VARCHAR(40),
-	address VARCHAR(40),
-	phoneNumber VARCHAR(20),
-	entryFee DOUBLE,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	displayName VARCHAR(40) NOT NULL,
+	address VARCHAR(40) NOT NULL,
+	phoneNumber VARCHAR(20) NOT NULL,
+	entryFee DOUBLE NOT NULL,
 	description TEXT
 );
 
 create table Join_Date(
-	id INT,
-	id_event INT,
-	id_userA INT,
-	id_userB INT,
-	confirmedA boolean,
-	confirmedB boolean
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_event INT NOT NULL,
+	id_userA INT NOT NULL,
+	id_userB INT NOT NULL,
+	confirmedA boolean NOT NULL,
+	confirmedB boolean NOT NULL
 );
