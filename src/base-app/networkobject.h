@@ -6,9 +6,11 @@
 #include <QDataStream>
 #include <QString>
 
+#include "base-app_global.h"
+
 namespace base {
     /* Implemented by Kyle and Anthony */
-    class NetworkObject {
+    class BASEAPPSHARED_EXPORT NetworkObject {
     public:
         // The types of payloads
         enum PayloadType {
