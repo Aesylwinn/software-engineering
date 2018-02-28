@@ -5,9 +5,11 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 
+#include "base-app_global.h"
+
 namespace base {
     /* Implemented by Kyle and Anthony */
-    class ServerNetworkMgr : public QObject {
+    class BASEAPPSHARED_EXPORT ServerNetworkMgr : public QObject {
         Q_OBJECT
     public:
         ServerNetworkMgr(QObject* parent=NULL);
