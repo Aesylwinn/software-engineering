@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>interestData</string>
+   <string>Get Going</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
    <item>
@@ -170,7 +170,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab_2">
           <attribute name="title">
@@ -846,11 +846,6 @@ Get Verified and share an experience with someone whose interests are cohesive w
             <string>Time</string>
            </property>
           </column>
-          <column>
-           <property name="text">
-            <string>Tickets Available</string>
-           </property>
-          </column>
           <item row="0" column="0">
            <property name="text">
             <string>Coachella</string>
@@ -869,11 +864,6 @@ Get Verified and share an experience with someone whose interests are cohesive w
           <item row="0" column="3">
            <property name="text">
             <string>12am</string>
-           </property>
-          </item>
-          <item row="0" column="4">
-           <property name="text">
-            <string>1400</string>
            </property>
           </item>
          </widget>
@@ -1048,7 +1038,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">
-       <string>Page</string>
+       <string>Profile (Verified)</string>
       </attribute>
      </widget>
     </widget>

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "eventpopup.h"
+#include "verified.h"
 
 namespace Ui {
 class interestData;

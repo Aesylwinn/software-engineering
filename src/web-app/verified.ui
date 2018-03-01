@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Verified</class>
+ <widget class="QDialog" name="Verified">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1265</width>
+    <height>585</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>1090</x>
+     <y>550</y>
+     <width>166</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="firstName">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>40</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="firstNameInput">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>60</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="email">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>40</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="emailInput">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>60</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="addressInput">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>160</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="address">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>130</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>160</y>
+     <width>72</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>AL</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>AK</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>AZ</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>AR</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>CA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>CO</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>CT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>DE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FL</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HI</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ID</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>IL</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>IN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>IA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>KS</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>KY</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ME</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MD</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MI</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MS</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MO</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NV</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NH</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NJ</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NM</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NY</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>NC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ND</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>OH</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>OR</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>PA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RI</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SD</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TX</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>UT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>VT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>VA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>WA</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>WV</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>WI</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>WY</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="zipcode_2">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>160</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="zipcode">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>140</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lastNameInput">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>60</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lastName">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>40</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="license">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>210</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="licenseInput">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>230</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>350</y>
+     <width>104</width>
+     <height>70</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Instructions">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>320</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Verified</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Verified</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
