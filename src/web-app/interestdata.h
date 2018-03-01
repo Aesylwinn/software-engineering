@@ -23,6 +23,8 @@ public slots:
     void togglePassword();
     void popUpWindow();
     //void sendAccount();
+    //void grabFromDatabase();
+    //void
 
 private:
     Ui::interestData *ui;
