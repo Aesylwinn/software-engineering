@@ -24,7 +24,7 @@ public slots:
     void popUpWindow();
     //void sendAccount();
     //void grabFromDatabase();
-    //void
+    //void verifyAccount();
 
 private:
     Ui::interestData *ui;
