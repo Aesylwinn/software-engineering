@@ -81,3 +81,10 @@ create table Join_Date(
 	confirmedA boolean NOT NULL,
 	confirmedB boolean NOT NULL
 );
+
+create table Join_Event(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_user INT NOT NULL,
+	id_event INT NOT NULL,
+	rsvp BOOLEAN
+);
