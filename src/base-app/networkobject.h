@@ -31,6 +31,8 @@ namespace base {
 
         // Default ctor, PT_None
         NetworkObject();
+        // Copy ctor
+        NetworkObject(const NetworkObject& other);
         // Parameterized ctor
         NetworkObject(PayloadType type, QByteArray payload);
         // Message ctor

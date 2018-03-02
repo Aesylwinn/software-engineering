@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 
 #include "base-app_global.h"
+#include "networkobject.h"
 
 namespace base {
     /* Implemented by Kyle and Anthony */
@@ -15,9 +16,8 @@ namespace base {
         ServerNetworkMgr(QObject* parent=NULL);
         void listen(int port);
     private:
+        void handleRequest(NetworkObject obj);
         QTcpServer* mServer;
-    signals:
-        void logMessageRecieved(QString message);
     private slots:
         void readyRead(QTcpSocket* socket);
 

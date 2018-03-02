@@ -8,6 +8,10 @@ namespace base {
         init(PT_None, QByteArray());
     }
 
+    NetworkObject::NetworkObject(const NetworkObject& other) {
+        init(other.mPayloadType, other.mPayload);
+    }
+
     NetworkObject::NetworkObject(PayloadType type, QByteArray payload)
     {
         init(type, payload);

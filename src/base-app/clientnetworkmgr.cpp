@@ -24,9 +24,9 @@ namespace base {
     qint32 ClientNetworkMgr::sendRequest(const NetworkObject& request) {
         // Note: this would preferably be done asynchronously
         // Extract details
-        quint32 type = (quint64) request.getPayloadType();
+        quint32 type = request.getPayloadType();
         QByteArray payload = request.getPayload();
-        quint32 size = (quint32) payload.size();
+        quint32 size = payload.size();
 
         // Send data to the server
         writeToSocket((char*)&type, sizeof(quint32));
