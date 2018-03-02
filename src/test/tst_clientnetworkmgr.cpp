@@ -68,10 +68,8 @@ TEST(base, ClientNetworkMgr_sendRequest) {
     QTcpServer* server = new QTcpServer(&app);
     server->listen(QHostAddress::Any, Port);
     // Connection test
-    bool wasConnected = false;
     bool wasRecieved = false;
     QObject::connect(server, &QTcpServer::newConnection, [&]() {
-        wasConnected = true;
         QTcpSocket* socket = server->nextPendingConnection();
         if (socket) {
             QObject::connect(socket, &QTcpSocket::readyRead, [&]() {
@@ -98,7 +96,6 @@ TEST(base, ClientNetworkMgr_sendRequest) {
 
     // Run
     ASSERT_EQ(app.exec(), 0);
-    ASSERT_TRUE(wasConnected);
     ASSERT_TRUE(wasSent);
     ASSERT_TRUE(wasRecieved);
 }
