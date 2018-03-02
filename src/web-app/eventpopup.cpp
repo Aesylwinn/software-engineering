@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #include "eventpopup.h"
 #include "ui_eventpopup.h"
 

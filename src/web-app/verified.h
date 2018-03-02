@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #ifndef VERIFIED_H
 #define VERIFIED_H
 

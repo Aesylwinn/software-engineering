@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #ifndef INTERESTDATA_H
 #define INTERESTDATA_H
 
