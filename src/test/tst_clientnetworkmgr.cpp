@@ -14,7 +14,7 @@
 using namespace testing;
 using namespace base;
 
-TEST(base, ClientNetworkMgr_connect_case1) {
+TEST(base, ClientNetworkMgr_connection) {
     // Workaround for const char* to char* issue
     char AppName[] = { 'T', 'S', 'T', '\n' };
     int Port = 1923;
@@ -29,27 +29,17 @@ TEST(base, ClientNetworkMgr_connect_case1) {
     server->listen(QHostAddress::Any, Port);
     // Connection test
     bool wasConnected = false;
-    bool wasRecieved = false;
     QObject::connect(server, &QTcpServer::newConnection, [&]() {
         wasConnected = true;
-        QTcpSocket* socket = server->nextPendingConnection();
-        if (socket) {
-            QObject::connect(socket, &QTcpSocket::readyRead, [&]() {
-                wasRecieved = true;
-                app.quit();
-            });
-        }
     });
 
     // Set up network
     ClientNetworkMgr* client = new ClientNetworkMgr(&app);
 
-    // Send a message after connecting
-    bool wasSent = false;
-    QObject::connect(client, &ClientNetworkMgr::connected, [&](){
-        client->log("Hello world!");
-        wasSent = true;
-    });
+    // Quit after connecting
+    QObject::connect(client, &ClientNetworkMgr::connected,
+            &app, &QCoreApplication::quit);
+
     // Connect
     client->connect("::1", Port);
 
@@ -59,8 +49,6 @@ TEST(base, ClientNetworkMgr_connect_case1) {
     // Run
     ASSERT_EQ(app.exec(), 0);
     ASSERT_TRUE(wasConnected);
-    ASSERT_TRUE(wasSent);
-    ASSERT_TRUE(wasRecieved);
 }
 
 TEST(base, ClientNetworkMgr_sendRequest) {

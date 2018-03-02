@@ -36,16 +36,6 @@ namespace base {
         return mRequestCounter++;
     }
 
-    void ClientNetworkMgr::log(QString message) {
-        // Set up a communication channel
-        QByteArray block;
-        QDataStream stream(&block, QIODevice::WriteOnly);
-        stream.setVersion(QDataStream::Qt_5_10);
-        stream << message;
-        // Send the message
-        mSocket->write(block);
-    }
-
     void ClientNetworkMgr::writeToSocket(const char* data, long long size) {
         // Unfortunately, Qt provides no mechanism to automatically do this.
         qint64 written = 0;

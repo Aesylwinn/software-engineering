@@ -21,9 +21,8 @@ namespace base {
         // The returned int is the identifier to listen for
         qint32 sendRequest(const NetworkObject& request);
 
-        void log(QString message);
-
     private:
+
         void writeToSocket(const char* data, long long size);
 
         QTcpSocket* mSocket;
