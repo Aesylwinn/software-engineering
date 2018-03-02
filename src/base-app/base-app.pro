@@ -18,7 +18,8 @@ SOURCES += \
     simpleclass.cpp \
     venue.cpp \
     timepoint.cpp \
-    mytime.cpp
+    mytime.cpp \
+    databaseconnection.cpp
 
 HEADERS += \
     baseapp.h \
@@ -31,7 +32,8 @@ HEADERS += \
     simpleclass.h \
     venue.h \
     timepoint.h \
-    mytime.h
+    mytime.h \
+    databaseconnection.h
 
 unix {
     target.path = /usr/lib
