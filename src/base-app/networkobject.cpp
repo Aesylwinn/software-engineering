@@ -32,11 +32,11 @@ namespace base {
         stream << request.username << request.password;
     }
 
-    NetworkObject::PayloadType NetworkObject::getPayloadType() {
+    NetworkObject::PayloadType NetworkObject::getPayloadType() const {
         return mPayloadType;
     }
 
-    QByteArray NetworkObject::getPayload() {
+    QByteArray NetworkObject::getPayload() const {
         // Check for valid type
         if (mPayloadType == PT_None) {
             throw std::runtime_error("Payload type is none!");
@@ -49,7 +49,7 @@ namespace base {
         mPayload = payload;
     }
 
-    NetworkObject::Message NetworkObject::getMessage() {
+    NetworkObject::Message NetworkObject::getMessage() const {
         mustMatch(PT_Message);
 
         // Convert
@@ -61,7 +61,7 @@ namespace base {
         return result;
     }
 
-    NetworkObject::LoginRequest NetworkObject::getLoginRequest() {
+    NetworkObject::LoginRequest NetworkObject::getLoginRequest() const {
         mustMatch(PT_LoginRequest);
 
         // Convert
@@ -79,10 +79,12 @@ namespace base {
         mBuffer.setBuffer(nullptr);
     }
 
-    void NetworkObject::setupRead(QDataStream& stream) {
+    void NetworkObject::setupRead(QDataStream& stream) const {
         // Set up stream for writing
         mBuffer.close();
-        mBuffer.setBuffer(&mPayload);
+        // We are reading, so this const_cast will not effect anything.
+        // The cast is required because of Qt's api.
+        mBuffer.setBuffer(const_cast<QByteArray*>(&mPayload));
         mBuffer.open(QIODevice::ReadOnly);
         // Attach stream to buffer
         stream.setDevice(&mBuffer);
@@ -99,7 +101,7 @@ namespace base {
         stream.setVersion(NetworkDataVersion);
     }
 
-    void NetworkObject::mustMatch(PayloadType type) {
+    void NetworkObject::mustMatch(PayloadType type) const {
         if (type != mPayloadType) {
             throw std::runtime_error("Payload type does not match");
         }

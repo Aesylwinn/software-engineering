@@ -39,31 +39,31 @@ namespace base {
         NetworkObject(const LoginRequest& request);
 
         // Type and raw data retrieval
-        PayloadType getPayloadType();
-        QByteArray getPayload();
+        PayloadType getPayloadType() const;
+        QByteArray getPayload() const;
 
         // Type and data setting
         void setPayload(PayloadType type, QByteArray payload);
 
         // Converts payload to a message
-        Message getMessage();
+        Message getMessage() const;
 
         // Converts payload to a login request
-        LoginRequest getLoginRequest();
+        LoginRequest getLoginRequest() const;
 
     private:
 
         void init(PayloadType type, QByteArray payload);
 
-        void setupRead(QDataStream& stream);
+        void setupRead(QDataStream& stream) const;
         void setupWrite(QDataStream& stream);
 
-        void mustMatch(PayloadType type);
+        void mustMatch(PayloadType type) const;
 
         PayloadType mPayloadType;
         QByteArray mPayload;
 
-        QBuffer mBuffer;
+        mutable QBuffer mBuffer;
     };
 }
 
