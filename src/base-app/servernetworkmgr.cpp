@@ -27,11 +27,23 @@ namespace base {
         qInfo("handling request\n");
         switch (obj.getPayloadType()) {
             case NetworkObject::PT_Message:
-            {
-                NetworkObject::Message msg = obj.getMessage();
-                qInfo("%s: %s\n", qUtf8Printable(msg.category),
-                        qUtf8Printable(msg.message));
-            }
+                {
+                    NetworkObject::Message msg = obj.getMessage();
+                    qInfo("%s: %s\n", qUtf8Printable(msg.category),
+                            qUtf8Printable(msg.message));
+                }
+                break;
+            case NetworkObject::PT_LoginRequest:
+                {
+                    NetworkObject::LoginRequest request = obj.getLoginRequest();
+                    qInfo("%s: is trying to login with %s\n",
+                            qUtf8Printable(request.username),
+                            qUtf8Printable(request.password));
+                }
+                break;
+            default:
+                qInfo("Unknown request encountered: %d", obj.getPayloadType());
+                break;
         }
     }
 
