@@ -1,4 +1,4 @@
-QT += widgets network testlib
+QT += widgets network sql
 QT -= gui
 CONFIG += c++11
 TARGET = base-app
