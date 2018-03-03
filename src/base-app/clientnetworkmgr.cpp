@@ -21,13 +21,27 @@ namespace base {
     void ClientNetworkMgr::disconnect() {
     }
 
-    void ClientNetworkMgr::log(QString message) {
-        // Set up a communication channel
-        QByteArray block;
-        QDataStream stream(&block, QIODevice::WriteOnly);
-        stream.setVersion(QDataStream::Qt_5_10);
-        stream << message;
-        // Send the message
-        mSocket->write(block);
+    qint32 ClientNetworkMgr::sendRequest(const NetworkObject& request) {
+        // Note: this would preferably be done asynchronously
+        // Extract details
+        quint32 type = request.getPayloadType();
+        QByteArray payload = request.getPayload();
+        quint32 size = payload.size();
+
+        // Send data to the server
+        writeToSocket((char*)&type, sizeof(quint32));
+        writeToSocket((char*)&size, sizeof(quint32));
+        writeToSocket(payload.data(), payload.size());
+
+        return mRequestCounter++;
+    }
+
+    void ClientNetworkMgr::writeToSocket(const char* data, long long size) {
+        // Unfortunately, Qt provides no mechanism to automatically do this.
+        qint64 written = 0;
+        while (written < size) {
+            written += mSocket->write(&data[written], size - written);
+            mSocket->waitForBytesWritten(100);
+        }
     }
 }

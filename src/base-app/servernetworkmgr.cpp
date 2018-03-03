@@ -23,18 +23,61 @@ namespace base {
         }
     }
 
+    void ServerNetworkMgr::handleRequest(NetworkObject obj) {
+        qInfo("handling request\n");
+        switch (obj.getPayloadType()) {
+            case NetworkObject::PT_Message:
+                {
+                    NetworkObject::Message msg = obj.getMessage();
+                    qInfo("%s: %s\n", qUtf8Printable(msg.category),
+                            qUtf8Printable(msg.message));
+                }
+                break;
+            case NetworkObject::PT_LoginRequest:
+                {
+                    NetworkObject::LoginRequest request = obj.getLoginRequest();
+                    qInfo("%s: is trying to login with %s\n",
+                            qUtf8Printable(request.username),
+                            qUtf8Printable(request.password));
+                }
+                break;
+            default:
+                qInfo("Unknown request encountered: %d", obj.getPayloadType());
+                break;
+        }
+    }
+
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
         qInfo("readReady\n");
-        if (true || socket->canReadLine()) {
-            QByteArray block = socket->readLine();
-            QDataStream stream(&block, QIODevice::ReadOnly);
-            // Read string
-            QString output;
-            stream >> output;
-            // Handle
-            logMessage(output);
-            qInfo("line read!\n");
+
+        // Make sure header is available
+        if (socket->bytesAvailable() < sizeof(quint32) * 2)
+            return;
+
+        // Data
+        quint32 type = 0;
+        quint32 size = 0;
+        QByteArray payload;
+
+        // Attempt to read all data
+        QDataStream stream(socket);
+        stream.startTransaction();
+
+        // Read header
+        stream.readRawData((char*) &type, sizeof(quint32));
+        stream.readRawData((char*) &size, sizeof(quint32));
+
+        // Copy the data
+        payload.resize(size);
+        if (stream.readRawData(payload.data(), size) < size) {
+            // Not everything has been recieved yet
+            stream.rollbackTransaction();
+            return;
         }
+
+        auto convertedType = static_cast<NetworkObject::PayloadType>(type);
+        NetworkObject obj(convertedType, payload);
+        handleRequest(obj);
     }
 
     void ServerNetworkMgr::newConnection() {
