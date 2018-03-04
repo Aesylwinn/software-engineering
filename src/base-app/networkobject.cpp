@@ -36,6 +36,16 @@ namespace base {
         stream << request.username << request.password;
     }
 
+    NetworkObject::NetworkObject(const LoginResponse& response)
+    {
+        init(PT_LoginResponse, QByteArray());
+
+        // Combine into a single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << response.valid << response.details;
+    }
+
     NetworkObject::PayloadType NetworkObject::getPayloadType() const {
         return mPayloadType;
     }
@@ -74,6 +84,18 @@ namespace base {
 
         LoginRequest result;
         stream >> result.username >> result.password;
+        return result;
+    }
+
+    NetworkObject::LoginResponse NetworkObject::getLoginResponse() const {
+        mustMatch(PT_LoginResponse);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        LoginResponse result;
+        stream >> result.valid >> result.details;
         return result;
     }
 

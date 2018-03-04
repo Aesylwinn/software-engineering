@@ -49,3 +49,25 @@ TEST(base, NetworkObject_messageCtor) {
     ASSERT_EQ(message.category, converted.category);
     ASSERT_EQ(message.message, converted.message);
 }
+
+TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
+    using LoginResponse = NetworkObject::LoginResponse;
+
+    const LoginResponse response{ 0, "User password is wrong" };
+    NetworkObject netObj(response);
+
+    LoginResponse converted = netObj.getLoginResponse();
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_loginResponseCtor_isvalid) {
+    using LoginResponse = NetworkObject::LoginResponse;
+
+    const LoginResponse response{ 1, "" };
+    NetworkObject netObj(response);
+
+    LoginResponse converted = netObj.getLoginResponse();
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+}

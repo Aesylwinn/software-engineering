@@ -16,6 +16,7 @@ namespace base {
         enum PayloadType {
             PT_None,
             PT_LoginRequest,
+            PT_LoginResponse,
             PT_Message
         };
 
@@ -29,6 +30,11 @@ namespace base {
             QString password;
         };
 
+        struct LoginResponse {
+            qint32 valid;
+            QString details;
+        };
+
         // Default ctor, PT_None
         NetworkObject();
         // Copy ctor
@@ -39,6 +45,8 @@ namespace base {
         NetworkObject(const Message& message);
         // Login request ctor
         NetworkObject(const LoginRequest& request);
+        // Login response ctor
+        NetworkObject(const LoginResponse& response);
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
@@ -52,6 +60,9 @@ namespace base {
 
         // Converts payload to a login request
         LoginRequest getLoginRequest() const;
+
+        // Converts payload to a login response
+        LoginResponse getLoginResponse() const;
 
     private:
 
