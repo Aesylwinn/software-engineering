@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QTimer>
 
+#include "../base-app/base-app_global.h"
 #include "../base-app/servernetworkmgr.h"
 
 int main(int argc, char *argv[])
@@ -10,7 +11,7 @@ int main(int argc, char *argv[])
 
     // Create and initialize server
     auto mgr = new base::ServerNetworkMgr(&app);
-    mgr->listen(1942);
+    mgr->listen(SERVER_PORT);
 
     // Run until terminated
     return app.exec();
