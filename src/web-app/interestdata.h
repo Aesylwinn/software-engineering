@@ -1,8 +1,10 @@
+/*Written by Darius and Parker*/
 #ifndef INTERESTDATA_H
 #define INTERESTDATA_H
 
 #include <QDialog>
 #include "eventpopup.h"
+#include "verified.h"
 
 namespace Ui {
 class interestData;
@@ -22,6 +24,9 @@ public slots:
     void reverseLowTab();
     void togglePassword();
     void popUpWindow();
+    //void sendAccount();
+    //void grabFromDatabase();
+    //void verifyAccount();
 
 private:
     Ui::interestData *ui;

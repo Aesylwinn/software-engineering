@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #include "interestdata.h"
 #include "ui_interestdata.h"
 
@@ -20,6 +21,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->accept, SIGNAL(clicked()), this, SLOT(reverseLowTab()));
     connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reverseLowTab()));
     connect(ui->createEvent, SIGNAL(clicked()), this, SLOT(popUpWindow()));
+    connect(ui->GetVerifiedB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
 }
 
 interestData::~interestData()
@@ -95,6 +97,16 @@ void interestData::togglePassword()
 
 void interestData::popUpWindow()
 {
-    eventPopUp* popInstance = new eventPopUp(this);
-    popInstance->show();
+    QObject* button = QObject::sender();
+    if (button == ui->createEvent)
+    {
+        eventPopUp* popInstance = new eventPopUp(this);
+        popInstance->show();
+    }
+    else
+    {
+        Verified* popInstance = new Verified(this);
+        popInstance->show();
+//        ui->GetVerifiedB->setEnabled(false);
+    }
 }
