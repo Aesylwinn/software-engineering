@@ -4,6 +4,7 @@
 #include <QByteArray>
 #include <QBuffer>
 #include <QDataStream>
+#include <QIODevice>
 #include <QString>
 
 #include "base-app_global.h"
@@ -55,6 +56,12 @@ namespace base {
         // Type and data setting
         void setPayload(PayloadType type, QByteArray payload);
 
+        // Writes to any IO device including sockets!
+        void write(QIODevice* device) const;
+
+        // Reads the IO device in a nonblocking manner.
+        bool tryRead(QIODevice* device);
+
         // Converts payload to a message
         Message getMessage() const;
 
@@ -72,6 +79,8 @@ namespace base {
         void setupWrite(QDataStream& stream);
 
         void mustMatch(PayloadType type) const;
+
+        void writeBlocking(QIODevice* device, const char* data, qint64 size) const;
 
         PayloadType mPayloadType;
         QByteArray mPayload;

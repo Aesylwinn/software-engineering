@@ -63,6 +63,49 @@ namespace base {
         mPayload = payload;
     }
 
+    void NetworkObject::write(QIODevice* device) const {
+        // Data to write, must use platform independant types
+        quint32 type = getPayloadType();
+        QByteArray payload = getPayload();
+        qint64 size = payload.size();
+
+        // Write all of the data
+        writeBlocking(device, (const char*) &type, sizeof(type));
+        writeBlocking(device, (const char*) &size, sizeof(size));
+        writeBlocking(device, payload.data(), payload.size());
+    }
+
+    bool NetworkObject::tryRead(QIODevice* device) {
+        // Data
+        quint32 type = -1;
+        qint64 size = -1;
+        QByteArray payload;
+
+        // Check that the full header is available
+        if (device->bytesAvailable() < sizeof(quint32) + sizeof(qint64))
+            return false;
+
+        // Set up to rollback if not all the data is available
+        QDataStream stream(device);
+        stream.startTransaction();
+
+        // Read the header
+        stream.readRawData((char*) &type, sizeof(type));
+        stream.readRawData((char*) &size, sizeof(size));
+
+        // Copy the data
+        payload.resize(size);
+        if (stream.readRawData(payload.data(), size) < size) {
+            // Rollback, missing data
+            stream.rollbackTransaction();
+            return false;
+        }
+
+        // Set values
+        init((PayloadType) type, payload);
+        return true;
+    }
+
     NetworkObject::Message NetworkObject::getMessage() const {
         mustMatch(PT_Message);
 
@@ -130,6 +173,19 @@ namespace base {
     void NetworkObject::mustMatch(PayloadType type) const {
         if (type != mPayloadType) {
             throw std::runtime_error("Payload type does not match");
+        }
+    }
+
+    void NetworkObject::writeBlocking(QIODevice* device, const char* data,
+            qint64 size) const {
+        qint64 written = 0;
+        while (written < size) {
+            // Try to write what remains
+            written += device->write(&data[written], size-written);
+            // Filled up buffer, must wait for space
+            if (written < size) {
+                device->waitForBytesWritten(-1);
+            }
         }
     }
 }

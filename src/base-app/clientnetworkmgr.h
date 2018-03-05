@@ -22,9 +22,6 @@ namespace base {
         qint32 sendRequest(const NetworkObject& request);
 
     private:
-
-        void writeToSocket(const char* data, long long size);
-
         QTcpSocket* mSocket;
         qint32 mRequestCounter;
     signals:
