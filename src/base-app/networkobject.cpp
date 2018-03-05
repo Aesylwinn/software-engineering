@@ -162,6 +162,15 @@ namespace base {
         return result;
     }
 
+    NetworkObject NetworkObject::createResponse(const LoginResponse& data) {
+            mustMatch(PT_LoginRequest);
+
+            // Construct response and match the ticket
+            NetworkObject response(data);
+            response.setTicket(getTicket());
+            return response;
+    }
+
     void NetworkObject::init(PayloadType type, QByteArray payload) {
         mPayloadType = type;
         mPayload = payload;

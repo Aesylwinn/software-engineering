@@ -51,23 +51,45 @@ TEST(base, NetworkObject_messageCtor) {
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
+    using LoginRequest = NetworkObject::LoginRequest;
     using LoginResponse = NetworkObject::LoginResponse;
 
+    // Set up state
+    const LoginRequest request{ "muah", "hahaha!!!" };
     const LoginResponse response{ 0, "User password is wrong" };
-    NetworkObject netObj(response);
+    const qint32 ticketNumber = 11;
 
-    LoginResponse converted = netObj.getLoginResponse();
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Method being tested
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    // The all seeing Oracle
+    LoginResponse converted = netObjResponse.getLoginResponse();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isvalid) {
+    using LoginRequest = NetworkObject::LoginRequest;
     using LoginResponse = NetworkObject::LoginResponse;
 
+    // Set up state
+    const LoginRequest request{ "oh", "dear" };
     const LoginResponse response{ 1, "" };
-    NetworkObject netObj(response);
+    const qint32 ticketNumber = 11;
 
-    LoginResponse converted = netObj.getLoginResponse();
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Method being tested
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    // The all seeing Oracle
+    LoginResponse converted = netObjResponse.getLoginResponse();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
 }

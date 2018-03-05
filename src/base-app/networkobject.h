@@ -46,8 +46,6 @@ namespace base {
         NetworkObject(const Message& message);
         // Login request ctor
         NetworkObject(const LoginRequest& request);
-        // Login response ctor
-        NetworkObject(const LoginResponse& response);
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
@@ -74,15 +72,25 @@ namespace base {
         // Converts payload to a login response
         LoginResponse getLoginResponse() const;
 
+        // Creates a response to a LoginRequest
+        NetworkObject createResponse(const LoginResponse& data);
+
     private:
 
+        // Login response ctor
+        NetworkObject(const LoginResponse& response);
+
+        // Ctor helper function
         void init(PayloadType type, QByteArray payload);
 
+        // Buffer setup helper functions
         void setupRead(QDataStream& stream) const;
         void setupWrite(QDataStream& stream);
 
+        // Conversion helper function
         void mustMatch(PayloadType type) const;
 
+        // Device writing helper function
         void writeBlocking(QIODevice* device, const char* data, qint64 size) const;
 
         PayloadType mPayloadType;
