@@ -95,7 +95,10 @@ TEST(base, NetworkObject_read) {
 
     // Set up state
     const Message msg{ "billy", "He's playing hooky!" };
+    const qint32 ticketNum = 5;
+
     NetworkObject netObj(msg);
+    netObj.setTicket(ticketNum);
 
     NetworkObject outputObj;
 
@@ -113,6 +116,7 @@ TEST(base, NetworkObject_read) {
     buffer.close();
 
     Message output = outputObj.getMessage();
+    ASSERT_EQ(outputObj.getTicket(), ticketNum);
     ASSERT_EQ(msg.category, output.category);
     ASSERT_EQ(msg.message, output.message);
 }

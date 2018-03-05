@@ -52,9 +52,12 @@ namespace base {
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
         QByteArray getPayload() const;
+        // Response tracking
+        qint32 getTicket() const;
 
         // Type and data setting
         void setPayload(PayloadType type, QByteArray payload);
+        void setTicket(qint32 ticket);
 
         // Writes to any IO device including sockets!
         void write(QIODevice* device) const;
@@ -84,6 +87,7 @@ namespace base {
 
         PayloadType mPayloadType;
         QByteArray mPayload;
+        qint32 mTicket;
 
         mutable QBuffer mBuffer;
     };
