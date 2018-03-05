@@ -17,6 +17,7 @@ namespace base {
         void listen(int port);
     private:
         void handleRequest(NetworkObject obj);
+        void sendResponse(QTcpSocket* socket, NetworkObject obj);
         QTcpServer* mServer;
     private slots:
         void readyRead(QTcpSocket* socket);

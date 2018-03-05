@@ -47,6 +47,11 @@ namespace base {
         }
     }
 
+    void ServerNetworkMgr::sendResponse(QTcpSocket* socket, NetworkObject obj) {
+        // This should eventually be asynchronous
+        obj.write(socket);
+    }
+
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
         qInfo("readReady\n");
 
