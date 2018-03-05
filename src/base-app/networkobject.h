@@ -93,6 +93,8 @@ namespace base {
         // Device writing helper function
         void writeBlocking(QIODevice* device, const char* data, qint64 size) const;
 
+        bool isInvalidSocket(QIODevice* device) const;
+
         PayloadType mPayloadType;
         QByteArray mPayload;
         qint32 mTicket;

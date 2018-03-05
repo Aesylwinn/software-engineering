@@ -2,6 +2,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+
+#include <QTcpSocket>
+
 // Class being tested
 #include "../base-app/networkobject.h"
 
@@ -175,4 +181,79 @@ TEST(base, NetworkObject_partialRead) {
             ASSERT_EQ(data.at(j), tempData.at(j));
         }
     }
+}
+
+TEST(base, NetworkObject_invalidDevice) {
+    std::condition_variable childDone;
+    std::mutex mutex;
+    bool done = false;
+
+    std::thread child([&](){
+        using Message = NetworkObject::Message;
+
+        // Set up state
+        const Message msg{ "billy", "He's gone fishing!" };
+        NetworkObject netObj(msg);
+
+        // Set up test device
+        QByteArray data;
+        QBuffer buffer(&data);
+        // Write to the device
+        netObj.write(&buffer);
+
+        // Signal parent
+        std::unique_lock<std::mutex> lock(mutex);
+        done = true;
+        lock.unlock();
+        childDone.notify_one();
+    });
+
+    // Wait for child or timeout
+    std::unique_lock<std::mutex> lock(mutex);
+    if (!done) {
+        childDone.wait_until(lock, std::chrono::system_clock::now() +
+            std::chrono::milliseconds(10), [&]{ return done; });
+    }
+    ASSERT_EQ(done, true);
+    lock.unlock();
+
+    // Join with child thread
+    child.join();
+}
+
+TEST(base, NetworkObject_invalidSocket) {
+    std::condition_variable childDone;
+    std::mutex mutex;
+    bool done = false;
+
+    std::thread child([&](){
+        using Message = NetworkObject::Message;
+
+        // Set up state
+        const Message msg{ "billy", "He's gone fishing!" };
+        NetworkObject netObj(msg);
+
+        // Set up test device
+        QTcpSocket socket;
+        // Write to the device
+        netObj.write(&socket);
+
+        // Signal parent
+        std::unique_lock<std::mutex> lock(mutex);
+        done = true;
+        lock.unlock();
+        childDone.notify_one();
+    });
+
+    // Wait for child or timeout
+    std::unique_lock<std::mutex> lock(mutex);
+    if (!done) {
+        childDone.wait_until(lock, std::chrono::system_clock::now() +
+            std::chrono::milliseconds(10), [&]{ return done; });
+    }
+    ASSERT_EQ(done, true);
+    lock.unlock();
+
+    // Join with child thread
+    child.join();
 }

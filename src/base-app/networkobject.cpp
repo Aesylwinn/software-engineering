@@ -1,5 +1,7 @@
 #include "networkobject.h"
 
+#include <QAbstractSocket>
+
 namespace base {
     const QDataStream::Version NetworkDataVersion = QDataStream::Qt_5_10;
 
@@ -78,6 +80,12 @@ namespace base {
     }
 
     void NetworkObject::write(QIODevice* device) const {
+        if (!(device->openMode() & QIODevice::WriteOnly))
+            return;
+
+        if (isInvalidSocket(device))
+            return;
+
         // Data to write, must use platform independant types
         quint32 type = getPayloadType();
         QByteArray payload = getPayload();
@@ -92,6 +100,12 @@ namespace base {
     }
 
     bool NetworkObject::tryRead(QIODevice* device) {
+        if (!(device->openMode() & QIODevice::ReadOnly))
+            return false;
+
+        if (isInvalidSocket(device))
+            return false;
+
         // Data
         qint32 ticket = -1;
         quint32 type = -1;
@@ -216,5 +230,13 @@ namespace base {
                 device->waitForBytesWritten(-1);
             }
         }
+    }
+
+    bool NetworkObject::isInvalidSocket(QIODevice* device) const {
+        auto socket = dynamic_cast<QAbstractSocket*>(device);
+        if (socket && socket->state() != QAbstractSocket::ConnectedState)
+            return true;
+        else
+            return false;
     }
 }
