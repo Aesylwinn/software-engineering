@@ -23,7 +23,7 @@ namespace base {
         }
     }
 
-    void ServerNetworkMgr::handleRequest(NetworkObject obj) {
+    void ServerNetworkMgr::handleRequest(QTcpSocket* socket, NetworkObject obj) {
         qInfo("handling request\n");
         switch (obj.getPayloadType()) {
             case NetworkObject::PT_Message:
@@ -39,6 +39,9 @@ namespace base {
                     qInfo("%s: is trying to login with %s\n",
                             qUtf8Printable(request.username),
                             qUtf8Printable(request.password));
+                    // 1 means success, 0 means failure
+                    NetworkObject::LoginResponse response { 1, "" };
+                    sendResponse(socket, obj.createResponse(response));
                 }
                 break;
             default:
@@ -58,7 +61,7 @@ namespace base {
         // Try to read
         NetworkObject netObj;
         if (netObj.tryRead(socket))
-            handleRequest(netObj);
+            handleRequest(socket, netObj);
     }
 
     void ServerNetworkMgr::newConnection() {
