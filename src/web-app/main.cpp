@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #include "interestdata.h"
 #include <QApplication>
 

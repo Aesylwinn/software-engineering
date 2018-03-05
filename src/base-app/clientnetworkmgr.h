@@ -19,17 +19,18 @@ namespace base {
         void disconnect();
 
         // The returned int is the identifier to listen for
-        qint32 sendRequest(const NetworkObject& request);
+        qint32 sendRequest(NetworkObject request);
 
     private:
-
-        void writeToSocket(const char* data, long long size);
-
         QTcpSocket* mSocket;
         qint32 mRequestCounter;
+    private slots:
+        void readyRead();
     signals:
         void connected();
         void disconnected();
+
+        void responseRecieved(NetworkObject response);
     };
 }
 

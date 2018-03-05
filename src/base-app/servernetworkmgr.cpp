@@ -23,7 +23,7 @@ namespace base {
         }
     }
 
-    void ServerNetworkMgr::handleRequest(NetworkObject obj) {
+    void ServerNetworkMgr::handleRequest(QTcpSocket* socket, NetworkObject obj) {
         qInfo("handling request\n");
         switch (obj.getPayloadType()) {
             case NetworkObject::PT_Message:
@@ -39,6 +39,9 @@ namespace base {
                     qInfo("%s: is trying to login with %s\n",
                             qUtf8Printable(request.username),
                             qUtf8Printable(request.password));
+                    // 1 means success, 0 means failure
+                    NetworkObject::LoginResponse response { 1, "" };
+                    sendResponse(socket, obj.createResponse(response));
                 }
                 break;
             default:
@@ -47,37 +50,18 @@ namespace base {
         }
     }
 
+    void ServerNetworkMgr::sendResponse(QTcpSocket* socket, NetworkObject obj) {
+        // This should eventually be asynchronous
+        obj.write(socket);
+    }
+
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
         qInfo("readReady\n");
 
-        // Make sure header is available
-        if (socket->bytesAvailable() < sizeof(quint32) * 2)
-            return;
-
-        // Data
-        quint32 type = 0;
-        quint32 size = 0;
-        QByteArray payload;
-
-        // Attempt to read all data
-        QDataStream stream(socket);
-        stream.startTransaction();
-
-        // Read header
-        stream.readRawData((char*) &type, sizeof(quint32));
-        stream.readRawData((char*) &size, sizeof(quint32));
-
-        // Copy the data
-        payload.resize(size);
-        if (stream.readRawData(payload.data(), size) < size) {
-            // Not everything has been recieved yet
-            stream.rollbackTransaction();
-            return;
-        }
-
-        auto convertedType = static_cast<NetworkObject::PayloadType>(type);
-        NetworkObject obj(convertedType, payload);
-        handleRequest(obj);
+        // Try to read
+        NetworkObject netObj;
+        if (netObj.tryRead(socket))
+            handleRequest(socket, netObj);
     }
 
     void ServerNetworkMgr::newConnection() {

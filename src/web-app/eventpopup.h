@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #ifndef EVENTPOPUP_H
 #define EVENTPOPUP_H
 
@@ -14,6 +15,9 @@ class eventPopUp : public QDialog
 public:
     explicit eventPopUp(QWidget *parent = 0);
     ~eventPopUp();
+
+public slots:
+    void openingCalendar();
 
 private:
     Ui::eventPopUp *ui;
