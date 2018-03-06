@@ -1,59 +1,99 @@
+/*Implemented by Jake*/
+
 #include "event.h"
 
-event::event()
-{
+namespace base{
+    event::event()
+    {
+        mainHost = NULL;
+        hosts = NULL;
+        attendingUsers = NULL;
+        location = NULL;
+    }
 
-}
+    event::event(QString theHost)
+    {
+        setHost(theHost);
+        hosts = NULL;
+        attendingUsers = NULL;
+        location = NULL;
+    }
 
-base::event::event()
-{
-    mainHost = NULL;
-    hosts = NULL;
-    attendingUsers = NULL;
-    location = NULL;
-}
+    base::event::event(QString theHost, QVector<QString> theHosts)
+    {
+        setHost(theHost);
+        setHosts(theHosts);
+        attendingUsers = NULL;
+        location = NULL;
+    }
 
-base::event::event(QString theHost)
-{
-    mainHost = theHost;
-    hosts = NULL;
-    attendingUsers = NULL;
-    location = NULL;
-}
+    event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers)
+    {
+        setHost(theHost);
+        setHosts(theHosts);
+        setUsers(theUsers);
+        location = NULL;
+    }
 
-base::event::event(QString theHost, QVector<QString> theHosts)
-{
-    mainHost = theHost;
-    for (int i = 0; i < theHosts.size(); i++)
-        hosts.push_back(theHosts[i]);
-    attendingUsers = NULL;
-    location = NULL;
-}
+    event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, base::venue theVenue)
+    {
+        setHost(theHost);
+        setHosts(theHosts);
+        setUsers(theUsers);
+        setLocation(theVenue);
+    }
 
-base::event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers)
-{
-    mainHost = theHost;
-    for (int i = 0; i < theHosts.size(); i++)
-        hosts.push_back(theHosts[i]);
-    for (int i = 0; i < theUsers.size(); i++)
-        attendingUsers.push_back(theUsers[i]);
-    location = NULL;
-}
+    bool event::setHost(QString theHost)
+    {
+        if (theHost.size() == 0)
+                return false;
+        mainHost = theHost;
+        return true;
+    }
 
-base::event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, base::venue theVenue)
-{
-    mainHost = theHost;
-    for (int i = 0; i < theHosts.size(); i++)
-        hosts.push_back(theHosts[i]);
-    for (int i = 0; i < theUsers.size(); i++)
-        attendingUsers.push_back(theUsers[i]);
-    location.setAddress(theVenue.getAddress());
-    location.setEntryFee(theVenue.getEntryFee());
-    location.setName(theVenue.getName());
-    location.setPhoneNumber(theVenue.getPhoneNumber());
-}
+    bool event::setHosts(QVector<QString> theHosts)
+    {
+        if (theHosts.size() == 0)
+                return false;
+        hosts.clear();
+        hosts = theHosts;
+        return true;
+    }
 
-bool base::event::setHost(QString theHost)
-{
-    for ()
+    bool event::setUsers(QVector<QString> theUsers)
+    {
+        if (theUsers.size() == 0)
+                return false;
+        attendingUsers.clear();
+        attendingUsers = theUsers;
+        return true;
+    }
+
+    bool event::setLocation(base::venue theVenue)
+    {
+        if (theVenue == NULL)
+            return false;
+        location.setAddress(theVenue.getAddress());
+        location.setEntryFee(theVenue.getEntryFee());
+        location.setName(theVenue.getName());
+        location.setPhoneNumber(theVenue.getPhoneNumber());
+        return true;
+    }
+
+    bool event::addHost(QString newHost)
+    {
+        if (newHost == NULL)
+            return false;
+        hosts.push_back(newHost);
+        return true;
+    }
+
+    bool event::addUser(QString newUser)
+    {
+        if (newUser == NULL)
+            return false;
+        attendingUsers.push_back(newUser);
+        return true;
+    }
+
 }

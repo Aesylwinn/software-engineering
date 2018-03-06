@@ -1,3 +1,5 @@
+/*Implemented by Jake*/
+
 #ifndef EVENT_H
 #define EVENT_H
 
@@ -27,9 +29,6 @@ namespace  base{
         //adders
         bool addHost(QString newHost);
         bool addUser(QString newUser);
-
-        //other functions
-        bool cancel();
 
     private:
         QString mainHost;
