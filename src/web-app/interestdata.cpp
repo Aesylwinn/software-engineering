@@ -11,6 +11,7 @@ interestData::interestData(QWidget *parent) :
     ui->tabWidget_2->setCurrentWidget(ui->tab_2);
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
+    ui->tabWidget->setTabEnabled(3, false);
 
     connect(ui->get_started, SIGNAL(clicked()), this, SLOT(switchMainTabs()));
     connect(ui->Login, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
@@ -21,6 +22,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reverseLowTab()));
     connect(ui->createEvent, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->GetVerifiedB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
+    connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
 }
 
 interestData::~interestData()
@@ -32,6 +34,7 @@ void interestData::switchMainTabs()
 {
     ui->tabWidget->setTabEnabled(1, true);
     ui->tabWidget->setCurrentWidget(ui->signUp);
+    ui->tabWidget_2->setTabEnabled(0, true);
     ui->tabWidget_2->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(0, false);
 }
@@ -108,4 +111,13 @@ void interestData::popUpWindow()
         popInstance->show();
 //        ui->GetVerifiedB->setEnabled(false);
     }
+}
+
+void interestData::logout()
+{
+    ui->tabWidget->setCurrentWidget(ui->tab);
+    ui->tabWidget->setTabEnabled(0, true);
+    ui->tabWidget->setTabEnabled(1, false);
+    ui->tabWidget->setTabEnabled(2, false);
+    ui->tabWidget->setTabEnabled(3, false);
 }

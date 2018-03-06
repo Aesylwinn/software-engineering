@@ -23,6 +23,7 @@ public slots:
     void reverseLowTab();
     void togglePassword();
     void popUpWindow();
+    void logout();
     //void sendAccount();
     //void grabFromDatabase();
     //void verifyAccount();

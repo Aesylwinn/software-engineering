@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -170,7 +170,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_2">
           <attribute name="title">
@@ -432,7 +432,7 @@ p, li { white-space: pre-wrap; }
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>600</number>
+              <number>0</number>
              </property>
              <item>
               <widget class="QRadioButton" name="malebutt">
@@ -1034,6 +1034,19 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QPushButton" name="logout">
+       <property name="geometry">
+        <rect>
+         <x>1190</x>
+         <y>610</y>
+         <width>80</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Logout</string>
+       </property>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_5">
