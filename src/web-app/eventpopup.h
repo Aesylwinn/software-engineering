@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #ifndef EVENTPOPUP_H
 #define EVENTPOPUP_H
 

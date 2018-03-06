@@ -1,3 +1,4 @@
+/*Written by Darius and Parker*/
 #include "verified.h"
 #include "ui_verified.h"
 
