@@ -16,7 +16,8 @@ namespace base {
         ServerNetworkMgr(QObject* parent=NULL);
         void listen(int port);
     private:
-        void handleRequest(NetworkObject obj);
+        void handleRequest(QTcpSocket* socket, NetworkObject obj);
+        void sendResponse(QTcpSocket* socket, NetworkObject obj);
         QTcpServer* mServer;
     private slots:
         void readyRead(QTcpSocket* socket);

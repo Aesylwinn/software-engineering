@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Create Event</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="rowWrapPolicy">
@@ -259,55 +259,7 @@
          <property name="title">
           <string>Reocurring</string>
          </property>
-         <widget class="QCheckBox" name="daily">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>60</y>
-            <width>72</width>
-            <height>19</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Daily</string>
-          </property>
-         </widget>
-         <widget class="QCheckBox" name="monthly">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>90</y>
-            <width>72</width>
-            <height>19</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Monthly</string>
-          </property>
-         </widget>
-         <widget class="QCheckBox" name="weekly">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>120</y>
-            <width>72</width>
-            <height>19</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Weekly</string>
-          </property>
-         </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -332,6 +284,19 @@
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QCalendarWidget" name="recurringDate">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>280</width>
+            <height>156</height>
+           </rect>
+          </property>
          </widget>
         </widget>
        </item>

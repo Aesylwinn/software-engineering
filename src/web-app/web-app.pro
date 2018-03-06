@@ -8,15 +8,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp\
         interestdata.cpp \
-    eventpopup.cpp
+    eventpopup.cpp \
+    verified.cpp
 
 HEADERS += \
         interestdata.h \
-    eventpopup.h
+    eventpopup.h \
+    verified.h
 
 FORMS += \
         interestdata.ui \
-    eventpopup.ui
+    eventpopup.ui \
+    verified.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base-app/debug/ -lbase-app
