@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 
 #include "base-app_global.h"
+#include "networkobject.h"
 
 namespace base {
     /* Implemented by Kyle and Anthony */
@@ -17,12 +18,19 @@ namespace base {
         void connect(QString address, int port);
         void disconnect();
 
-        void log(QString message);
+        // The returned int is the identifier to listen for
+        qint32 sendRequest(NetworkObject request);
+
     private:
         QTcpSocket* mSocket;
+        qint32 mRequestCounter;
+    private slots:
+        void readyRead();
     signals:
         void connected();
         void disconnected();
+
+        void responseRecieved(NetworkObject response);
     };
 }
 

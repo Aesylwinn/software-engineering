@@ -12,6 +12,8 @@ namespace base {
                 this, &ClientNetworkMgr::connected);
         QObject::connect(mSocket, &QTcpSocket::disconnected,
                 this, &ClientNetworkMgr::disconnected);
+        QObject::connect(mSocket, &QTcpSocket::readyRead,
+                this, &ClientNetworkMgr::readyRead);
     }
 
     void ClientNetworkMgr::connect(QString address, int port) {
@@ -21,13 +23,17 @@ namespace base {
     void ClientNetworkMgr::disconnect() {
     }
 
-    void ClientNetworkMgr::log(QString message) {
-        // Set up a communication channel
-        QByteArray block;
-        QDataStream stream(&block, QIODevice::WriteOnly);
-        stream.setVersion(QDataStream::Qt_5_10);
-        stream << message;
-        // Send the message
-        mSocket->write(block);
+    qint32 ClientNetworkMgr::sendRequest(NetworkObject request) {
+        // Note: this would preferably be done asynchronously
+        qint32 ticket = mRequestCounter++;
+        request.setTicket(ticket);
+        request.write(mSocket);
+        return ticket;
+    }
+
+    void ClientNetworkMgr::readyRead() {
+        NetworkObject netObj;
+        if (netObj.tryRead(mSocket))
+            emit responseRecieved(netObj);
     }
 }

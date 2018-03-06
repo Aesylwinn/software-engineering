@@ -23,18 +23,45 @@ namespace base {
         }
     }
 
+    void ServerNetworkMgr::handleRequest(QTcpSocket* socket, NetworkObject obj) {
+        qInfo("handling request\n");
+        switch (obj.getPayloadType()) {
+            case NetworkObject::PT_Message:
+                {
+                    NetworkObject::Message msg = obj.getMessage();
+                    qInfo("%s: %s\n", qUtf8Printable(msg.category),
+                            qUtf8Printable(msg.message));
+                }
+                break;
+            case NetworkObject::PT_LoginRequest:
+                {
+                    NetworkObject::LoginRequest request = obj.getLoginRequest();
+                    qInfo("%s: is trying to login with %s\n",
+                            qUtf8Printable(request.username),
+                            qUtf8Printable(request.password));
+                    // 1 means success, 0 means failure
+                    NetworkObject::LoginResponse response { 1, "" };
+                    sendResponse(socket, obj.createResponse(response));
+                }
+                break;
+            default:
+                qInfo("Unknown request encountered: %d", obj.getPayloadType());
+                break;
+        }
+    }
+
+    void ServerNetworkMgr::sendResponse(QTcpSocket* socket, NetworkObject obj) {
+        // This should eventually be asynchronous
+        obj.write(socket);
+    }
+
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
         qInfo("readReady\n");
-        if (true || socket->canReadLine()) {
-            QByteArray block = socket->readLine();
-            QDataStream stream(&block, QIODevice::ReadOnly);
-            // Read string
-            QString output;
-            stream >> output;
-            // Handle
-            logMessage(output);
-            qInfo("line read!\n");
-        }
+
+        // Try to read
+        NetworkObject netObj;
+        if (netObj.tryRead(socket))
+            handleRequest(socket, netObj);
     }
 
     void ServerNetworkMgr::newConnection() {

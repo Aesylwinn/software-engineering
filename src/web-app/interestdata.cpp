@@ -2,11 +2,19 @@
 #include "interestdata.h"
 #include "ui_interestdata.h"
 
+using namespace base;
 
 interestData::interestData(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::interestData)
+    ui(new Ui::interestData),
+    mNetworkMgr(new ClientNetworkMgr(this)),
+    mLoginRequest(-1)
 {
+    // Connect to the server
+    mNetworkMgr->connect(QString(SERVER_ADDRESS), SERVER_PORT);
+    connect(mNetworkMgr, &ClientNetworkMgr::responseRecieved,
+            this, &interestData::checkResponse);
+
     ui->setupUi(this);
     ui->tabWidget->setCurrentWidget(ui->tab);
     ui->tabWidget_2->setCurrentWidget(ui->tab_2);
@@ -28,6 +36,9 @@ interestData::interestData(QWidget *parent) :
 
 interestData::~interestData()
 {
+    // Note: mNetworkMgr memory is managed by Qt
+    mNetworkMgr->disconnect();
+
     delete ui;
 }
 
@@ -45,6 +56,7 @@ void interestData::switchLowTabs()
     QObject* button = QObject::sender();
 
     if(button == ui->Login){
+        login("bob", "hatespasswords");
         ui->tabWidget->setCurrentWidget(ui->tab_4);
         ui->tabWidget->setTabEnabled(2, true);
         ui->tabWidget->setTabEnabled(1, false);
@@ -121,4 +133,24 @@ void interestData::logout()
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
     ui->tabWidget->setTabEnabled(3, false);
+}
+
+void interestData::login(QString username, QString password)
+{
+    // Send request. The ticket will match to the response.
+    NetworkObject request(NetworkObject::LoginRequest{ username, password });
+    mLoginRequest = mNetworkMgr->sendRequest(request);
+}
+
+void interestData::checkResponse(base::NetworkObject response) {
+    if (response.getTicket() == mLoginRequest) {
+        // Reset ticket
+        mLoginRequest = -1;
+        // Handle response
+        if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
+            NetworkObject::LoginResponse info = response.getLoginResponse();
+            qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
+            // Handle here
+        }
+    }
 }

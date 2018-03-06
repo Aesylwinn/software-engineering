@@ -6,6 +6,8 @@
 #include "eventpopup.h"
 #include "verified.h"
 
+#include "../base-app/clientnetworkmgr.h"
+
 namespace Ui {
 class interestData;
 }
@@ -29,8 +31,13 @@ public slots:
     //void grabFromDatabase();
     //void verifyAccount();
 
+    void login(QString username, QString password);
+    void checkResponse(base::NetworkObject response);
+
 private:
     Ui::interestData *ui;
+    base::ClientNetworkMgr *mNetworkMgr;
+    qint32 mLoginRequest;
 };
 
 #endif // INTERESTDATA_H
