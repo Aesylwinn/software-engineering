@@ -6,6 +6,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QVariant>
 #include <exception>
 
 
@@ -16,8 +17,7 @@ namespace base {
     public:
         DatabaseConnection(QString hostname);
         ~DatabaseConnection();
-
-        bool testConnection();
+        bool checkPassword(QString username, QString password);
 
     private:
         void SetUp(QString hostname, QString databaseName, QString username, QString password);

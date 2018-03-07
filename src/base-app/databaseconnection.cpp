@@ -25,4 +25,26 @@ void DatabaseConnection::SetUp(QString hostname, QString databaseName, QString u
 
 }
 
+bool DatabaseConnection::checkPassword(QString username, QString password)
+{
+    QSqlQuery query(db);
+
+    if (!query.prepare("SELECT password FROM User_basic WHERE username = :usern"))
+        throw std::runtime_error("Unable to check password, unable to prepare");
+
+    query.bindValue(":usern", username);
+
+    if (!query.exec())
+        throw std::runtime_error("Unable to check password, unable to execute");
+
+    if( query.isSelect() && query.first() )
+    {
+        QString actualPassword = query.value("password").toString();
+        return actualPassword == password;
+    }
+
+    return false;
+
+}
+
 }

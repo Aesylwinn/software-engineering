@@ -2,7 +2,7 @@
 create table User_basic(		--unverified access profile
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	userType ENUM('BASIC','PROFILE','HOST') NOT NULL,
-	username CHAR(20) NOT NULL,
+	username CHAR(20) NOT NULL UNIQUE,
 	password CHAR(20) NOT NULL,
 	verified BOOLEAN NOT NULL
 );
