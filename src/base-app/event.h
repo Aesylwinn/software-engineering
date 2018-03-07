@@ -25,6 +25,7 @@ namespace  base{
         bool setHosts(QVector<QString> theHosts);
         bool setUsers(QVector<QString> theUsers);
         bool setLocation(venue theVenue);
+        bool initialize(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, venue theVenue);
 
         //adders
         bool addHost(QString newHost);

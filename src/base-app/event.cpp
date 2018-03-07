@@ -5,26 +5,17 @@
 namespace base{
     event::event()
     {
-        mainHost = NULL;
-        hosts = NULL;
-        attendingUsers = NULL;
-        location = NULL;
     }
 
     event::event(QString theHost)
     {
         setHost(theHost);
-        hosts = NULL;
-        attendingUsers = NULL;
-        location = NULL;
     }
 
-    base::event::event(QString theHost, QVector<QString> theHosts)
+    event::event(QString theHost, QVector<QString> theHosts)
     {
         setHost(theHost);
         setHosts(theHosts);
-        attendingUsers = NULL;
-        location = NULL;
     }
 
     event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers)
@@ -32,15 +23,11 @@ namespace base{
         setHost(theHost);
         setHosts(theHosts);
         setUsers(theUsers);
-        location = NULL;
     }
 
     event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, base::venue theVenue)
     {
-        setHost(theHost);
-        setHosts(theHosts);
-        setUsers(theUsers);
-        setLocation(theVenue);
+        initialize(theHost, theHosts, theUsers, theVenue);
     }
 
     bool event::setHost(QString theHost)
@@ -71,7 +58,7 @@ namespace base{
 
     bool event::setLocation(base::venue theVenue)
     {
-        if (theVenue == NULL)
+        if (theVenue.getName().size() == 0)
             return false;
         location.setAddress(theVenue.getAddress());
         location.setEntryFee(theVenue.getEntryFee());
@@ -82,7 +69,7 @@ namespace base{
 
     bool event::addHost(QString newHost)
     {
-        if (newHost == NULL)
+        if (newHost.size() == 0)
             return false;
         hosts.push_back(newHost);
         return true;
@@ -90,10 +77,17 @@ namespace base{
 
     bool event::addUser(QString newUser)
     {
-        if (newUser == NULL)
+        if (newUser.size() == 0)
             return false;
         attendingUsers.push_back(newUser);
         return true;
     }
-
+    bool event::initialize(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, venue theVenue)
+    {
+        setHost(theHost);
+        setHosts(theHosts);
+        setUsers(theUsers);
+        setLocation(theVenue);
+        return true;
+    }
 }
