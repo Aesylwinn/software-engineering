@@ -10,6 +10,7 @@
 namespace base {
     class BASEAPPSHARED_EXPORT venue{
         public:
+            venue();
             venue(QString n, QString addr);
             venue(QString n, QString addr, QString phone);
             venue(QString n, QString addr, double fee);
@@ -36,6 +37,7 @@ namespace base {
             QString phoneNumber;
             double entryFee;
             QString description;
+            void initialize(QString n, QString addr, QString phone, double fee);
     };
 }
 
