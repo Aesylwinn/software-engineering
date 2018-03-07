@@ -27,4 +27,23 @@ TEST(base, dbconnection) {
 
 }
 
+TEST(base, createAccount){
+    char AppName[] = { 'a', 'b' , 'c', '\0'};
+    int argc = 1;
+    char* argv[] = {AppName, nullptr};
+    QCoreApplication app(argc, argv);
+
+    try{
+        DatabaseConnection db("se");
+        db.createAccount("testUsername","pass");
+    }
+    catch ( std::runtime_error ex ) {
+        std::cerr << ex.what();
+        FAIL();
+    }
+
+    QTimer::singleShot(100, &app, SLOT(quit()));
+    app.exec();
+}
+
 

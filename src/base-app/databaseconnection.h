@@ -17,7 +17,8 @@ namespace base {
     public:
         DatabaseConnection(QString hostname);
         ~DatabaseConnection();
-        bool checkPassword(QString username, QString password);
+        bool checkPassword(QString username, QString password); //can throw run-time error if server unavailable
+        bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
 
     private:
         void SetUp(QString hostname, QString databaseName, QString username, QString password);
