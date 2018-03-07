@@ -32,7 +32,7 @@ namespace base{
 
     bool event::setHost(QString theHost)
     {
-        if (theHost.size() == 0)
+        if (theHost.isEmpty())
                 return false;
         mainHost = theHost;
         return true;
@@ -40,7 +40,7 @@ namespace base{
 
     bool event::setHosts(QVector<QString> theHosts)
     {
-        if (theHosts.size() == 0)
+        if (theHosts.isEmpty())
                 return false;
         hosts.clear();
         hosts = theHosts;
@@ -49,7 +49,7 @@ namespace base{
 
     bool event::setUsers(QVector<QString> theUsers)
     {
-        if (theUsers.size() == 0)
+        if (theUsers.isEmpty())
                 return false;
         attendingUsers.clear();
         attendingUsers = theUsers;
@@ -58,7 +58,7 @@ namespace base{
 
     bool event::setLocation(base::venue theVenue)
     {
-        if (theVenue.getName().size() == 0)
+        if (theVenue.getName().isEmpty())
             return false;
         location.setAddress(theVenue.getAddress());
         location.setEntryFee(theVenue.getEntryFee());
@@ -69,7 +69,7 @@ namespace base{
 
     bool event::addHost(QString newHost)
     {
-        if (newHost.size() == 0)
+        if (newHost.isEmpty())
             return false;
         hosts.push_back(newHost);
         return true;
@@ -77,7 +77,7 @@ namespace base{
 
     bool event::addUser(QString newUser)
     {
-        if (newUser.size() == 0)
+        if (newUser.isEmpty())
             return false;
         attendingUsers.push_back(newUser);
         return true;

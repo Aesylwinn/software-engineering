@@ -4,55 +4,51 @@
 #include "venue.h"
 
 namespace base {
+    venue::venue(){
+        initialize("", "", "", -1);
+    }
     venue::venue(QString n, QString addr){
-        setName(n);
-        setAddress(addr);
-        phoneNumber = "867-5309";
-        entryFee = 0;
+        initialize(n, addr, "", -1);
     }
     venue::venue(QString n, QString addr, QString phone){
-        setName(n);
-        setAddress(addr);
-        setPhoneNumber(phone);
-        entryFee = 0;
+        initialize(n, addr, phone, -1);
     }
     venue::venue(QString n, QString addr, double fee){
-        setName(n);
-        setAddress(addr);
-        phoneNumber = "867-5309";
-        setEntryFee(fee);
+        initialize(n, addr, "", fee);
     }
     venue::venue(QString n, QString addr, QString phone, double fee){
+        initialize(n, addr, phone, fee);
     }
-    venue::venue(QString data){
+    venue::venue(QString data){ //assuming for now that data means the name
+        name = data;
     }    //conversion constructor
 
     //utility
     QString venue::toString(){
-        return "";
+        return name;
     }
 
     //setters
     bool venue::setAddress(QString a){
-        if (a == NULL)
+        if (a.isEmpty())
             return false;
         address = a;
         return true;
     }
     bool venue::setPhoneNumber(QString n){
-        if (n == NULL)
+        if (n.isEmpty())
             return false;
         phoneNumber = n;
         return true;
     }
     bool venue::setName(QString n){
-        if (n = NULL)
+        if (n.isEmpty())
             return false;
         name = n;
         return true;
     }
     bool venue::setEntryFee(double f){
-        if (f == NULL)
+        if (f < 0)
             return false;
         entryFee = f;
         return true;
@@ -70,5 +66,25 @@ namespace base {
     }
     double venue::getEntryFee(){
         return entryFee;
+    }
+
+    //helper class
+    void venue::initialize(QString n, QString addr, QString phone, double fee){
+        if (n.isEmpty())
+                name = "";
+        else
+            setName(n);
+        if (addr.isEmpty())
+            addr = "";
+        else
+            setAddress(addr);
+        if (phone.isEmpty())
+            phoneNumber = "867-5309";
+        else
+            setPhoneNumber(phone);
+        if (fee < 0)
+            entryFee = 0;
+        else
+            setEntryFee(fee);
     }
  }
