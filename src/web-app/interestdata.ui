@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -189,7 +189,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit">
+                <widget class="QLineEdit" name="usrName">
                  <property name="minimumSize">
                   <size>
                    <width>175</width>
@@ -218,10 +218,10 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_2">
+                  <widget class="QLineEdit" name="password">
                    <property name="minimumSize">
                     <size>
-                     <width>100</width>
+                     <width>150</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -422,52 +422,52 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QDateEdit" name="dateEdit"/>
                </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QRadioButton" name="malebutt">
+                   <property name="text">
+                    <string>Male</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="febutt">
+                   <property name="text">
+                    <string>Female</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
               </layout>
              </item>
-            </layout>
-           </item>
-           <item row="3" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QRadioButton" name="malebutt">
-               <property name="text">
-                <string>Male</string>
+             <item row="4" column="0">
+              <widget class="QPushButton" name="SignUp">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="febutt">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
                <property name="text">
-                <string>Female</string>
+                <string>Create Account</string>
                </property>
               </widget>
              </item>
             </layout>
-           </item>
-           <item row="4" column="0">
-            <widget class="QPushButton" name="SignUp">
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Create Account</string>
-             </property>
-            </widget>
            </item>
            <item row="2" column="1">
             <widget class="QLabel" name="label_4">
