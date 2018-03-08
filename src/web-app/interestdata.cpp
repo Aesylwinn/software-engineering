@@ -88,7 +88,7 @@ void interestData::reverseLowTab()
 
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->accept){
-        login(ui->lineEdit->text(), ui->confirmPass->text());   //logins to the server to communicate
+        login(ui->newUsrName->text(), ui->confirmPass->text());   //logins to the server to communicate
         ui->tabWidget->setCurrentWidget(ui->tab_4);
         ui->tabWidget->setTabEnabled(2, true);
         ui->tabWidget->setTabEnabled(1, false);
@@ -139,7 +139,8 @@ void interestData::popUpWindow()
         popInstance->show();
     }
 }
-
+//sets the whole application to the default state
+//returns to the homepage
 void interestData::logout()
 {
     ui->tabWidget->setCurrentWidget(ui->tab);
@@ -147,6 +148,14 @@ void interestData::logout()
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
     ui->tabWidget->setTabEnabled(3, false);
+    ui->usrName->clear();
+    ui->password->clear();
+    ui->lineEdit_FN->clear();
+    ui->lineEdit_LN->clear();
+    ui->newEmail->clear();
+    ui->newUsrName->clear();
+    ui->newPass->clear();
+    ui->confirmPass->clear();
 }
 
 void interestData::login(QString username, QString password)

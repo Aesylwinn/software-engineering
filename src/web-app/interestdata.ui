@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -337,7 +337,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_5">
+                <widget class="QLineEdit" name="newEmail">
                  <property name="maximumSize">
                   <size>
                    <width>150</width>
@@ -450,7 +450,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit">
+                <widget class="QLineEdit" name="newUsrName">
                  <property name="maximumSize">
                   <size>
                    <width>150</width>
@@ -785,25 +785,12 @@ Get Verified and share an experience with someone whose interests are cohesive w
       <attribute name="title">
        <string>Profile</string>
       </attribute>
-      <widget class="QPushButton" name="createEvent">
-       <property name="geometry">
-        <rect>
-         <x>1170</x>
-         <y>10</y>
-         <width>80</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Create Event</string>
-       </property>
-      </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>250</y>
-         <width>513</width>
+         <width>411</width>
          <height>223</height>
         </rect>
        </property>
@@ -836,13 +823,13 @@ Get Verified and share an experience with someone whose interests are cohesive w
          <widget class="QTableWidget" name="interestStream">
           <property name="minimumSize">
            <size>
-            <width>511</width>
+            <width>300</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>511</width>
+            <width>420</width>
             <height>16777215</height>
            </size>
           </property>
@@ -1013,8 +1000,8 @@ Get Verified and share an experience with someone whose interests are cohesive w
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>810</x>
-         <y>200</y>
+         <x>870</x>
+         <y>0</y>
          <width>419</width>
          <height>270</height>
         </rect>
@@ -1087,6 +1074,19 @@ p, li { white-space: pre-wrap; }
       <attribute name="title">
        <string>Profile (Verified)</string>
       </attribute>
+      <widget class="QPushButton" name="createEvent">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>60</y>
+         <width>80</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Create Event</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
