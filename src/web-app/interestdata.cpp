@@ -34,6 +34,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reverseLowTab()));
     connect(ui->createEvent, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->GetVerifiedB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
+    connect(ui->matchB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
 }
 
@@ -75,6 +76,7 @@ void interestData::switchLowTabs()
             //createAccount(ui->usrName->text(), ui->confirmPass->text());
             ui->tabWidget_2->setTabEnabled(1, true);
             ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
+            ui->Nam_Display_2->setText(tr("%1 %2").arg(ui->lineEdit_FN->text(), ui->lineEdit_LN->text()));
             ui->tabWidget_2->setCurrentWidget(ui->tab_3);
             ui->tabWidget_2->setTabEnabled(0, false);
         }
@@ -131,10 +133,17 @@ void interestData::popUpWindow()
         eventPopUp* popInstance = new eventPopUp(this);
         popInstance->show();
     }
-    else
+    if (button == ui->GetVerifiedB)
     {
         Verified* popInstance = new Verified(this);
         popInstance->show();
+    }
+
+    if (button == ui->matchB)
+    {
+        matches* popInstance = new matches(this);
+        popInstance->show();
+
     }
 }
 //sets the whole application to the default state

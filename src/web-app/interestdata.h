@@ -5,6 +5,7 @@
 #include <QDialog>
 #include "eventpopup.h"
 #include "verified.h"
+#include "matches.h"
 
 #include "../base-app/clientnetworkmgr.h"
 
@@ -33,7 +34,7 @@ public slots:
 
     void login(QString username, QString password);
     void checkResponse(base::NetworkObject response);
-    void createAccount(QString username, QString password);
+    //void createAccount(QString username, QString password);
 
 private:
     Ui::interestData *ui;
