@@ -140,7 +140,6 @@ void interestData::popUpWindow()
     }
 }
 //sets the whole application to the default state
-//returns to the homepage
 void interestData::logout()
 {
     ui->tabWidget->setCurrentWidget(ui->tab);
