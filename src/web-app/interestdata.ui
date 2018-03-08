@@ -348,46 +348,19 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="1" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_10">
-               <item>
-                <widget class="QLabel" name="SUPass">
-                 <property name="text">
-                  <string>New Password</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="newPass">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="echoMode">
-                  <enum>QLineEdit::Password</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
              <item row="2" column="0" colspan="2">
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_12">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
+                <layout class="QVBoxLayout" name="verticalLayout_10">
                  <item>
-                  <widget class="QLabel" name="label">
+                  <widget class="QLabel" name="SUPass">
                    <property name="text">
-                    <string>Confirm Password</string>
+                    <string>New Password</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="confirmPass">
+                  <widget class="QLineEdit" name="newPass">
                    <property name="maximumSize">
                     <size>
                      <width>150</width>
@@ -410,7 +383,26 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="3" column="0">
+             <item row="5" column="0">
+              <widget class="QPushButton" name="SignUp">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Create Account</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
               <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
                 <widget class="QLabel" name="BDay">
@@ -448,24 +440,53 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="4" column="0">
-              <widget class="QPushButton" name="SignUp">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
+             <item row="1" column="1">
+              <layout class="QVBoxLayout" name="verticalLayout_16">
+               <item>
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Username</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit">
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <property name="spacing">
+                <number>0</number>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Create Account</string>
-               </property>
-              </widget>
+               <item>
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Confirm Password</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="confirmPass">
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="echoMode">
+                  <enum>QLineEdit::Password</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>

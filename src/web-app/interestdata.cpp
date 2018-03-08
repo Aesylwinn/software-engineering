@@ -1,6 +1,7 @@
 /*Written by Darius and Parker*/
 #include "interestdata.h"
 #include "ui_interestdata.h"
+#include <QMessageBox>
 
 using namespace base;
 
@@ -65,10 +66,19 @@ void interestData::switchLowTabs()
         ui->tabWidget->setTabEnabled(1, false);
     }
     else{
-        ui->tabWidget_2->setTabEnabled(1, true);
-        ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
-        ui->tabWidget_2->setCurrentWidget(ui->tab_3);
-        ui->tabWidget_2->setTabEnabled(0, false);
+        if (ui->newPass->text() != ui->confirmPass->text())
+        {
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error","The passwords do not match!\n You shall not PASS!!!");
+            messageBox.setFixedSize(500,200);
+        }
+        else
+        {
+            ui->tabWidget_2->setTabEnabled(1, true);
+            ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
+            ui->tabWidget_2->setCurrentWidget(ui->tab_3);
+            ui->tabWidget_2->setTabEnabled(0, false);
+        }
     }
 }
 
@@ -78,7 +88,7 @@ void interestData::reverseLowTab()
 
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->accept){
-        login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
+        login(ui->lineEdit->text(), ui->confirmPass->text());   //logins to the server to communicate
         ui->tabWidget->setCurrentWidget(ui->tab_4);
         ui->tabWidget->setTabEnabled(2, true);
         ui->tabWidget->setTabEnabled(1, false);
