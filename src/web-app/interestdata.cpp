@@ -61,9 +61,6 @@ void interestData::switchLowTabs()
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->Login){
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
-        ui->tabWidget->setCurrentWidget(ui->tab_4);
-        ui->tabWidget->setTabEnabled(2, true);
-        ui->tabWidget->setTabEnabled(1, false);
     }
     else{
         if (ui->newPass->text() != ui->confirmPass->text())
@@ -74,6 +71,8 @@ void interestData::switchLowTabs()
         }
         else
         {
+            //function that needs to be made, will create the account
+            //createAccount(ui->usrName->text(), ui->confirmPass->text());
             ui->tabWidget_2->setTabEnabled(1, true);
             ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
             ui->tabWidget_2->setCurrentWidget(ui->tab_3);
@@ -88,7 +87,6 @@ void interestData::reverseLowTab()
 
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->accept){
-        login(ui->newUsrName->text(), ui->confirmPass->text());   //logins to the server to communicate
         ui->tabWidget->setCurrentWidget(ui->tab_4);
         ui->tabWidget->setTabEnabled(2, true);
         ui->tabWidget->setTabEnabled(1, false);
@@ -155,6 +153,8 @@ void interestData::logout()
     ui->newUsrName->clear();
     ui->newPass->clear();
     ui->confirmPass->clear();
+    // Note: mNetworkMgr memory is managed by Qt
+    mNetworkMgr->disconnect();
 }
 
 void interestData::login(QString username, QString password)
@@ -164,6 +164,8 @@ void interestData::login(QString username, QString password)
     mLoginRequest = mNetworkMgr->sendRequest(request);
 }
 
+
+
 void interestData::checkResponse(base::NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
@@ -172,7 +174,24 @@ void interestData::checkResponse(base::NetworkObject response) {
         if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
             NetworkObject::LoginResponse info = response.getLoginResponse();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
-            // Handle here
+            if (info.valid == 1)
+            {
+                ui->tabWidget->setCurrentWidget(ui->tab_4);
+                ui->tabWidget->setTabEnabled(2, true);
+                ui->tabWidget->setTabEnabled(1, false);
+            }
+            else
+            {
+                QMessageBox messageBox;
+                messageBox.critical(0,"Error","Sorry the username isn't valid");
+                messageBox.setFixedSize(500,200);
+            }
         }
     }
+    //if (response.getTicket() == mCreateAccountReqt??) //will create account
 }
+
+/*void interestData::createAccount(QString username, QString password)  //need to implement via server
+{
+
+} */

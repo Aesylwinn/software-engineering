@@ -36,6 +36,22 @@ namespace base {
             QString details;
         };
 
+//        //Darius and Parker inserted ;)
+//        struct EventRequest {
+//            QString username;
+//            QVector interest;
+//        };
+
+//        //Darius and Parker inserted ;)
+//        struct EventResponse {
+//            qint32 valid;
+//            //Dont know if this is where you want it??
+//            QVector musicEvents;
+//            QVector sportEvents;
+//            QVector foodEvents;
+//            QVector leisureEvents;
+//        };
+
         // Default ctor, PT_None
         NetworkObject();
         // Copy ctor

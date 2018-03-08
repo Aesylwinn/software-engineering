@@ -33,6 +33,7 @@ public slots:
 
     void login(QString username, QString password);
     void checkResponse(base::NetworkObject response);
+    void createAccount(QString username, QString password);
 
 private:
     Ui::interestData *ui;
