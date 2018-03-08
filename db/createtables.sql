@@ -28,7 +28,8 @@ create table User_Host(			--business/host profile
 );
 
 create table Event(				--previously titled interest, changed for clarity
-	id INT  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_host INT NOT NULL,
 	standardOperation BOOLEAN NOT NULL,	--if true, this event represents the business' normal hours and procedure
 	recurring BOOLEAN NOT NULL,
 	displayName VARCHAR(20) NOT NULL,	
