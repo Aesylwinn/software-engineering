@@ -61,6 +61,15 @@ void interestData::switchLowTabs()
 
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->Login){
+		/* //function that will parse through the usernames to match up password
+		int or bool temp = parseUserNames(ui->userName->text(), ui->password->text());	//function can return an int or boolean of some kind
+		if (temp == true or 1){
+			login(ui->usrName->text(), ui->password->text());  } //logins to the server to communicate
+		else {
+			QMessageBox messageBox;
+            messageBox.critical(0,"Error","Incorrect user name or password");
+            messageBox.setFixedSize(500,200);
+		} */
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
     else{
@@ -197,10 +206,23 @@ void interestData::checkResponse(base::NetworkObject response) {
             }
         }
     }
-    //if (response.getTicket() == mCreateAccountReqt??) //will create account
+    //else if (response.getTicket() == mCreateAccountReqt) //will create account
+	//else if (response.getTicket() == mEventRequest) //will grab events
+	//else if (response.getTicket() == mCreateEventRqt) //will create event
+	//else if (response.getTicket() == mUsernamesRequest) //will grab usernames
 }
 
 /*void interestData::createAccount(QString username, QString password)  //need to implement via server
 {
 
+} */
+
+/*int or bool interestData::parseUserNames(QString username, QString password)
+{
+	
+} */
+
+/*void interestData::displayEvents()
+{
+	
 } */
