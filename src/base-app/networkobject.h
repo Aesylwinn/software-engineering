@@ -16,6 +16,7 @@ namespace base {
         // The types of payloads
         enum PayloadType {
             PT_None,
+            PT_CreateAccountRequest,
             PT_LoginRequest,
             PT_LoginResponse,
             PT_Message
@@ -24,6 +25,16 @@ namespace base {
         struct Message {
             QString category;
             QString message;
+        };
+
+        struct CreateAccountRequest {
+            QString username;
+            QString password;
+            QString email;
+            QString firstName;
+            QString lastName;
+            QString gender;
+            QString birthDate;
         };
 
         struct LoginRequest {
@@ -71,6 +82,8 @@ namespace base {
         NetworkObject(PayloadType type, QByteArray payload);
         // Message ctor
         NetworkObject(const Message& message);
+        // Create account request
+        NetworkObject(const CreateAccountRequest& request);
         // Login request ctor
         NetworkObject(const LoginRequest& request);
 
@@ -92,6 +105,9 @@ namespace base {
 
         // Converts payload to a message
         Message getMessage() const;
+
+        // Converts payload to a create account request
+        CreateAccountRequest getCreateAccountRequest() const;
 
         // Converts payload to a login request
         LoginRequest getLoginRequest() const;

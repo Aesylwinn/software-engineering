@@ -34,6 +34,30 @@ TEST(base, NetworkObject_parametizedCtor) {
     ASSERT_EQ(netObj.getPayload(), payload);
 }
 
+TEST(base, NetworkObject_createAccountRequestCtor) {
+    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
+
+    CreateAccountRequest request;
+    request.username = "WillyWonka";
+    request.password = "chocolate";
+    request.email = "thegreatestchocolatier@delicious.com";
+    request.firstName = "Willy";
+    request.lastName = "Wonka";
+    request.gender = "Male";
+    request.birthDate = "01/24/1950";
+
+    NetworkObject netObj((const CreateAccountRequest) request);
+
+    CreateAccountRequest converted = netObj.getCreateAccountRequest();
+    ASSERT_EQ(request.username, converted.username);
+    ASSERT_EQ(request.password, converted.password);
+    ASSERT_EQ(request.email, converted.email);
+    ASSERT_EQ(request.firstName, converted.firstName);
+    ASSERT_EQ(request.lastName, converted.lastName);
+    ASSERT_EQ(request.gender, converted.gender);
+    ASSERT_EQ(request.birthDate, converted.birthDate);
+}
+
 TEST(base, NetworkObject_loginRequestCtor) {
     using LoginRequest = NetworkObject::LoginRequest;
 
