@@ -1,4 +1,4 @@
-/*Implemented by Jake*/
+/*Implemented by Jake and Anthony*/
 
 #ifndef EVENT_H
 #define EVENT_H
@@ -15,28 +15,41 @@ namespace  base{
     public:
         //constructors
         event();
-        event(QString theHost);
-        event(QString theHost, QVector<QString> theHosts);
-        event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers);
-        event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, venue theVenue);
+        event(QString n);
+        event(QString n, int a);
+        event(QString n, int a, QString des);
+        event(QString n, int a, QString des, QString theHost);
+        event(QString n, int a, QString des, QString theHost, bool standardOp);
+        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers);
+        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue);
+        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat);
 
         //setters
         bool setHost(QString theHost);
-        bool setHosts(QVector<QString> theHosts);
         bool setUsers(QVector<QString> theUsers);
         bool setLocation(venue theVenue);
-        bool initialize(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, venue theVenue);
+        bool setName(QString n);
+        bool setDescription(QString des);
+        bool setOperation(bool standardOp);
+        bool setCategory(QString cat);
+        bool setID(int a);
 
         //adders
         bool addHost(QString newHost);
         bool addUser(QString newUser);
 
+
     private:
+        bool standardOperation;
+        QString name;
+        QString category;
         QString mainHost;
-        QVector<QString> hosts;
         QVector<QString> attendingUsers;
         venue location;
+        QString description;
+        int id;
 
+        void initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat);
     };
 }
 #endif // EVENT_H
