@@ -2,7 +2,7 @@
 create table User_basic(		--unverified access profile
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	userType ENUM('BASIC','PROFILE','HOST') NOT NULL,
-	username CHAR(20) NOT NULL,
+	username CHAR(20) NOT NULL UNIQUE,
 	password CHAR(20) NOT NULL,
 	verified BOOLEAN NOT NULL
 );
@@ -28,7 +28,8 @@ create table User_Host(			--business/host profile
 );
 
 create table Event(				--previously titled interest, changed for clarity
-	id INT  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_host INT NOT NULL,
 	standardOperation BOOLEAN NOT NULL,	--if true, this event represents the business' normal hours and procedure
 	recurring BOOLEAN NOT NULL,
 	displayName VARCHAR(20) NOT NULL,	
@@ -54,29 +55,37 @@ create table Event_Exceptions(
 );
 
 create table Category(
-	id INT NOT NULL ,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	displayName VARCHAR(20)
 );
 
 create table Subcategory(
-	id INT,
-	id_category INT,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_category INT NOT NULL,
 	displayName VARCHAR(20)
 );
 
 create table Venue(
-	id INT,
-	address VARCHAR(40),
-	phoneNumber VARCHAR(20),
-	entryFee DOUBLE,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	displayName VARCHAR(40) NOT NULL,
+	address VARCHAR(40) NOT NULL,
+	phoneNumber VARCHAR(20) NOT NULL,
+	entryFee DOUBLE NOT NULL,
 	description TEXT
 );
 
 create table Join_Date(
-	id INT,
-	id_event INT,
-	id_userA INT,
-	id_userB INT,
-	confirmedA boolean,
-	confirmedB boolean
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_event INT NOT NULL,
+	id_userA INT NOT NULL,
+	id_userB INT NOT NULL,
+	confirmedA boolean NOT NULL,
+	confirmedB boolean NOT NULL
+);
+
+create table Join_Event(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_user INT NOT NULL,
+	id_event INT NOT NULL,
+	rsvp BOOLEAN
 );

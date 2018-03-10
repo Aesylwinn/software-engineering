@@ -1,6 +1,8 @@
-<!DOCTYPE RCC><RCC version="1.0">
+<RCC>
     <qresource prefix="/">
         <file>Utilities/party-istock-resize-600x338.jpg</file>
         <file>Utilities/crowd.PNG</file>
+        <file>Utilities/verified.jpg</file>
+        <file>Utilities/social.jpg</file>
     </qresource>
 </RCC>

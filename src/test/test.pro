@@ -4,7 +4,7 @@ TEMPLATE = app
 CONFIG += console thread c++11
 CONFIG -= app_bundle
 
-QT += widgets network
+QT += widgets network sql
 QT -= gui
 
 SOURCES += \
@@ -14,7 +14,8 @@ SOURCES += \
     tst_simpleclass.cpp \
     test_timepoint.cpp \
     tst_clientnetworkmgr.cpp \
-    tst_venue.cpp
+    tst_venue.cpp \
+    tst_databaseconnection.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base-app/debug/ -lbase-app

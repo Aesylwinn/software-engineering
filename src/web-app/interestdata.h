@@ -5,6 +5,7 @@
 #include <QDialog>
 #include "eventpopup.h"
 #include "verified.h"
+#include "matches.h"
 
 #include "../base-app/clientnetworkmgr.h"
 
@@ -26,17 +27,23 @@ public slots:
     void reverseLowTab();
     void togglePassword();
     void popUpWindow();
-    //void sendAccount();
-    //void grabFromDatabase();
-    //void verifyAccount();
+    void logout();
 
     void login(QString username, QString password);
     void checkResponse(base::NetworkObject response);
+    //void createAccount(QString username, QString password);	//need to send a packet to the server with the username and password 
+	//int or bool parseUserName(QString username, QString password);	//in this function it will need to have a client to server connection to get usernames in an array of some sort
+	//void displayEvenets();									//will need to have a server function that grabs events from database. I think i wrote a starter struct in 
+																//networkingobject.h for the events but it might be wrong
 
 private:
     Ui::interestData *ui;
     base::ClientNetworkMgr *mNetworkMgr;
     qint32 mLoginRequest;
+	//qint32 mCreateAccountReqt;
+	//qint32 mEventRequest; 
+	//qint32 mCreateEventRqt;
+	//qint32 mUsernamesRequest;
 };
 
 #endif // INTERESTDATA_H

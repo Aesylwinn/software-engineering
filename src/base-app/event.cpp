@@ -1,33 +1,52 @@
-/*Implemented by Jake*/
+/*Implemented by Jake and Anthony*/
 
 #include "event.h"
 
 namespace base{
     event::event()
     {
+        initialize("",0,"","",false,"");
     }
 
-    event::event(QString theHost)
+    event::event(QString n)
     {
-        setHost(theHost);
+        initialize(n,0,"","",false,"");
+    }
+    event::event(QString n, int a)
+    {
+        initialize(n,a,"","",false,"");
+    }
+    event::event(QString n, int a, QString des)
+    {
+        initialize(n,a,des,"",false,"");
     }
 
-    event::event(QString theHost, QVector<QString> theHosts)
+    event::event(QString n, int a, QString des, QString theHost)
     {
-        setHost(theHost);
-        setHosts(theHosts);
+        initialize(n,a,des,theHost,false,"");
     }
 
-    event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers)
+    event::event(QString n, int a, QString des, QString theHost, bool standardOp)
     {
-        setHost(theHost);
-        setHosts(theHosts);
+        initialize(n,a,des,theHost,standardOp,"");
+    }
+
+    event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers)
+    {
+        initialize(n,a,des,theHost,standardOp,"");
         setUsers(theUsers);
     }
-
-    event::event(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, base::venue theVenue)
+    event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue)
     {
-        initialize(theHost, theHosts, theUsers, theVenue);
+        initialize(n,a,des,theHost,standardOp,"");
+        setUsers(theUsers);
+        setLocation(theVenue);
+    }
+    event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat)
+    {
+        initialize(n,a,des,theHost,standardOp,cat);
+        setUsers(theUsers);
+        setLocation(theVenue);
     }
 
     bool event::setHost(QString theHost)
@@ -35,15 +54,6 @@ namespace base{
         if (theHost.isEmpty())
                 return false;
         mainHost = theHost;
-        return true;
-    }
-
-    bool event::setHosts(QVector<QString> theHosts)
-    {
-        if (theHosts.isEmpty())
-                return false;
-        hosts.clear();
-        hosts = theHosts;
         return true;
     }
 
@@ -67,11 +77,43 @@ namespace base{
         return true;
     }
 
-    bool event::addHost(QString newHost)
+    bool event::setName(QString n)
     {
-        if (newHost.isEmpty())
+        if (n.isEmpty())
             return false;
-        hosts.push_back(newHost);
+        name = n;
+        return true;
+    }
+
+    bool event::setDescription(QString des)
+    {
+        if (des.isEmpty())
+            return false;
+        description = des;
+        return true;
+    }
+
+    bool event::setOperation(bool standardOp)
+    {
+        if (standardOp != true && standardOp != false)
+            return false;
+        standardOperation = standardOp;
+        return true;
+    }
+
+    bool event::setCategory(QString cat)
+    {
+        if (cat.isEmpty())
+            return false;
+        category = cat;
+        return true;
+    }
+
+    bool event::setID(int a)
+    {
+        if (a < 0)
+            return false;
+        id = a;
         return true;
     }
 
@@ -82,12 +124,33 @@ namespace base{
         attendingUsers.push_back(newUser);
         return true;
     }
-    bool event::initialize(QString theHost, QVector<QString> theHosts, QVector<QString> theUsers, venue theVenue)
+    void event::initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat)
     {
-        setHost(theHost);
-        setHosts(theHosts);
-        setUsers(theUsers);
-        setLocation(theVenue);
-        return true;
+        if (n.isEmpty())
+            n = "";
+        else
+            setName(n);
+
+        if (a < 0)
+            id = 0;
+        else
+            id = a;
+        if (des.isEmpty())
+            des = "";
+        else
+            setDescription(des);
+
+        if (theHost.isEmpty())
+            mainHost = "";
+        else
+            setHost(theHost);
+
+        setOperation(standardOp);
+
+        if (cat.isEmpty())
+            category = "";
+        else
+            category = cat;
+
     }
 }
