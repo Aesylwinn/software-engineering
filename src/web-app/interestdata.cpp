@@ -9,7 +9,8 @@ interestData::interestData(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::interestData),
     mNetworkMgr(new ClientNetworkMgr(this)),
-    mLoginRequest(-1)
+    mLoginRequest(-1),
+    mCreateAccountRequest(-1)
 {
     // Connect to the server
     mNetworkMgr->connect(QString(SERVER_ADDRESS), SERVER_PORT);
@@ -81,8 +82,9 @@ void interestData::switchLowTabs()
         }
         else
         {
-            //function that needs to be made, will create the account
-            //createAccount(ui->usrName->text(), ui->confirmPass->text());
+            // Create the account
+            createAccount(ui->usrName->text(), ui->confirmPass->text());
+
             ui->tabWidget_2->setTabEnabled(1, true);
             ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
             ui->Nam_Display_2->setText(tr("%1 %2").arg(ui->lineEdit_FN->text(), ui->lineEdit_LN->text()));
@@ -182,7 +184,26 @@ void interestData::login(QString username, QString password)
     mLoginRequest = mNetworkMgr->sendRequest(request);
 }
 
+void interestData::createAccount(QString username, QString password)
+{
+    NetworkObject::CreateAccountRequest data;
+    data.username = username;
+    data.password = password;
+    // TODO: the other fields?
 
+    NetworkObject request(data);
+    mCreateAccountRequest = mNetworkMgr->sendRequest(request);
+}
+
+/*int or bool interestData::parseUserNames(QString username, QString password)
+{
+
+} */
+
+/*void interestData::displayEvents()
+{
+
+} */
 
 void interestData::checkResponse(base::NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
@@ -206,23 +227,19 @@ void interestData::checkResponse(base::NetworkObject response) {
             }
         }
     }
-    //else if (response.getTicket() == mCreateAccountReqt) //will create account
+    else if (response.getTicket() == mCreateAccountRequest) {
+        mCreateAccountRequest = -1;
+        if (response.getPayloadType() == NetworkObject::PT_CreateAccountResponse) {
+            NetworkObject::CreateAccountResponse info = response.getCreateAccountResponse();
+            qInfo("account created: %d msg: %s", info.valid, qUtf8Printable(info.details));
+            if (info.valid) {
+                // Account was created successfully popup
+            } else {
+                // Account creation failed popup
+            }
+        }
+    }
 	//else if (response.getTicket() == mEventRequest) //will grab events
 	//else if (response.getTicket() == mCreateEventRqt) //will create event
 	//else if (response.getTicket() == mUsernamesRequest) //will grab usernames
 }
-
-/*void interestData::createAccount(QString username, QString password)  //need to implement via server
-{
-
-} */
-
-/*int or bool interestData::parseUserNames(QString username, QString password)
-{
-	
-} */
-
-/*void interestData::displayEvents()
-{
-	
-} */
