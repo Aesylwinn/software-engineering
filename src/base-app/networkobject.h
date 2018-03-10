@@ -16,9 +16,13 @@ namespace base {
         // The types of payloads
         enum PayloadType {
             PT_None,
+
             PT_CreateAccountRequest,
             PT_LoginRequest,
+
+            PT_CreateAccountResponse,
             PT_LoginResponse,
+
             PT_Message
         };
 
@@ -43,6 +47,11 @@ namespace base {
         };
 
         struct LoginResponse {
+            qint32 valid;
+            QString details;
+        };
+
+        struct CreateAccountResponse {
             qint32 valid;
             QString details;
         };
@@ -115,6 +124,12 @@ namespace base {
         // Converts payload to a login response
         LoginResponse getLoginResponse() const;
 
+        // Converts payload to a create account response
+        CreateAccountResponse getCreateAccountResponse() const;
+
+        // Creates a response to a CreateAccountRequest
+        NetworkObject createResponse(const CreateAccountResponse& data);
+
         // Creates a response to a LoginRequest
         NetworkObject createResponse(const LoginResponse& data);
 
@@ -122,6 +137,9 @@ namespace base {
 
         // Login response ctor
         NetworkObject(const LoginResponse& response);
+
+        // CreateAccount response ctor
+        NetworkObject(const CreateAccountResponse& response);
 
         // Ctor helper function
         void init(PayloadType type, QByteArray payload);

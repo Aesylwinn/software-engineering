@@ -80,6 +80,25 @@ TEST(base, NetworkObject_messageCtor) {
     ASSERT_EQ(message.message, converted.message);
 }
 
+TEST(base, NetworkObject_createAccountResponse) {
+    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
+    using CreateAccountResponse = NetworkObject::CreateAccountResponse;
+
+    const CreateAccountRequest request{ "1", "2", "3", "4", "5", "6", "7" };
+    const CreateAccountResponse response{ 1, "What interesting tastes you have..." };
+    const qint32 ticketNumber = 14;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    CreateAccountResponse converted = netObjResponse.getCreateAccountResponse();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+}
+
 TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
     using LoginRequest = NetworkObject::LoginRequest;
     using LoginResponse = NetworkObject::LoginResponse;

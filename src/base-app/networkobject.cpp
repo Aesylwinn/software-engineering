@@ -57,6 +57,16 @@ namespace base {
         stream << request.birthDate;
     }
 
+    NetworkObject::NetworkObject(const CreateAccountResponse& response) {
+        init(PT_CreateAccountResponse, QByteArray());
+        mTicket = -1;
+
+        // Combine into a single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << response.valid << response.details;
+    }
+
     NetworkObject::NetworkObject(const LoginResponse& response)
     {
         init(PT_LoginResponse, QByteArray());
@@ -194,6 +204,18 @@ namespace base {
         return result;
     }
 
+    NetworkObject::CreateAccountResponse NetworkObject::getCreateAccountResponse() const {
+        mustMatch(PT_CreateAccountResponse);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateAccountResponse result;
+        stream >> result.valid >> result.details;
+        return result;
+    }
+
     NetworkObject::LoginResponse NetworkObject::getLoginResponse() const {
         mustMatch(PT_LoginResponse);
 
@@ -204,6 +226,15 @@ namespace base {
         LoginResponse result;
         stream >> result.valid >> result.details;
         return result;
+    }
+
+    NetworkObject NetworkObject::createResponse(const CreateAccountResponse& data) {
+        mustMatch(PT_CreateAccountRequest);
+
+        // Construct response and match the ticket
+        NetworkObject response(data);
+        response.setTicket(getTicket());
+        return response;
     }
 
     NetworkObject NetworkObject::createResponse(const LoginResponse& data) {
@@ -245,7 +276,10 @@ namespace base {
 
     void NetworkObject::mustMatch(PayloadType type) const {
         if (type != mPayloadType) {
-            throw std::runtime_error("Payload type does not match");
+            QString msg = "Payload type does not match { ";
+            msg += "Expected: " + QVariant(type).toString() + " ";
+            msg += "Actual: " + QVariant(mPayloadType).toString() + " }";
+            throw std::runtime_error(qUtf8Printable(msg));
         }
     }
 
