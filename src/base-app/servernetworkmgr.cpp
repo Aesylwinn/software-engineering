@@ -26,53 +26,57 @@ namespace base {
     }
 
     void ServerNetworkMgr::handleRequest(QTcpSocket* socket, NetworkObject obj) {
-        const char* DbName = "se";
-        qInfo("handling request\n");
-        switch (obj.getPayloadType()) {
-            case NetworkObject::PT_Message:
-                {
-                    NetworkObject::Message msg = obj.getMessage();
-                    qInfo("%s: %s\n", qUtf8Printable(msg.category),
-                            qUtf8Printable(msg.message));
-                }
-                break;
-            case NetworkObject::PT_CreateAccountRequest:
-                {
-                    NetworkObject::CreateAccountRequest request = obj.getCreateAccountRequest();
-                    NetworkObject::CreateAccountResponse response = { 0, "DB error" };
-                    qInfo("create account request for username: %s\n", qUtf8Printable(request.username));
-                    // Add to database
-                    try {
-                        DatabaseConnection dbConnection(DbName);
-                        if (dbConnection.createAccount(request.username, request.password)) {
-                            response = { 1, "Account created" };
-                        }
-                        else {
-                            response = { 0, "Username taken" };
-                        }
-                    } catch (std::exception& e) {
-                        qInfo("db error: %s", e.what());
-                    } catch (...) {
-                        qInfo("unknown db exception");
+        try {
+            const char* DbName = "se";
+            qInfo("handling request\n");
+            switch (obj.getPayloadType()) {
+                case NetworkObject::PT_Message:
+                    {
+                        NetworkObject::Message msg = obj.getMessage();
+                        qInfo("%s: %s\n", qUtf8Printable(msg.category),
+                                qUtf8Printable(msg.message));
                     }
-                    // Send response
-                    sendResponse(socket, obj.createResponse(response));
-                }
-                break;
-            case NetworkObject::PT_LoginRequest:
-                {
-                    NetworkObject::LoginRequest request = obj.getLoginRequest();
-                    qInfo("%s: is trying to login with %s\n",
-                            qUtf8Printable(request.username),
-                            qUtf8Printable(request.password));
-                    // 1 means success, 0 means failure
-                    NetworkObject::LoginResponse response { 1, "" };
-                    sendResponse(socket, obj.createResponse(response));
-                }
-                break;
-            default:
-                qInfo("Unknown request encountered: %d", obj.getPayloadType());
-                break;
+                    break;
+                case NetworkObject::PT_CreateAccountRequest:
+                    {
+                        NetworkObject::CreateAccountRequest request = obj.getCreateAccountRequest();
+                        NetworkObject::CreateAccountResponse response = { 0, "DB error" };
+                        qInfo("create account request for username: %s\n", qUtf8Printable(request.username));
+                        // Add to database
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.createAccount(request.username, request.password)) {
+                                response = { 1, "Account created" };
+                            }
+                            else {
+                                response = { 0, "Username taken" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
+                        // Send response
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case NetworkObject::PT_LoginRequest:
+                    {
+                        NetworkObject::LoginRequest request = obj.getLoginRequest();
+                        qInfo("%s: is trying to login with %s\n",
+                                qUtf8Printable(request.username),
+                                qUtf8Printable(request.password));
+                        // 1 means success, 0 means failure
+                        NetworkObject::LoginResponse response { 1, "" };
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                default:
+                    qInfo("Unknown request encountered: %d", obj.getPayloadType());
+                    break;
+            }
+        } catch (std::exception& e) {
+            qInfo("Exception in handleRequest: %s\n", e.what());
+        } catch (...) {
+            qInfo("Unrecognized exception in handleRequest\n");
         }
     }
 
