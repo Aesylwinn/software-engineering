@@ -33,6 +33,15 @@ namespace base {
                             qUtf8Printable(msg.message));
                 }
                 break;
+            case NetworkObject::PT_CreateAccountRequest:
+                {
+                    NetworkObject::CreateAccountRequest request = obj.getCreateAccountRequest();
+                    qInfo("create account request for username: %s\n", qUtf8Printable(request.username));
+                    // TODO add to DB
+                    NetworkObject::CreateAccountResponse response{ 1, "" };
+                    sendResponse(socket, obj.createResponse(response));
+                }
+                break;
             case NetworkObject::PT_LoginRequest:
                 {
                     NetworkObject::LoginRequest request = obj.getLoginRequest();
