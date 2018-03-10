@@ -6,6 +6,8 @@
 #include <QByteArray>
 #include <QDataStream>
 
+#include "databaseconnection.h"
+
 namespace base {
     ServerNetworkMgr::ServerNetworkMgr(QObject* parent)
         : QObject(parent)
@@ -24,6 +26,7 @@ namespace base {
     }
 
     void ServerNetworkMgr::handleRequest(QTcpSocket* socket, NetworkObject obj) {
+        const char* DbName = "se";
         qInfo("handling request\n");
         switch (obj.getPayloadType()) {
             case NetworkObject::PT_Message:
@@ -36,9 +39,23 @@ namespace base {
             case NetworkObject::PT_CreateAccountRequest:
                 {
                     NetworkObject::CreateAccountRequest request = obj.getCreateAccountRequest();
+                    NetworkObject::CreateAccountResponse response = { 0, "DB error" };
                     qInfo("create account request for username: %s\n", qUtf8Printable(request.username));
-                    // TODO add to DB
-                    NetworkObject::CreateAccountResponse response{ 1, "" };
+                    // Add to database
+                    try {
+                        DatabaseConnection dbConnection(DbName);
+                        if (dbConnection.createAccount(request.username, request.password)) {
+                            response = { 1, "Account created" };
+                        }
+                        else {
+                            response = { 0, "Username taken" };
+                        }
+                    } catch (std::exception& e) {
+                        qInfo("db error: %s", e.what());
+                    } catch (...) {
+                        qInfo("unknown db exception");
+                    }
+                    // Send response
                     sendResponse(socket, obj.createResponse(response));
                 }
                 break;
