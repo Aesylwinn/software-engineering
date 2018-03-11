@@ -27,6 +27,7 @@ namespace base {
 
         bool validConnect;
         QSqlDatabase db;
+        QString connectionName;
     };
 }
 

@@ -1,5 +1,8 @@
 #include "databaseconnection.h"
 
+#include <sstream>
+#include <thread>
+
 namespace base {
 
 DatabaseConnection::DatabaseConnection(QString databaseName)
@@ -10,11 +13,19 @@ DatabaseConnection::DatabaseConnection(QString databaseName)
 DatabaseConnection::~DatabaseConnection()
 {
     db.close();
+    QSqlDatabase::removeDatabase(connectionName);
 }
 
 void DatabaseConnection::SetUp(QString hostname, QString databaseName, QString username, QString password)
 {
-    db = QSqlDatabase::addDatabase("QMYSQL");
+    // Create a unique connection name for the current thread
+    {
+        std::ostringstream os;
+        os << "SE_CONNECTION_" << std::this_thread::get_id();
+        connectionName = QString(os.str().c_str());
+    }
+
+    db = QSqlDatabase::addDatabase("QMYSQL", connectionName);
     db.setHostName(hostname);
     db.setDatabaseName(databaseName);
     db.setUserName(username);
