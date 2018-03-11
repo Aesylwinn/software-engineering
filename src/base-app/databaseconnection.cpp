@@ -57,8 +57,10 @@ bool DatabaseConnection::createAccount(QString username, QString password)
     query.bindValue(":usern",username);
     query.bindValue(":passw",password);
 
-    if (!query.exec())
-        throw std::runtime_error("Unable to create account, unable to execute query");
+    if (!query.exec()) {
+        // Username is already taken
+        return false;
+    }
 
     return true;
 }
