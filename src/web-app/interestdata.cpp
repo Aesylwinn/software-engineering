@@ -83,7 +83,7 @@ void interestData::switchLowTabs()
         else
         {
             // Create the account
-            createAccount(ui->usrName->text(), ui->confirmPass->text());
+            createAccount(ui->newUsrName->text(), ui->confirmPass->text());
 
             ui->tabWidget_2->setTabEnabled(1, true);
             ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
