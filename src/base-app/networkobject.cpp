@@ -158,6 +158,8 @@ namespace base {
             return false;
         }
 
+        stream.commitTransaction();
+
         // Set values
         init((PayloadType) type, payload);
         setTicket(ticket);
