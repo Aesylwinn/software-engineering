@@ -12,7 +12,9 @@ DatabaseConnection::DatabaseConnection(QString databaseName)
 
 DatabaseConnection::~DatabaseConnection()
 {
-    db.close();
+    db->close();
+    delete db;
+    // db needs to be destroyed before removeDatabase is called
     QSqlDatabase::removeDatabase(connectionName);
 }
 
@@ -25,20 +27,20 @@ void DatabaseConnection::SetUp(QString hostname, QString databaseName, QString u
         connectionName = QString(os.str().c_str());
     }
 
-    db = QSqlDatabase::addDatabase("QMYSQL", connectionName);
-    db.setHostName(hostname);
-    db.setDatabaseName(databaseName);
-    db.setUserName(username);
-    db.setPassword(password);
+    db = new QSqlDatabase(QSqlDatabase::addDatabase("QMYSQL", connectionName));
+    db->setHostName(hostname);
+    db->setDatabaseName(databaseName);
+    db->setUserName(username);
+    db->setPassword(password);
 
-    if ( !db.open() )
+    if ( !db->open() )
         throw std::runtime_error("invalid database connection");
 
 }
 
 bool DatabaseConnection::checkPassword(QString username, QString password)
 {
-    QSqlQuery query(db);
+    QSqlQuery query(*db);
 
     if (!query.prepare("SELECT password FROM User_basic WHERE username = :usern"))
         throw std::runtime_error("Unable to check password, unable to prepare query");
@@ -60,7 +62,7 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
 bool DatabaseConnection::createAccount(QString username, QString password)
 {
-    QSqlQuery query(db);
+    QSqlQuery query(*db);
 
     if (!query.prepare("INSERT INTO User_basic (username, password) VALUES ( :usern, :passw )"))
         throw std::runtime_error("Unable to create account, unable to prepare query");
