@@ -1,6 +1,5 @@
 /* Implemented by Yianni and Jake */
 
-#include <string>
 #include "venue.h"
 
 namespace base {
@@ -19,7 +18,7 @@ namespace base {
     venue::venue(QString n, QString addr, QString phone, double fee){
         initialize(n, addr, phone, fee);
     }
-    venue::venue(QString data){ //assuming for now that data means the name
+    venue::venue(QString data){ //Data means "name,address,phone,fee"
         name = data;
     }    //conversion constructor
 

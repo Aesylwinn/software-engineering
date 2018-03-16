@@ -36,7 +36,6 @@ namespace base {
             QString address;
             QString phoneNumber;
             double entryFee;
-            QString description;
             void initialize(QString n, QString addr, QString phone, double fee);
     };
 }
