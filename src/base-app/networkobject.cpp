@@ -43,6 +43,7 @@ namespace base {
         stream << request.username << request.password;
     }
 
+
     NetworkObject::NetworkObject(const CreateAccountRequest& request) {
         init(PT_CreateAccountRequest, QByteArray());
         mTicket = -1;
@@ -55,6 +56,23 @@ namespace base {
         stream << request.firstName << request.lastName;
         stream << request.gender;
         stream << request.birthDate;
+    }
+
+    NetworkObject::NetworkObject(const CreateEventRequest& input)
+    {
+        init(PT_CreateEventRequest, QByteArray());
+        mTicket = -1;
+
+        //Combine into single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << input.data.name;
+        stream << input.data.category;
+        stream << input.data.mainHost;
+        stream << input.data.attendingUsers;
+        //stream << input.data.location;
+        stream << input.data.description;
+        stream << input.data.id;
     }
 
     NetworkObject::NetworkObject(const CreateAccountResponse& response) {

@@ -11,6 +11,7 @@ SOURCES += \
     baseapp.cpp \
     clientnetworkmgr.cpp \
     date.cpp \
+    event.cpp \
     match.cpp \
     networkobject.cpp \
     recurringtime.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     baseapp.h \
     base-app_global.h \
     clientnetworkmgr.h \
+    event.h \
     match.h \
     networkobject.h \
     recurringtime.h \

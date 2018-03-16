@@ -69,6 +69,16 @@ TEST(base, NetworkObject_loginRequestCtor) {
     ASSERT_EQ(request.password, converted.password);
 }
 
+TEST(base, NetworkObject_EventCreateRequest){
+    using CreateEventRequest = NetworkObject::CreateEventRequest;
+
+    const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
+    NetworkObject netObj(myEvent);
+
+    CreateEventRequest converted = netObj.getEventCreateRequest();
+    ASSERT_EQ(myEvent.data, converted.data);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     using Message = NetworkObject::Message;
 

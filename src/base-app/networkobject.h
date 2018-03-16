@@ -8,6 +8,7 @@
 #include <QString>
 
 #include "base-app_global.h"
+#include "event.h"
 
 namespace base {
     /* Implemented by Kyle and Anthony */
@@ -19,9 +20,11 @@ namespace base {
 
             PT_CreateAccountRequest,
             PT_LoginRequest,
+            PT_CreateEventRequest,
 
             PT_CreateAccountResponse,
             PT_LoginResponse,
+            PT_CreateEventResponse,
 
             PT_Message
         };
@@ -54,6 +57,10 @@ namespace base {
         struct CreateAccountResponse {
             qint32 valid;
             QString details;
+        };
+
+        struct CreateEventRequest{
+            event data;
         };
 
 //        //Darius and Parker inserted ;)
@@ -95,6 +102,8 @@ namespace base {
         NetworkObject(const CreateAccountRequest& request);
         // Login request ctor
         NetworkObject(const LoginRequest& request);
+        // Event request ctor
+        NetworkObject(const CreateEventRequest& data);
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
