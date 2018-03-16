@@ -60,11 +60,23 @@ namespace base {
                 case NetworkObject::PT_LoginRequest:
                     {
                         NetworkObject::LoginRequest request = obj.getLoginRequest();
+                        NetworkObject::LoginResponse response = {0, "DB Error"};
+
                         qInfo("%s: is trying to login with %s",
                                 qUtf8Printable(request.username),
                                 qUtf8Printable(request.password));
-                        // 1 means success, 0 means failure
-                        NetworkObject::LoginResponse response { 1, "" };
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.checkPassword(request.username, request.password)) {
+                                response = { 1, "Authenticated" };
+                            }
+                            else {
+                                response = { 0, "Unknown Username or Bad Password" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
+                        // Send response
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
