@@ -26,7 +26,8 @@ namespace base {
         void SetUp(QString hostname, QString databaseName, QString username, QString password);
 
         bool validConnect;
-        QSqlDatabase db;
+        QSqlDatabase *db;
+        QString connectionName;
     };
 }
 

@@ -3,7 +3,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <Qstring>
+#include <QString>
 #include <QVector>
 #include "venue.h"
 
@@ -32,7 +32,7 @@ namespace  base{
         bool setDescription(QString des);
         bool setOperation(bool standardOp);
         bool setCategory(QString cat);
-        bool setID(int a);
+        bool setID(qint32 a);
 
         //adders
         bool addHost(QString newHost);
@@ -47,9 +47,10 @@ namespace  base{
         QVector<QString> attendingUsers;
         venue location;
         QString description;
-        int id;
+        qint32 id;
 
         void initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat);
+        friend class NetworkObject;
     };
 }
 #endif // EVENT_H

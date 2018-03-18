@@ -34,6 +34,30 @@ TEST(base, NetworkObject_parametizedCtor) {
     ASSERT_EQ(netObj.getPayload(), payload);
 }
 
+TEST(base, NetworkObject_createAccountRequestCtor) {
+    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
+
+    CreateAccountRequest request;
+    request.username = "WillyWonka";
+    request.password = "chocolate";
+    request.email = "thegreatestchocolatier@delicious.com";
+    request.firstName = "Willy";
+    request.lastName = "Wonka";
+    request.gender = "Male";
+    request.birthDate = "01/24/1950";
+
+    NetworkObject netObj((const CreateAccountRequest) request);
+
+    CreateAccountRequest converted = netObj.getCreateAccountRequest();
+    ASSERT_EQ(request.username, converted.username);
+    ASSERT_EQ(request.password, converted.password);
+    ASSERT_EQ(request.email, converted.email);
+    ASSERT_EQ(request.firstName, converted.firstName);
+    ASSERT_EQ(request.lastName, converted.lastName);
+    ASSERT_EQ(request.gender, converted.gender);
+    ASSERT_EQ(request.birthDate, converted.birthDate);
+}
+
 TEST(base, NetworkObject_loginRequestCtor) {
     using LoginRequest = NetworkObject::LoginRequest;
 
@@ -45,6 +69,17 @@ TEST(base, NetworkObject_loginRequestCtor) {
     ASSERT_EQ(request.password, converted.password);
 }
 
+TEST(base, NetworkObject_EventCreateRequest){
+    using CreateEventRequest = NetworkObject::CreateEventRequest;
+
+    const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
+    NetworkObject netObj(myEvent);
+
+    CreateEventRequest converted = netObj.getCreateEventRequest();
+    // TODO
+    //ASSERT_EQ(myEvent.data, converted.data);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     using Message = NetworkObject::Message;
 
@@ -54,6 +89,25 @@ TEST(base, NetworkObject_messageCtor) {
     Message converted = netObj.getMessage();
     ASSERT_EQ(message.category, converted.category);
     ASSERT_EQ(message.message, converted.message);
+}
+
+TEST(base, NetworkObject_createAccountResponse) {
+    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
+    using CreateAccountResponse = NetworkObject::CreateAccountResponse;
+
+    const CreateAccountRequest request{ "1", "2", "3", "4", "5", "6", "7" };
+    const CreateAccountResponse response{ 1, "What interesting tastes you have..." };
+    const qint32 ticketNumber = 14;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    CreateAccountResponse converted = netObjResponse.getCreateAccountResponse();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {

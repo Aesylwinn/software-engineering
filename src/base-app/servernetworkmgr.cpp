@@ -6,6 +6,8 @@
 #include <QByteArray>
 #include <QDataStream>
 
+#include "databaseconnection.h"
+
 namespace base {
     ServerNetworkMgr::ServerNetworkMgr(QObject* parent)
         : QObject(parent)
@@ -24,29 +26,68 @@ namespace base {
     }
 
     void ServerNetworkMgr::handleRequest(QTcpSocket* socket, NetworkObject obj) {
-        qInfo("handling request\n");
-        switch (obj.getPayloadType()) {
-            case NetworkObject::PT_Message:
-                {
-                    NetworkObject::Message msg = obj.getMessage();
-                    qInfo("%s: %s\n", qUtf8Printable(msg.category),
-                            qUtf8Printable(msg.message));
-                }
-                break;
-            case NetworkObject::PT_LoginRequest:
-                {
-                    NetworkObject::LoginRequest request = obj.getLoginRequest();
-                    qInfo("%s: is trying to login with %s\n",
-                            qUtf8Printable(request.username),
-                            qUtf8Printable(request.password));
-                    // 1 means success, 0 means failure
-                    NetworkObject::LoginResponse response { 1, "" };
-                    sendResponse(socket, obj.createResponse(response));
-                }
-                break;
-            default:
-                qInfo("Unknown request encountered: %d", obj.getPayloadType());
-                break;
+        try {
+            const char* DbName = "se";
+            switch (obj.getPayloadType()) {
+                case NetworkObject::PT_Message:
+                    {
+                        NetworkObject::Message msg = obj.getMessage();
+                        qInfo("%s: %s", qUtf8Printable(msg.category),
+                                qUtf8Printable(msg.message));
+                    }
+                    break;
+                case NetworkObject::PT_CreateAccountRequest:
+                    {
+                        NetworkObject::CreateAccountRequest request = obj.getCreateAccountRequest();
+                        NetworkObject::CreateAccountResponse response = { 0, "DB error" };
+                        qInfo("create account request for username: %s", qUtf8Printable(request.username));
+                        // Add to database
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.createAccount(request.username, request.password)) {
+                                response = { 1, "Account created" };
+                            }
+                            else {
+                                response = { 0, "Username taken" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
+                        // Send response
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case NetworkObject::PT_LoginRequest:
+                    {
+                        NetworkObject::LoginRequest request = obj.getLoginRequest();
+                        NetworkObject::LoginResponse response = {0, "DB Error"};
+
+                        qInfo("%s: is trying to login with %s",
+                                qUtf8Printable(request.username),
+                                qUtf8Printable(request.password));
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.checkPassword(request.username, request.password)) {
+                                response = { 1, "Authenticated" };
+                            }
+                            else {
+                                response = { 0, "Unknown Username or Bad Password" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
+                        // Send response
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                default:
+                    qInfo("Unknown request encountered: %d", obj.getPayloadType());
+                    break;
+            }
+        } catch (std::exception& e) {
+            qInfo("Exception in handleRequest: %s", e.what());
+        } catch (...) {
+            qInfo("Unrecognized exception in handleRequest");
         }
     }
 
@@ -56,8 +97,6 @@ namespace base {
     }
 
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
-        qInfo("readReady\n");
-
         // Try to read
         NetworkObject netObj;
         if (netObj.tryRead(socket))
@@ -69,7 +108,7 @@ namespace base {
         QTcpSocket* socket = nullptr;
         while ((socket = mServer->nextPendingConnection()) != nullptr) {
             // Log connection
-            qInfo("Incoming connection: host %s port %d\n",
+            qInfo("Incoming connection: host %s port %d",
                     qUtf8Printable(socket->peerAddress().toString()),
                     socket->peerPort());
             // Set up packet reading
@@ -84,13 +123,13 @@ namespace base {
 
     void ServerNetworkMgr::acceptError(QAbstractSocket::SocketError error) {
         // Log the error
-        qWarning("Server failed to accept connection: error code %d\n", error);
+        qWarning("Server failed to accept connection: error code %d", error);
     }
 
     void ServerNetworkMgr::acceptSocketError(QAbstractSocket::SocketError error) {
         // Log the error
         QTcpSocket* socket = (QTcpSocket*)  sender();
-        qWarning("Connection error: host %s port %d: error code %d\n",
+        qWarning("Connection error: host %s port %d: error code %d",
                 qUtf8Printable(socket->peerAddress().toString()),
                 socket->peerPort(), error);
     }

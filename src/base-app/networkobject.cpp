@@ -43,6 +43,48 @@ namespace base {
         stream << request.username << request.password;
     }
 
+
+    NetworkObject::NetworkObject(const CreateAccountRequest& request) {
+        init(PT_CreateAccountRequest, QByteArray());
+        mTicket = -1;
+
+        // Combine into a single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << request.username << request.password;
+        stream << request.email;
+        stream << request.firstName << request.lastName;
+        stream << request.gender;
+        stream << request.birthDate;
+    }
+
+    NetworkObject::NetworkObject(const CreateEventRequest& input)
+    {
+        init(PT_CreateEventRequest, QByteArray());
+        mTicket = -1;
+
+        //Combine into single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << input.data.name;
+        stream << input.data.category;
+        stream << input.data.mainHost;
+        stream << input.data.attendingUsers;
+        //stream << input.data.location;
+        stream << input.data.description;
+        stream << input.data.id;
+    }
+
+    NetworkObject::NetworkObject(const CreateAccountResponse& response) {
+        init(PT_CreateAccountResponse, QByteArray());
+        mTicket = -1;
+
+        // Combine into a single object
+        QDataStream stream;
+        setupWrite(stream);
+        stream << response.valid << response.details;
+    }
+
     NetworkObject::NetworkObject(const LoginResponse& response)
     {
         init(PT_LoginResponse, QByteArray());
@@ -134,6 +176,8 @@ namespace base {
             return false;
         }
 
+        stream.commitTransaction();
+
         // Set values
         init((PayloadType) type, payload);
         setTicket(ticket);
@@ -152,6 +196,22 @@ namespace base {
         return result;
     }
 
+    NetworkObject::CreateAccountRequest NetworkObject::getCreateAccountRequest() const {
+        mustMatch(PT_CreateAccountRequest);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateAccountRequest result;
+        stream >> result.username >> result.password;
+        stream >> result.email;
+        stream >> result.firstName >> result.lastName;
+        stream >> result.gender;
+        stream >> result.birthDate;
+        return result;
+    }
+
     NetworkObject::LoginRequest NetworkObject::getLoginRequest() const {
         mustMatch(PT_LoginRequest);
 
@@ -161,6 +221,36 @@ namespace base {
 
         LoginRequest result;
         stream >> result.username >> result.password;
+        return result;
+    }
+
+    NetworkObject::CreateEventRequest NetworkObject::getCreateEventRequest() const {
+        mustMatch(PT_CreateEventRequest);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateEventRequest result;
+        stream >> result.data.name;
+        stream >> result.data.category;
+        stream >> result.data.mainHost;
+        stream >> result.data.attendingUsers;
+        //stream >> result.data.location;
+        stream >> result.data.description;
+        stream >> result.data.id;
+        return result;
+    }
+
+    NetworkObject::CreateAccountResponse NetworkObject::getCreateAccountResponse() const {
+        mustMatch(PT_CreateAccountResponse);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateAccountResponse result;
+        stream >> result.valid >> result.details;
         return result;
     }
 
@@ -174,6 +264,15 @@ namespace base {
         LoginResponse result;
         stream >> result.valid >> result.details;
         return result;
+    }
+
+    NetworkObject NetworkObject::createResponse(const CreateAccountResponse& data) {
+        mustMatch(PT_CreateAccountRequest);
+
+        // Construct response and match the ticket
+        NetworkObject response(data);
+        response.setTicket(getTicket());
+        return response;
     }
 
     NetworkObject NetworkObject::createResponse(const LoginResponse& data) {
@@ -215,7 +314,10 @@ namespace base {
 
     void NetworkObject::mustMatch(PayloadType type) const {
         if (type != mPayloadType) {
-            throw std::runtime_error("Payload type does not match");
+            QString msg = "Payload type does not match { ";
+            msg += "Expected: " + QVariant(type).toString() + " ";
+            msg += "Actual: " + QVariant(mPayloadType).toString() + " }";
+            throw std::runtime_error(qUtf8Printable(msg));
         }
     }
 

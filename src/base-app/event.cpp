@@ -109,7 +109,7 @@ namespace base{
         return true;
     }
 
-    bool event::setID(int a)
+    bool event::setID(qint32 a)
     {
         if (a < 0)
             return false;

@@ -8,6 +8,7 @@
 #include <QString>
 
 #include "base-app_global.h"
+#include "event.h"
 
 namespace base {
     /* Implemented by Kyle and Anthony */
@@ -16,14 +17,31 @@ namespace base {
         // The types of payloads
         enum PayloadType {
             PT_None,
+
+            PT_CreateAccountRequest,
             PT_LoginRequest,
+            PT_CreateEventRequest,
+
+            PT_CreateAccountResponse,
             PT_LoginResponse,
+            PT_CreateEventResponse,
+
             PT_Message
         };
 
         struct Message {
             QString category;
             QString message;
+        };
+
+        struct CreateAccountRequest {
+            QString username;
+            QString password;
+            QString email;
+            QString firstName;
+            QString lastName;
+            QString gender;
+            QString birthDate;
         };
 
         struct LoginRequest {
@@ -34,6 +52,15 @@ namespace base {
         struct LoginResponse {
             qint32 valid;
             QString details;
+        };
+
+        struct CreateAccountResponse {
+            qint32 valid;
+            QString details;
+        };
+
+        struct CreateEventRequest{
+            event data;
         };
 
 //        //Darius and Parker inserted ;)
@@ -71,8 +98,12 @@ namespace base {
         NetworkObject(PayloadType type, QByteArray payload);
         // Message ctor
         NetworkObject(const Message& message);
+        // Create account request
+        NetworkObject(const CreateAccountRequest& request);
         // Login request ctor
         NetworkObject(const LoginRequest& request);
+        // Event request ctor
+        NetworkObject(const CreateEventRequest& data);
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
@@ -93,11 +124,22 @@ namespace base {
         // Converts payload to a message
         Message getMessage() const;
 
+        // Converts payload to a create account request
+        CreateAccountRequest getCreateAccountRequest() const;
+
         // Converts payload to a login request
         LoginRequest getLoginRequest() const;
 
+        CreateEventRequest getCreateEventRequest() const;
+
         // Converts payload to a login response
         LoginResponse getLoginResponse() const;
+
+        // Converts payload to a create account response
+        CreateAccountResponse getCreateAccountResponse() const;
+
+        // Creates a response to a CreateAccountRequest
+        NetworkObject createResponse(const CreateAccountResponse& data);
 
         // Creates a response to a LoginRequest
         NetworkObject createResponse(const LoginResponse& data);
@@ -106,6 +148,9 @@ namespace base {
 
         // Login response ctor
         NetworkObject(const LoginResponse& response);
+
+        // CreateAccount response ctor
+        NetworkObject(const CreateAccountResponse& response);
 
         // Ctor helper function
         void init(PayloadType type, QByteArray payload);
