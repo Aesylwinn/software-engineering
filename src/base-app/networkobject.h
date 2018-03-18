@@ -130,6 +130,8 @@ namespace base {
         // Converts payload to a login request
         LoginRequest getLoginRequest() const;
 
+        CreateEventRequest getCreateEventRequest() const;
+
         // Converts payload to a login response
         LoginResponse getLoginResponse() const;
 

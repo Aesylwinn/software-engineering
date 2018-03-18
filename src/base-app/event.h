@@ -3,7 +3,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <Qstring>
+#include <QString>
 #include <QVector>
 #include "venue.h"
 

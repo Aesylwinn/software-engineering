@@ -224,6 +224,24 @@ namespace base {
         return result;
     }
 
+    NetworkObject::CreateEventRequest NetworkObject::getCreateEventRequest() const {
+        mustMatch(PT_CreateEventRequest);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateEventRequest result;
+        stream >> result.data.name;
+        stream >> result.data.category;
+        stream >> result.data.mainHost;
+        stream >> result.data.attendingUsers;
+        //stream >> result.data.location;
+        stream >> result.data.description;
+        stream >> result.data.id;
+        return result;
+    }
+
     NetworkObject::CreateAccountResponse NetworkObject::getCreateAccountResponse() const {
         mustMatch(PT_CreateAccountResponse);
 
