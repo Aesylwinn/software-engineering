@@ -10,7 +10,7 @@
 #include "base-app_global.h"
 
 namespace  base{
-    class event
+    class BASEAPPSHARED_EXPORT event
     {
     public:
         //constructors
