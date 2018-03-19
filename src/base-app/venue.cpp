@@ -23,8 +23,6 @@ namespace base {
     }
     venue::venue(QString data){
         // assumes data == "name, address, phone, fee" in order
-        initialize("", "", "", -1);
-
         QStringList list = data.split(',');
         int i = 0;
         for(QStringList::iterator it = list.begin(); it != list.end(); it++) {
