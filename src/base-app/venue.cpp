@@ -1,5 +1,8 @@
 /* Implemented by Yianni and Jake */
 
+#include <QVector>
+#include <QStringList>
+#include <QDebug> // for iterator
 #include "venue.h"
 
 namespace base {
@@ -18,9 +21,23 @@ namespace base {
     venue::venue(QString n, QString addr, QString phone, double fee){
         initialize(n, addr, phone, fee);
     }
-    venue::venue(QString data){ //Data means "name,address,phone,fee"
-        name = data;
-    }    //conversion constructor
+    venue::venue(QString data){
+        // assumes data == "name, address, phone, fee" in order
+        initialize("", "", "", -1);
+
+        QStringList list = data.split(',');
+        int i = 0;
+        for(QStringList::iterator it = list.begin(); it != list.end(); it++) {
+            QString temp = *it;
+            temp = temp.simplified();
+            switch(i++) {
+                case 0: name = temp;
+                case 1: address = temp;
+                case 2: phoneNumber = temp;
+                case 3: entryFee = temp.toDouble();
+            }
+        }
+    }   //conversion constructor
 
     //utility
     QString venue::toString(){
