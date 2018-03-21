@@ -63,32 +63,17 @@ namespace base {
             event data;
         };
 
-//        //Darius and Parker inserted ;)
-//        struct EventRequest {
-//            QString username;
-//            QVector<QString> interest;
-//        };
+        //Darius and Parker inserted
+        struct EventRequest {
+            QString username;
+        };
 
-//        //Darius and Parker inserted ;)
-//        struct EventResponse {
-//            qint32 valid;
-//            //Dont know if this is where you want it??
-//            QVector<QString> musicEvents;
-//            QVector<QString> sportEvents;
-//            QVector<QString> foodEvents;
-//            QVector<QString> leisureEvents;
-//        };
+        //Darius and Parker inserted
+        struct EventResponse {
+            qint32 valid;
+            QVector<event> multipleEvents;
+        };
 
-//		  //Darius inserted, i dont know exactly what to put but need a request for usernames again im guessing so I dont know if correct
-//		  struct UsernameRequest {
-//				//dont really need to provide anything for the request but
-//				qint32 dummy;
-//		  };
-
-//		  struct UsernameResponse (
-//				qint32 vaild;
-//				QVector<QString> usernames;
-//		  };
 
         // Default ctor, PT_None
         NetworkObject();

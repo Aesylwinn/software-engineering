@@ -62,15 +62,6 @@ void interestData::switchLowTabs()
 
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->Login){
-        /* //function that will parse through the usernames to match up password
-        int or bool temp = parseUserNames(ui->userName->text(), ui->password->text());	//function can return an int or boolean of some kind
-        if (temp == true or 1){
-            login(ui->usrName->text(), ui->password->text());  } //logins to the server to communicate
-        else {
-            QMessageBox messageBox;
-            messageBox.critical(0,"Error","Incorrect user name or password");
-            messageBox.setFixedSize(500,200);
-        } */
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
     else{
@@ -83,7 +74,7 @@ void interestData::switchLowTabs()
         else
         {
             // Create the account
-            createAccount(ui->newUsrName->text(), ui->confirmPass->text());
+            createAccount();
         }
     }
 }
@@ -178,21 +169,23 @@ void interestData::login(QString username, QString password)
     mLoginRequest = mNetworkMgr->sendRequest(request);
 }
 
-void interestData::createAccount(QString username, QString password)
+void interestData::createAccount()
 {
     NetworkObject::CreateAccountRequest data;
-    data.username = username;
-    data.password = password;
-    // TODO: the other fields?
+    data.username = ui->newUsrName->text();
+    data.password = ui->confirmPass->text();
+    // the other fields filled out
+    data.email = ui->newEmail->text();
+    data.firstName = ui->lineEdit_FN->text();
+    data.lastName = ui->lineEdit_LN->text();
+    if (ui->malebutt->isChecked())
+        data.gender = ui->malebutt->text();
+    else
+        data.gender = ui->febutt->text();
 
     NetworkObject request(data);
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
-
-/*int or bool interestData::parseUserNames(QString username, QString password)
-{
-
-} */
 
 /*void interestData::displayEvents()
 {
@@ -240,6 +233,4 @@ void interestData::checkResponse(base::NetworkObject response) {
         }
     }
     //else if (response.getTicket() == mEventRequest) //will grab events
-    //else if (response.getTicket() == mCreateEventRqt) //will create event
-    //else if (response.getTicket() == mUsernamesRequest) //will grab usernames
 }
