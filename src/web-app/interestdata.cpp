@@ -187,10 +187,10 @@ void interestData::createAccount()
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-/*void interestData::displayEvents(QVector<event> interest)
+void interestData::displayEvents(QVector<event> interest)
 {
 
-} */
+}
 
 void interestData::checkResponse(base::NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
