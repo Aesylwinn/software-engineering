@@ -2,22 +2,35 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
+// Qt
+#include <QString>
+
 // Class being tested
 #include "../base-app/venue.h"
 
 using namespace testing;
 using namespace base;
 
-TEST(base, venue_fullCTOR){
-    venue ven("name", "123 place", "456", 7.89);
-    ASSERT_TRUE(ven.getName() == "name");
-    ASSERT_TRUE(ven.getAddress() == "123 place");
-    ASSERT_TRUE(ven.getPhoneNumber() == "456");
-    ASSERT_TRUE(ven.getEntryFee() == 7.89);
+TEST(base, venue_defaultCtor) {
+    venue obj;
+    ASSERT_EQ(obj.getName(), QString(""));
+    ASSERT_EQ(obj.getAddress(), QString(""));
+    ASSERT_EQ(obj.getPhoneNumber(), QString("867-5309"));
+    ASSERT_EQ(obj.getEntryFee(), 0);
 }
 
-TEST(base, venue_stringCTOR) {
+TEST(base, venue_fullCtor) {
+    venue obj("name", "123 place", "456", 7.89);
+    ASSERT_EQ(obj.getName(), QString("name"));
+    ASSERT_EQ(obj.getAddress(), QString("123 place"));
+    ASSERT_EQ(obj.getPhoneNumber(), QString("456"));
+    ASSERT_EQ(obj.getEntryFee(), 7.89);
 }
 
-TEST(base, venue_toString) {
+TEST(base, venue_conversionCtor) {
+    venue obj("name, 123 place, 456, 7.89");
+    ASSERT_EQ(obj.getName(), QString("name"));
+    ASSERT_EQ(obj.getAddress(), QString("123 place"));
+    ASSERT_EQ(obj.getPhoneNumber(), QString("456"));
+    ASSERT_EQ(obj.getEntryFee(), 7.89);
 }
