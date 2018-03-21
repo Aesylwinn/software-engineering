@@ -6,20 +6,15 @@ namespace base {
     venue::venue(){
         initialize("", "", "", -1);
     }
-    venue::venue(QString n, QString addr){
-        initialize(n, addr, "", -1);
-    }
-    venue::venue(QString n, QString addr, QString phone){
-        initialize(n, addr, phone, -1);
-    }
-    venue::venue(QString n, QString addr, double fee){
-        initialize(n, addr, "", fee);
-    }
     venue::venue(QString n, QString addr, QString phone, double fee){
         initialize(n, addr, phone, fee);
     }
     venue::venue(QString data){ //Data means "name,address,phone,fee"
-        name = data;
+        QStringList theList = data.split(",");
+        setName(theList[0]);
+        setAddress(theList[1]);
+        setPhoneNumber(theList[2]);
+        setEntryFee(theList[3].toDouble());
     }    //conversion constructor
 
     //utility
@@ -65,6 +60,15 @@ namespace base {
     }
     double venue::getEntryFee(){
         return entryFee;
+    }
+
+    venue venue::operator=(const QString& data){ //data = "name,address,phone,fee"
+        venue newVenue(data);
+        setName(newVenue.getName());
+        setAddress(newVenue.getAddress());
+        setPhoneNumber(newVenue.getPhoneNumber());
+        setEntryFee(newVenue.getEntryFee());
+        return *this;
     }
 
     //helper class

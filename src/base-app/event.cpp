@@ -7,41 +7,6 @@ namespace base{
     {
         initialize("",0,"","",false,"");
     }
-
-    event::event(QString n)
-    {
-        initialize(n,0,"","",false,"");
-    }
-    event::event(QString n, int a)
-    {
-        initialize(n,a,"","",false,"");
-    }
-    event::event(QString n, int a, QString des)
-    {
-        initialize(n,a,des,"",false,"");
-    }
-
-    event::event(QString n, int a, QString des, QString theHost)
-    {
-        initialize(n,a,des,theHost,false,"");
-    }
-
-    event::event(QString n, int a, QString des, QString theHost, bool standardOp)
-    {
-        initialize(n,a,des,theHost,standardOp,"");
-    }
-
-    event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers)
-    {
-        initialize(n,a,des,theHost,standardOp,"");
-        setUsers(theUsers);
-    }
-    event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue)
-    {
-        initialize(n,a,des,theHost,standardOp,"");
-        setUsers(theUsers);
-        setLocation(theVenue);
-    }
     event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat)
     {
         initialize(n,a,des,theHost,standardOp,cat);
@@ -115,6 +80,41 @@ namespace base{
             return false;
         id = a;
         return true;
+    }
+
+    QString event::getName()
+    {
+        return name;
+    }
+
+    QString event::getCategory()
+    {
+        return category;
+    }
+
+    QString event::getMainHost()
+    {
+        return mainHost;
+    }
+
+    QVector<QString> event::getAttendingUsers()
+    {
+        return attendingUsers;
+    }
+
+    venue event::getLocation()
+    {
+        return location;
+    }
+
+    QString event::getDescription()
+    {
+        return description;
+    }
+
+    qint32 event::getID()
+    {
+        return id;
     }
 
     bool event::addUser(QString newUser)
