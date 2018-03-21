@@ -15,14 +15,7 @@ namespace  base{
     public:
         //constructors
         event();
-        event(QString n);
-        event(QString n, int a);
-        event(QString n, int a, QString des);
-        event(QString n, int a, QString des, QString theHost);
-        event(QString n, int a, QString des, QString theHost, bool standardOp);
-        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers);
-        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue);
-        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat);
+        event(QString n = "", qint32 a = 0, QString des = "", QString theHost = "", bool standardOp = false, QVector<QString> theUsers = {""}, venue theVenue = venue(QString("name,address,8675-309,0.00")), QString cat = "");
 
         //setters
         bool setHost(QString theHost);
@@ -33,6 +26,15 @@ namespace  base{
         bool setOperation(bool standardOp);
         bool setCategory(QString cat);
         bool setID(qint32 a);
+
+        //getters
+        QString getName();
+        QString getCategory();
+        QString getMainHost();
+        QVector<QString> getAttendingUsers();
+        venue getLocation();
+        QString getDescription();
+        qint32 getID();
 
         //adders
         bool addHost(QString newHost);
@@ -49,7 +51,7 @@ namespace  base{
         QString description;
         qint32 id;
 
-        void initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat);
+        void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
         friend class NetworkObject;
     };
 }
