@@ -194,10 +194,25 @@ void interestData::displayEvents(QVector<base::event> interest)
     for (int i = 0; i < interest.size(); i++)
     {
             ui->interestStream->setItem(i, temp, new QTableWidgetItem(interest[i].getName()));
-            ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation()));
-            ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getName()));
-            ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getName()));
+            ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation().getAddress()));
+            ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getName()));        //date
+            ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getName()));        //time
             ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(interest[i].getDescription()));
+    }
+
+}
+
+void interestData::displayMyEvents(QVector<base::event> myEvent)
+{
+    int temp = 0;
+    ui->eventStream->setRowCount(myEvent.size());
+    for(int i = 0; i < myEvent.size(); i++)
+    {
+        ui->eventStream->setItem(i, temp, new QTableWidgetItem(myEvent[i].getName()));
+        ui->eventStream->setItem(i, temp+1, new QTableWidgetItem(myEvent[i].getLocation().getAddress()));
+        ui->eventStream->setItem(i, temp+2, new QTableWidgetItem(myEvent[i].getName()));            //date
+        ui->eventStream->setItem(i, temp+3, new QTableWidgetItem(myEvent[i].getName()));            //time
+        ui->eventStream->setItem(i, temp+4, new QTableWidgetItem(myEvent[i].getDescription()));
     }
 }
 
