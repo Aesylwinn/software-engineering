@@ -187,9 +187,18 @@ void interestData::createAccount()
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-void interestData::displayEvents(QVector<event> interest)
+void interestData::displayEvents(QVector<base::event> interest)
 {
-
+    int temp = 0;
+    ui->interestStream->setRowCount(interest.size());
+    for (int i = 0; i < interest.size(); i++)
+    {
+            ui->interestStream->setItem(i, temp, new QTableWidgetItem(interest[i].getName()));
+            ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation()));
+            ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getName()));
+            ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getName()));
+            ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(interest[i].getDescription()));
+    }
 }
 
 void interestData::checkResponse(base::NetworkObject response) {
