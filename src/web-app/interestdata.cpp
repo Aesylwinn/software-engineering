@@ -62,15 +62,15 @@ void interestData::switchLowTabs()
 
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->Login){
-		/* //function that will parse through the usernames to match up password
-		int or bool temp = parseUserNames(ui->userName->text(), ui->password->text());	//function can return an int or boolean of some kind
-		if (temp == true or 1){
-			login(ui->usrName->text(), ui->password->text());  } //logins to the server to communicate
-		else {
-			QMessageBox messageBox;
+        /* //function that will parse through the usernames to match up password
+        int or bool temp = parseUserNames(ui->userName->text(), ui->password->text());	//function can return an int or boolean of some kind
+        if (temp == true or 1){
+            login(ui->usrName->text(), ui->password->text());  } //logins to the server to communicate
+        else {
+            QMessageBox messageBox;
             messageBox.critical(0,"Error","Incorrect user name or password");
             messageBox.setFixedSize(500,200);
-		} */
+        } */
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
     else{
@@ -84,12 +84,6 @@ void interestData::switchLowTabs()
         {
             // Create the account
             createAccount(ui->newUsrName->text(), ui->confirmPass->text());
-
-            ui->tabWidget_2->setTabEnabled(1, true);
-            ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
-            ui->Nam_Display_2->setText(tr("%1 %2").arg(ui->lineEdit_FN->text(), ui->lineEdit_LN->text()));
-            ui->tabWidget_2->setCurrentWidget(ui->tab_3);
-            ui->tabWidget_2->setTabEnabled(0, false);
         }
     }
 }
@@ -233,13 +227,19 @@ void interestData::checkResponse(base::NetworkObject response) {
             NetworkObject::CreateAccountResponse info = response.getCreateAccountResponse();
             qInfo("account created: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
-                // Account was created successfully popup
+                ui->tabWidget_2->setTabEnabled(1, true);
+                ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
+                ui->Nam_Display_2->setText(tr("%1 %2").arg(ui->lineEdit_FN->text(), ui->lineEdit_LN->text()));
+                ui->tabWidget_2->setCurrentWidget(ui->tab_3);
+                ui->tabWidget_2->setTabEnabled(0, false);
             } else {
-                // Account creation failed popup
+                QMessageBox messageBox;
+                messageBox.critical(0,"Error","Sorry that username is already taken");
+                messageBox.setFixedSize(500,200);
             }
         }
     }
-	//else if (response.getTicket() == mEventRequest) //will grab events
-	//else if (response.getTicket() == mCreateEventRqt) //will create event
-	//else if (response.getTicket() == mUsernamesRequest) //will grab usernames
+    //else if (response.getTicket() == mEventRequest) //will grab events
+    //else if (response.getTicket() == mCreateEventRqt) //will create event
+    //else if (response.getTicket() == mUsernamesRequest) //will grab usernames
 }

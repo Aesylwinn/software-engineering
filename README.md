@@ -150,8 +150,16 @@ To run the tests (See the Google Test Framework section above to set it up):
 
 1. The web-app
     * The application opens without crashing when ran
-    * The user can choose between different pages by clicking on the tabs
-
+	* The user can create a new account on the "Sign Up" page by filling in
+	   "Username", "New Password", "Confirm Password" and clicking on
+	   "Create Account"
+	* The user can login to their created account by filling in
+	   "Email or Username" and "Password" and clicking "Login"
+	* The user can click "Get Verified" to see a popup where they can enter
+	   extra information about themselves.
+	* The user can click "See Dates" to see a popup where they can check
+	   what matches are available.
+	   
 2. The mobile-app
     * The application opens without crashing when ran
 
