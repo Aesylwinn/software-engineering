@@ -187,7 +187,7 @@ void interestData::createAccount()
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-/*void interestData::displayEvents()
+/*void interestData::displayEvents(QVector<event> interest)
 {
 
 } */
