@@ -3,10 +3,6 @@
 #include "event.h"
 
 namespace base{
-    event::event()
-    {
-        initialize("",0,"","",false,"");
-    }
     event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat)
     {
         initialize(n,a,des,theHost,standardOp,cat);

@@ -14,7 +14,6 @@ namespace  base{
     {
     public:
         //constructors
-        event();
         event(QString n = "", qint32 a = 0, QString des = "", QString theHost = "", bool standardOp = false, QVector<QString> theUsers = {""}, venue theVenue = venue(QString("name,address,8675-309,0.00")), QString cat = "");
 
         //setters
