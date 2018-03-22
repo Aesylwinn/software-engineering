@@ -5,6 +5,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QDateTime>
 #include "venue.h"
 
 #include "base-app_global.h"
@@ -25,6 +26,7 @@ namespace  base{
         bool setOperation(bool standardOp);
         bool setCategory(QString cat);
         bool setID(qint32 a);
+        bool setTimes(QDateTime t);
 
         //getters
         QString getName();
@@ -34,6 +36,7 @@ namespace  base{
         venue getLocation();
         QString getDescription();
         qint32 getID();
+        QVector<QDateTime> getTimes();
 
         //adders
         bool addHost(QString newHost);
@@ -49,6 +52,7 @@ namespace  base{
         venue location;
         QString description;
         qint32 id;
+        QVector<QDateTime> times;
 
         void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
         friend class NetworkObject;

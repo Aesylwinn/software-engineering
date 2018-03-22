@@ -78,6 +78,10 @@ namespace base{
         return true;
     }
 
+    bool event::setTimes(QDateTime t) {
+        return true;
+    }
+
     QString event::getName()
     {
         return name;
@@ -111,6 +115,10 @@ namespace base{
     qint32 event::getID()
     {
         return id;
+    }
+
+    QVector<QDateTime> event::getTimes() {
+        return times;
     }
 
     bool event::addUser(QString newUser)
