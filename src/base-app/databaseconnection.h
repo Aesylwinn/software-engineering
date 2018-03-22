@@ -20,6 +20,7 @@ namespace base {
         ~DatabaseConnection();
         bool checkPassword(QString username, QString password); //can throw run-time error if server unavailable
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
+        bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
 
 
     private:

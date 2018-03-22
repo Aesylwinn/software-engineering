@@ -78,6 +78,23 @@ bool DatabaseConnection::createAccount(QString username, QString password)
     return true;
 }
 
+bool DatabaseConnection::createHost(qint64 userId, QString displayName, QString businessName, QString bio) {
+    QSqlQuery query(*db);
+
+    if (!query.prepare("INSERT INTO User_Host (id_user, displayName, businessName, bio) VALUES ( :id, :displayName, :businessName, :bio )"))
+        throw std::runtime_error("Unable to create host account, unable to prepare query");
+
+    query.bindValue(":id",userId);
+    query.bindValue(":displayName", displayName);
+    query.bindValue(":businessName", businessName);
+    query.bindValue(":bio", bio);
+
+    if (!query.exec()) {
+        return false;
+    }
+
+    return true;
+}
 
 
 }
