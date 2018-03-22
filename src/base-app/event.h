@@ -27,13 +27,13 @@ namespace  base{
         bool setID(qint32 a);
 
         //getters
-        QString getName();
-        QString getCategory();
-        QString getMainHost();
-        QVector<QString> getAttendingUsers();
-        venue getLocation();
-        QString getDescription();
-        qint32 getID();
+        QString getName()const;
+        QString getCategory() const;
+        QString getMainHost() const;
+        QVector<QString> getAttendingUsers() const;
+        venue getLocation() const;
+        QString getDescription() const;
+        qint32 getID() const;
 
         //adders
         bool addHost(QString newHost);
@@ -51,7 +51,6 @@ namespace  base{
         qint32 id;
 
         void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
-        friend class NetworkObject;
     };
 }
 #endif // EVENT_H

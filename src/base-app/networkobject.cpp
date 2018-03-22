@@ -66,13 +66,13 @@ namespace base {
         //Combine into single object
         QDataStream stream;
         setupWrite(stream);
-        stream << input.data.name;
-        stream << input.data.category;
-        stream << input.data.mainHost;
-        stream << input.data.attendingUsers;
-        //stream << input.data.location;
-        stream << input.data.description;
-        stream << input.data.id;
+        stream << input.data.getName();
+        stream << input.data.getCategory();
+        stream << input.data.getMainHost();
+        stream << input.data.getAttendingUsers();
+        stream << input.data.getLocation().toString();
+        stream << input.data.getDescription();
+        stream << input.data.getID();
     }
 
     NetworkObject::NetworkObject(const CreateAccountResponse& response) {
@@ -232,13 +232,37 @@ namespace base {
         setupRead(stream);
 
         CreateEventRequest result;
-        stream >> result.data.name;
-        stream >> result.data.category;
-        stream >> result.data.mainHost;
-        stream >> result.data.attendingUsers;
-        //stream >> result.data.location;
-        stream >> result.data.description;
-        stream >> result.data.id;
+        QString temp;
+        QVector<QString> users;
+        qint32 tempNum;
+        stream >> temp;
+        result.data.setName(temp);
+        stream >> temp;
+        result.data.setCategory(temp);
+        stream >> temp;
+        result.data.setHost(temp);
+
+        //qint32 numUsers = QString::number(temp);
+        //QVector<QString> users;
+        //users.resize(numUsers);
+
+        //populate list of attending users
+        /*for (qint32 i = 0;i < users.size();i++){
+            stream >> temp;
+            users[i] =temp;
+        }
+        result.data.setUsers(users);*/
+
+        stream >> users;
+        result.data.setUsers(users);
+        //assuming stream sends venue in a string of "name, address, phone number, fee"
+        stream >> temp;
+        venue tempVenue(temp);
+        result.data.setLocation(tempVenue);
+        stream >> temp;
+        result.data.setDescription(temp);
+        stream >> tempNum;
+        result.data.setID(tempNum);
         return result;
     }
 
