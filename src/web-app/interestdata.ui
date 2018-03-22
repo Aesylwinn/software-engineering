@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1309</width>
-    <height>720</height>
+    <height>824</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -53,7 +53,7 @@
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt;Get Going&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
@@ -70,8 +70,8 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;Mission Statement:&lt;/span&gt;&lt;/p&gt;
@@ -108,8 +108,8 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;Features:&lt;/span&gt;&lt;/p&gt;
@@ -274,6 +274,104 @@ p, li { white-space: pre-wrap; }
                 <widget class="QToolButton" name="togglePassword">
                  <property name="text">
                   <string>Toggle Password</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="0" colspan="2">
+                <widget class="QLabel" name="label_6">
+                 <property name="font">
+                  <font>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Interested in being a host?</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="hostName">
+                   <property name="text">
+                    <string>Display Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QLabel" name="businessName">
+                   <property name="text">
+                    <string>Business Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_2">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <widget class="QLabel" name="bio">
+                 <property name="text">
+                  <string>Bio:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="textEdit_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>425</width>
+                   <height>111</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>425</width>
+                   <height>111</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="createHost">
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Create Host</string>
                  </property>
                 </widget>
                </item>
@@ -576,104 +674,6 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="2" column="0">
-              <layout class="QGridLayout" name="gridLayout">
-               <item row="0" column="0" colspan="2">
-                <widget class="QLabel" name="label_6">
-                 <property name="font">
-                  <font>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Interested in being a host?</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <layout class="QHBoxLayout" name="horizontalLayout_9">
-                 <item>
-                  <widget class="QLabel" name="businessName">
-                   <property name="text">
-                    <string>Business Name:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_2">
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_8">
-                 <item>
-                  <widget class="QLabel" name="hostName">
-                   <property name="text">
-                    <string>Display Name:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit">
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_21">
-             <item>
-              <widget class="QLabel" name="bio">
-               <property name="text">
-                <string>Bio:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTextEdit" name="textEdit_2">
-               <property name="minimumSize">
-                <size>
-                 <width>425</width>
-                 <height>111</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>425</width>
-                 <height>111</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="createHost">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Create Host</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>
@@ -958,381 +958,368 @@ Get Verified and share an experience with someone whose interests are cohesive w
       <attribute name="title">
        <string>Profile</string>
       </attribute>
-      <widget class="QPushButton" name="logout">
-       <property name="geometry">
-        <rect>
-         <x>1190</x>
-         <y>610</y>
-         <width>80</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Logout</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="Nam_Display_2">
-       <property name="geometry">
-        <rect>
-         <x>450</x>
-         <y>10</y>
-         <width>350</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>350</width>
-         <height>75</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>350</width>
-         <height>75</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>34</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>413</width>
-         <height>454</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_18">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_29">
-          <item>
-           <widget class="QLabel" name="label_7">
-            <property name="minimumSize">
-             <size>
-              <width>171</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>171</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>My Event Stream</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTableWidget" name="eventStream">
-            <property name="minimumSize">
-             <size>
-              <width>409</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>409</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="editTriggers">
-             <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
-            <property name="showGrid">
-             <bool>true</bool>
-            </property>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <row>
-             <property name="text">
-              <string>1</string>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="2" column="2">
+        <widget class="QPushButton" name="logout">
+         <property name="text">
+          <string>Logout</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="Nam_Display_2">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>75</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>75</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>34</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_17">
+           <item>
+            <widget class="QTextEdit" name="textEdit">
+             <property name="minimumSize">
+              <size>
+               <width>331</width>
+               <height>375</height>
+              </size>
              </property>
-            </row>
-            <column>
-             <property name="text">
-              <string>Event</string>
+             <property name="maximumSize">
+              <size>
+               <width>331</width>
+               <height>375</height>
+              </size>
              </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Location</string>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
              </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Date</string>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </column>
-            <item row="0" column="0">
-             <property name="text">
-              <string>Coachella</string>
-             </property>
-            </item>
-            <item row="0" column="1">
-             <property name="text">
-              <string>California</string>
-             </property>
-            </item>
-            <item row="0" column="2">
-             <property name="text">
-              <string>1/1/2018</string>
-             </property>
-            </item>
-            <item row="0" column="3">
-             <property name="text">
-              <string>12am</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="minimumSize">
-             <size>
-              <width>171</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>171</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>My Interest Stream</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTableWidget" name="interestStream">
-            <property name="minimumSize">
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>420</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="editTriggers">
-             <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
-            <property name="showGrid">
-             <bool>true</bool>
-            </property>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <row>
-             <property name="text">
-              <string>1</string>
-             </property>
-            </row>
-            <column>
-             <property name="text">
-              <string>Event</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Location</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Date</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </column>
-            <item row="0" column="0">
-             <property name="text">
-              <string>Coachella</string>
-             </property>
-            </item>
-            <item row="0" column="1">
-             <property name="text">
-              <string>California</string>
-             </property>
-            </item>
-            <item row="0" column="2">
-             <property name="text">
-              <string>2/14/2018</string>
-             </property>
-            </item>
-            <item row="0" column="3">
-             <property name="text">
-              <string>12am</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>901</x>
-         <y>41</y>
-         <width>375</width>
-         <height>395</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_20">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_17">
-          <item>
-           <widget class="QTextEdit" name="textEdit">
-            <property name="minimumSize">
-             <size>
-              <width>331</width>
-              <height>241</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>331</width>
-              <height>241</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="html">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+             <property name="html">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Get Going is of course about you and your experiences, but some experiences are better with others who have simalr interests! &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Get Verified is our way of making sure that if you want to meet new people and see new places with them, you'll only be meeting people with the same intentions. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Take a few minutes to fill out our form and you'll be on your way to a world of new experiences.. Literally!&lt;/span&gt;  &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="GetVerifiedB">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Get Verified</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_19">
-          <item>
-           <widget class="QPlainTextEdit" name="plainTextEdit_2">
-            <property name="minimumSize">
-             <size>
-              <width>371</width>
-              <height>81</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>371</width>
-              <height>81</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="plainText">
-             <string>There's plenty of fish in the sea. Find out who's going to the same events as you and who would like your company!</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="matchB">
-            <property name="minimumSize">
-             <size>
-              <width>80</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>See Dates</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Take a few minutes to fill out our form and you'll be on your way to a world of new experiences.. Literally!&lt;/span&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;  &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="GetVerifiedB">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Get Verified</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="1">
+          <layout class="QVBoxLayout" name="verticalLayout_19">
+           <property name="bottomMargin">
+            <number>250</number>
+           </property>
+           <item>
+            <widget class="QPlainTextEdit" name="plainTextEdit_2">
+             <property name="minimumSize">
+              <size>
+               <width>371</width>
+               <height>125</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>371</width>
+               <height>125</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>14</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="plainText">
+              <string>There's plenty of fish in the sea. Find out who's going to the same events as you and who would like your company!</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="matchB">
+             <property name="minimumSize">
+              <size>
+               <width>80</width>
+               <height>21</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>21</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>See Dates</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0" rowspan="2">
+        <layout class="QVBoxLayout" name="verticalLayout_18">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_29">
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="minimumSize">
+              <size>
+               <width>171</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>171</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>14</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>My Event Stream</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="eventStream">
+             <property name="minimumSize">
+              <size>
+               <width>409</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>409</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="showGrid">
+              <bool>true</bool>
+             </property>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row>
+              <property name="text">
+               <string>1</string>
+              </property>
+             </row>
+             <column>
+              <property name="text">
+               <string>Event</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Location</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Date</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Time</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Description</string>
+              </property>
+             </column>
+             <item row="0" column="0">
+              <property name="text">
+               <string>Coachella</string>
+              </property>
+             </item>
+             <item row="0" column="1">
+              <property name="text">
+               <string>California</string>
+              </property>
+             </item>
+             <item row="0" column="2">
+              <property name="text">
+               <string>1/1/2018</string>
+              </property>
+             </item>
+             <item row="0" column="3">
+              <property name="text">
+               <string>12am</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="minimumSize">
+              <size>
+               <width>171</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>171</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>14</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>My Interest Stream</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="interestStream">
+             <property name="minimumSize">
+              <size>
+               <width>300</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>420</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="showGrid">
+              <bool>true</bool>
+             </property>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row>
+              <property name="text">
+               <string>1</string>
+              </property>
+             </row>
+             <column>
+              <property name="text">
+               <string>Event</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Location</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Date</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Time</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Description</string>
+              </property>
+             </column>
+             <item row="0" column="0">
+              <property name="text">
+               <string>Coachella</string>
+              </property>
+             </item>
+             <item row="0" column="1">
+              <property name="text">
+               <string>California</string>
+              </property>
+             </item>
+             <item row="0" column="2">
+              <property name="text">
+               <string>2/14/2018</string>
+              </property>
+             </item>
+             <item row="0" column="3">
+              <property name="text">
+               <string>12am</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">

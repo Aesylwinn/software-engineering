@@ -37,6 +37,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->GetVerifiedB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->matchB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
+    connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
 }
 
 interestData::~interestData()
@@ -61,10 +62,12 @@ void interestData::switchLowTabs()
     QObject* button = QObject::sender();    //allows us to see which button is pushed
 
     //just lets us grey out certain tabs that do not need to be used at that time
-    if(button == ui->Login){
+    if(button == ui->Login)
+    {
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
-    else{
+    else if(button == ui->SignUp)
+    {
         if (ui->newPass->text() != ui->confirmPass->text())
         {
             QMessageBox messageBox;
@@ -76,6 +79,13 @@ void interestData::switchLowTabs()
             // Create the account
             createAccount();
         }
+    }
+//This will be moved to checkResponse()
+    else
+    {
+        ui->tabWidget->setCurrentWidget(ui->tab_5);
+        ui->tabWidget->setTabEnabled(3, true);
+        ui->tabWidget->setTabEnabled(1, false);
     }
 }
 
@@ -216,6 +226,12 @@ void interestData::displayMyEvents(QVector<base::event> myEvent)
     }
 }
 
+/*
+void interestData::createHost()
+{
+
+}
+*/
 void interestData::checkResponse(base::NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket

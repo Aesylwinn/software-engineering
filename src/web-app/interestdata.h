@@ -34,7 +34,7 @@ public slots:
     void createAccount();
     void displayEvents(QVector<base::event> interest);
     void displayMyEvents(QVector<base::event> myEvent);
-
+    //void createHost();
 
 private:
     Ui::interestData *ui;
