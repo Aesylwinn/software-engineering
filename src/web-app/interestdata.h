@@ -42,6 +42,7 @@ private:
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
 	//qint32 mEventRequest;
+    //qint32 mCreateHostRqt;
 };
 
 #endif // INTERESTDATA_H

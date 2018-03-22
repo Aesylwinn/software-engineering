@@ -224,7 +224,7 @@ void interestData::checkResponse(base::NetworkObject response) {
         if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
             NetworkObject::LoginResponse info = response.getLoginResponse();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
-            if (info.valid == 1)
+            if (info.valid)
             {
                 ui->tabWidget->setCurrentWidget(ui->tab_4);
                 ui->tabWidget->setTabEnabled(2, true);
@@ -257,4 +257,5 @@ void interestData::checkResponse(base::NetworkObject response) {
         }
     }
     //else if (response.getTicket() == mEventRequest) //will grab events
+    //else if (response.getTicket() == mCreateHostRqt) //will grab events
 }

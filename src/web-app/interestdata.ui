@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -53,7 +53,7 @@
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt;Get Going&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
@@ -70,8 +70,8 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;Mission Statement:&lt;/span&gt;&lt;/p&gt;
@@ -108,8 +108,8 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;Features:&lt;/span&gt;&lt;/p&gt;
@@ -170,212 +170,108 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_2">
           <attribute name="title">
            <string>Login or Sign Up</string>
           </attribute>
-          <layout class="QFormLayout" name="formLayout_3">
+          <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0">
-            <layout class="QFormLayout" name="formLayout_2">
+            <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,30">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
              <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <item>
-                <widget class="QLabel" name="LEmail">
-                 <property name="text">
-                  <string>Email or Username</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="usrName">
-                 <property name="minimumSize">
-                  <size>
-                   <width>175</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>35</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="1">
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_6">
+              <layout class="QFormLayout" name="formLayout_2">
+               <property name="verticalSpacing">
+                <number>12</number>
+               </property>
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
                  <item>
-                  <widget class="QLabel" name="LPass">
+                  <widget class="QLabel" name="LEmail">
                    <property name="text">
-                    <string>Password</string>
+                    <string>Email or Username</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="password">
+                  <widget class="QLineEdit" name="usrName">
                    <property name="minimumSize">
                     <size>
-                     <width>150</width>
+                     <width>175</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>100</width>
+                     <width>200</width>
                      <height>35</height>
                     </size>
                    </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
-                   </property>
                   </widget>
                  </item>
                 </layout>
                </item>
-               <item>
-                <widget class="QPushButton" name="Login">
-                 <property name="minimumSize">
-                  <size>
-                   <width>75</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>75</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Login</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="1">
-              <widget class="QToolButton" name="togglePassword">
-               <property name="text">
-                <string>Toggle Password</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="font">
-              <font>
-               <pointsize>15</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Sign Up, It's Free!</string>
-             </property>
-             <property name="scaledContents">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <widget class="QLabel" name="SUFName">
-                 <property name="text">
-                  <string>First Name</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_FN">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QLabel" name="SULName">
-                 <property name="text">
-                  <string>Last Name</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_LN">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_9">
-               <item>
-                <widget class="QLabel" name="SUEmail">
-                 <property name="text">
-                  <string>Email</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="newEmail">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item row="0" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
-                  <widget class="QLabel" name="SUPass">
-                   <property name="text">
-                    <string>New Password</string>
-                   </property>
-                  </widget>
+                  <layout class="QVBoxLayout" name="verticalLayout_6">
+                   <item>
+                    <widget class="QLabel" name="LPass">
+                     <property name="text">
+                      <string>Password</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="password">
+                     <property name="minimumSize">
+                      <size>
+                       <width>150</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>100</width>
+                       <height>35</height>
+                      </size>
+                     </property>
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="newPass">
+                  <widget class="QPushButton" name="Login">
+                   <property name="minimumSize">
+                    <size>
+                     <width>75</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>150</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
+                   <property name="text">
+                    <string>Login</string>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
-               <item>
-                <widget class="QToolButton" name="togglePassword2">
+               <item row="1" column="1">
+                <widget class="QToolButton" name="togglePassword">
                  <property name="text">
                   <string>Toggle Password</string>
                  </property>
@@ -383,56 +279,296 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="5" column="0">
-              <widget class="QPushButton" name="SignUp">
+             <item row="1" column="1">
+              <widget class="QLabel" name="label_4">
                <property name="minimumSize">
                 <size>
-                 <width>150</width>
-                 <height>25</height>
+                 <width>0</width>
+                 <height>0</height>
                 </size>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
                </property>
                <property name="text">
-                <string>Create Account</string>
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="utilities.qrc">:/Utilities/social.jpg</pixmap>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+               <property name="indent">
+                <number>-1</number>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_11">
+             <item row="1" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_22">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
                <item>
-                <widget class="QLabel" name="BDay">
-                 <property name="text">
-                  <string>Birthday</string>
+                <layout class="QFormLayout" name="formLayout">
+                 <property name="horizontalSpacing">
+                  <number>6</number>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDateEdit" name="dateEdit"/>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_4">
-                 <property name="spacing">
+                 <property name="verticalSpacing">
+                  <number>6</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>20</number>
+                 </property>
+                 <property name="bottomMargin">
                   <number>0</number>
                  </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QRadioButton" name="malebutt">
+                 <item row="1" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_7">
+                   <item>
+                    <widget class="QLabel" name="SUFName">
+                     <property name="text">
+                      <string>First Name:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_FN">
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="1">
+                  <layout class="QVBoxLayout" name="verticalLayout_8">
+                   <item>
+                    <widget class="QLabel" name="SULName">
+                     <property name="text">
+                      <string>Last Name:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_LN">
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_9">
+                   <item>
+                    <widget class="QLabel" name="SUEmail">
+                     <property name="text">
+                      <string>Email:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="newEmail">
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_6">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_10">
+                     <item>
+                      <widget class="QLabel" name="SUPass">
+                       <property name="text">
+                        <string>New Password:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="newPass">
+                       <property name="maximumSize">
+                        <size>
+                         <width>150</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="echoMode">
+                        <enum>QLineEdit::Password</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QToolButton" name="togglePassword2">
+                     <property name="text">
+                      <string>Toggle Password</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="1">
+                  <layout class="QVBoxLayout" name="verticalLayout_11">
+                   <property name="rightMargin">
+                    <number>125</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="BDay">
+                     <property name="text">
+                      <string>Birthday:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDateEdit" name="dateEdit">
+                     <property name="maximumSize">
+                      <size>
+                       <width>75</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QRadioButton" name="malebutt">
+                       <property name="text">
+                        <string>Male</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QRadioButton" name="febutt">
+                       <property name="text">
+                        <string>Female</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="1">
+                  <layout class="QVBoxLayout" name="verticalLayout_16">
+                   <item>
+                    <widget class="QLabel" name="label_5">
+                     <property name="text">
+                      <string>Username:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="newUsrName">
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_12">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Confirm Password:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="confirmPass">
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QPushButton" name="SignUp">
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
                    <property name="text">
-                    <string>Male</string>
+                    <string>Create Account</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QRadioButton" name="febutt">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_3">
+                   <property name="font">
+                    <font>
+                     <pointsize>15</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
-                    <string>Female</string>
+                    <string>Sign Up, It's Free!</string>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
@@ -440,68 +576,105 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
-             <item row="1" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_16">
-               <item>
-                <widget class="QLabel" name="label_5">
+             <item row="2" column="0">
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="0" colspan="2">
+                <widget class="QLabel" name="label_6">
+                 <property name="font">
+                  <font>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
                  <property name="text">
-                  <string>Username</string>
+                  <string>Interested in being a host?</string>
                  </property>
                 </widget>
                </item>
-               <item>
-                <widget class="QLineEdit" name="newUsrName">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QLabel" name="businessName">
+                   <property name="text">
+                    <string>Business Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_2">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
-              </layout>
-             </item>
-             <item row="3" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_12">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Confirm Password</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="confirmPass">
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="echoMode">
-                  <enum>QLineEdit::Password</enum>
-                 </property>
-                </widget>
+               <item row="1" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="hostName">
+                   <property name="text">
+                    <string>Display Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
             </layout>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="utilities.qrc">:/Utilities/social.jpg</pixmap>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+           <item row="1" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_21">
+             <item>
+              <widget class="QLabel" name="bio">
+               <property name="text">
+                <string>Bio:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="textEdit_2">
+               <property name="minimumSize">
+                <size>
+                 <width>425</width>
+                 <height>111</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>425</width>
+                 <height>111</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="createHost">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Create Host</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -1068,14 +1241,17 @@ Get Verified and share an experience with someone whose interests are cohesive w
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Get Going is of course about you and your experiences, but some experiences are better with others who have simalr interests! &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Get Verified is our way of making sure that if you want to meet new people and see new places with them, you'll only be meeting people with the same intentions. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Take a few minutes to fill out our form and you'll be on your way to a world of new experiences.. Literally!&lt;/span&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;  &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Take a few minutes to fill out our form and you'll be on your way to a world of new experiences.. Literally!&lt;/span&gt;  &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -1126,6 +1302,9 @@ p, li { white-space: pre-wrap; }
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
             <property name="plainText">
              <string>There's plenty of fish in the sea. Find out who's going to the same events as you and who would like your company!</string>
             </property>
@@ -1162,8 +1341,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QPushButton" name="createEvent">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>470</y>
+         <x>10</x>
+         <y>10</y>
          <width>80</width>
          <height>21</height>
         </rect>
