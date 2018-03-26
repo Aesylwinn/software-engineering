@@ -31,15 +31,15 @@ namespace base {
             switch (obj.getPayloadType()) {
                 case NetworkObject::PT_Message:
                     {
-                        NetworkObject::Message msg = obj.getMessage();
+                        Message msg = obj.getMessage();
                         qInfo("%s: %s", qUtf8Printable(msg.category),
                                 qUtf8Printable(msg.message));
                     }
                     break;
                 case NetworkObject::PT_CreateAccountRequest:
                     {
-                        NetworkObject::CreateAccountRequest request = obj.getCreateAccountRequest();
-                        NetworkObject::CreateAccountResponse response = { 0, "DB error" };
+                        CreateAccountRequest request = obj.getCreateAccountRequest();
+                        CreateAccountResponse response = { 0, "DB error" };
                         qInfo("create account request for username: %s", qUtf8Printable(request.username));
                         // Add to database
                         try {
@@ -59,8 +59,8 @@ namespace base {
                     break;
                 case NetworkObject::PT_LoginRequest:
                     {
-                        NetworkObject::LoginRequest request = obj.getLoginRequest();
-                        NetworkObject::LoginResponse response = {0, "DB Error"};
+                        LoginRequest request = obj.getLoginRequest();
+                        LoginResponse response = {0, "DB Error"};
 
                         qInfo("%s: is trying to login with %s",
                                 qUtf8Printable(request.username),

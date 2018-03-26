@@ -9,6 +9,7 @@
 
 #include "base-app_global.h"
 #include "event.h"
+#include "networkpackets.h"
 
 namespace base {
     /* Implemented by Kyle and Anthony */
@@ -29,66 +30,6 @@ namespace base {
             PT_Message
         };
 
-        struct Message {
-            QString category;
-            QString message;
-        };
-
-        struct CreateAccountRequest {
-            QString username;
-            QString password;
-            QString email;
-            QString firstName;
-            QString lastName;
-            QString gender;
-            QString birthDate;
-        };
-
-        struct LoginRequest {
-            QString username;
-            QString password;
-        };
-
-        struct LoginResponse {
-            qint32 valid;
-            QString details;
-        };
-
-        struct CreateAccountResponse {
-            qint32 valid;
-            QString details;
-        };
-
-        struct CreateEventRequest{
-            event data;
-        };
-
-//        //Darius and Parker inserted ;)
-//        struct EventRequest {
-//            QString username;
-//            QVector<QString> interest;
-//        };
-
-//        //Darius and Parker inserted ;)
-//        struct EventResponse {
-//            qint32 valid;
-//            //Dont know if this is where you want it??
-//            QVector<QString> musicEvents;
-//            QVector<QString> sportEvents;
-//            QVector<QString> foodEvents;
-//            QVector<QString> leisureEvents;
-//        };
-
-//		  //Darius inserted, i dont know exactly what to put but need a request for usernames again im guessing so I dont know if correct
-//		  struct UsernameRequest {
-//				//dont really need to provide anything for the request but
-//				qint32 dummy;
-//		  };
-
-//		  struct UsernameResponse (
-//				qint32 vaild;
-//				QVector<QString> usernames;
-//		  };
 
         // Default ctor, PT_None
         NetworkObject();

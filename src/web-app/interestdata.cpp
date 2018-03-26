@@ -174,13 +174,13 @@ void interestData::logout()
 void interestData::login(QString username, QString password)
 {
     // Send request. The ticket will match to the response.
-    NetworkObject request(NetworkObject::LoginRequest{ username, password });
+    NetworkObject request(LoginRequest{ username, password });
     mLoginRequest = mNetworkMgr->sendRequest(request);
 }
 
 void interestData::createAccount(QString username, QString password)
 {
-    NetworkObject::CreateAccountRequest data;
+    CreateAccountRequest data;
     data.username = username;
     data.password = password;
     // TODO: the other fields?
@@ -199,13 +199,13 @@ void interestData::createAccount(QString username, QString password)
 
 } */
 
-void interestData::checkResponse(base::NetworkObject response) {
+void interestData::checkResponse(NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
         mLoginRequest = -1;
         // Handle response
         if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
-            NetworkObject::LoginResponse info = response.getLoginResponse();
+            LoginResponse info = response.getLoginResponse();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid == 1)
             {
@@ -224,7 +224,7 @@ void interestData::checkResponse(base::NetworkObject response) {
     else if (response.getTicket() == mCreateAccountRequest) {
         mCreateAccountRequest = -1;
         if (response.getPayloadType() == NetworkObject::PT_CreateAccountResponse) {
-            NetworkObject::CreateAccountResponse info = response.getCreateAccountResponse();
+            CreateAccountResponse info = response.getCreateAccountResponse();
             qInfo("account created: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
                 ui->tabWidget_2->setTabEnabled(1, true);

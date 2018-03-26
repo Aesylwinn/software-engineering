@@ -184,7 +184,7 @@ namespace base {
         return true;
     }
 
-    NetworkObject::Message NetworkObject::getMessage() const {
+    Message NetworkObject::getMessage() const {
         mustMatch(PT_Message);
 
         // Convert
@@ -196,7 +196,7 @@ namespace base {
         return result;
     }
 
-    NetworkObject::CreateAccountRequest NetworkObject::getCreateAccountRequest() const {
+    CreateAccountRequest NetworkObject::getCreateAccountRequest() const {
         mustMatch(PT_CreateAccountRequest);
 
         // Convert
@@ -212,7 +212,7 @@ namespace base {
         return result;
     }
 
-    NetworkObject::LoginRequest NetworkObject::getLoginRequest() const {
+    LoginRequest NetworkObject::getLoginRequest() const {
         mustMatch(PT_LoginRequest);
 
         // Convert
@@ -224,7 +224,7 @@ namespace base {
         return result;
     }
 
-    NetworkObject::CreateEventRequest NetworkObject::getCreateEventRequest() const {
+    CreateEventRequest NetworkObject::getCreateEventRequest() const {
         mustMatch(PT_CreateEventRequest);
 
         // Convert
@@ -242,7 +242,7 @@ namespace base {
         return result;
     }
 
-    NetworkObject::CreateAccountResponse NetworkObject::getCreateAccountResponse() const {
+    CreateAccountResponse NetworkObject::getCreateAccountResponse() const {
         mustMatch(PT_CreateAccountResponse);
 
         // Convert
@@ -254,7 +254,7 @@ namespace base {
         return result;
     }
 
-    NetworkObject::LoginResponse NetworkObject::getLoginResponse() const {
+    LoginResponse NetworkObject::getLoginResponse() const {
         mustMatch(PT_LoginResponse);
 
         // Convert

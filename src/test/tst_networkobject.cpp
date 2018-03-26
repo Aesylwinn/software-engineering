@@ -35,8 +35,6 @@ TEST(base, NetworkObject_parametizedCtor) {
 }
 
 TEST(base, NetworkObject_createAccountRequestCtor) {
-    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
-
     CreateAccountRequest request;
     request.username = "WillyWonka";
     request.password = "chocolate";
@@ -59,8 +57,6 @@ TEST(base, NetworkObject_createAccountRequestCtor) {
 }
 
 TEST(base, NetworkObject_loginRequestCtor) {
-    using LoginRequest = NetworkObject::LoginRequest;
-
     const LoginRequest request{ "Bob", "password" };
     NetworkObject netObj(request);
 
@@ -70,8 +66,6 @@ TEST(base, NetworkObject_loginRequestCtor) {
 }
 
 TEST(base, NetworkObject_EventCreateRequest){
-    using CreateEventRequest = NetworkObject::CreateEventRequest;
-
     const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
     NetworkObject netObj(myEvent);
 
@@ -81,20 +75,15 @@ TEST(base, NetworkObject_EventCreateRequest){
 }
 
 TEST(base, NetworkObject_messageCtor) {
-    using Message = NetworkObject::Message;
-
-    const Message message = { "general", "Hello!!!" };
+    const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
 
-    Message converted = netObj.getMessage();
+    base::Message converted = netObj.getMessage();
     ASSERT_EQ(message.category, converted.category);
     ASSERT_EQ(message.message, converted.message);
 }
 
 TEST(base, NetworkObject_createAccountResponse) {
-    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
-    using CreateAccountResponse = NetworkObject::CreateAccountResponse;
-
     const CreateAccountRequest request{ "1", "2", "3", "4", "5", "6", "7" };
     const CreateAccountResponse response{ 1, "What interesting tastes you have..." };
     const qint32 ticketNumber = 14;
@@ -111,9 +100,6 @@ TEST(base, NetworkObject_createAccountResponse) {
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
-    using LoginRequest = NetworkObject::LoginRequest;
-    using LoginResponse = NetworkObject::LoginResponse;
-
     // Set up state
     const LoginRequest request{ "muah", "hahaha!!!" };
     const LoginResponse response{ 0, "User password is wrong" };
@@ -133,9 +119,6 @@ TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isvalid) {
-    using LoginRequest = NetworkObject::LoginRequest;
-    using LoginResponse = NetworkObject::LoginResponse;
-
     // Set up state
     const LoginRequest request{ "oh", "dear" };
     const LoginResponse response{ 1, "" };
@@ -155,10 +138,8 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
 }
 
 TEST(base, NetworkObject_write) {
-    using Message = NetworkObject::Message;
-
     // Set up state
-    const Message msg{ "random", "You won!!!" };
+    const base::Message msg{ "random", "You won!!!" };
     NetworkObject netObj(msg);
 
     // Set up test device
@@ -173,10 +154,8 @@ TEST(base, NetworkObject_write) {
 }
 
 TEST(base, NetworkObject_read) {
-    using Message = NetworkObject::Message;
-
     // Set up state
-    const Message msg{ "billy", "He's playing hooky!" };
+    const base::Message msg{ "billy", "He's playing hooky!" };
     const qint32 ticketNum = 5;
 
     NetworkObject netObj(msg);
@@ -197,17 +176,15 @@ TEST(base, NetworkObject_read) {
     ASSERT_TRUE(outputObj.tryRead(&buffer));
     buffer.close();
 
-    Message output = outputObj.getMessage();
+    base::Message output = outputObj.getMessage();
     ASSERT_EQ(outputObj.getTicket(), ticketNum);
     ASSERT_EQ(msg.category, output.category);
     ASSERT_EQ(msg.message, output.message);
 }
 
 TEST(base, NetworkObject_partialRead) {
-    using Message = NetworkObject::Message;
-
     // Set up state
-    const Message msg{ "billy", "He's gone fishing!" };
+    const base::Message msg{ "billy", "He's gone fishing!" };
     NetworkObject netObj(msg);
 
     NetworkObject outputObj;
@@ -243,10 +220,8 @@ TEST(base, NetworkObject_invalidDevice) {
     bool done = false;
 
     std::thread child([&](){
-        using Message = NetworkObject::Message;
-
         // Set up state
-        const Message msg{ "billy", "He's gone fishing!" };
+        const base::Message msg{ "billy", "He's gone fishing!" };
         NetworkObject netObj(msg);
 
         // Set up test device
@@ -281,10 +256,8 @@ TEST(base, NetworkObject_invalidSocket) {
     bool done = false;
 
     std::thread child([&](){
-        using Message = NetworkObject::Message;
-
         // Set up state
-        const Message msg{ "billy", "He's gone fishing!" };
+        const base::Message msg{ "billy", "He's gone fishing!" };
         NetworkObject netObj(msg);
 
         // Set up test device
