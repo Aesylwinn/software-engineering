@@ -37,6 +37,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->GetVerifiedB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->matchB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
+    connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
 }
 
 interestData::~interestData()
@@ -61,19 +62,12 @@ void interestData::switchLowTabs()
     QObject* button = QObject::sender();    //allows us to see which button is pushed
 
     //just lets us grey out certain tabs that do not need to be used at that time
-    if(button == ui->Login){
-        /* //function that will parse through the usernames to match up password
-        int or bool temp = parseUserNames(ui->userName->text(), ui->password->text());	//function can return an int or boolean of some kind
-        if (temp == true or 1){
-            login(ui->usrName->text(), ui->password->text());  } //logins to the server to communicate
-        else {
-            QMessageBox messageBox;
-            messageBox.critical(0,"Error","Incorrect user name or password");
-            messageBox.setFixedSize(500,200);
-        } */
+    if(button == ui->Login)
+    {
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
-    else{
+    else if(button == ui->SignUp)
+    {
         if (ui->newPass->text() != ui->confirmPass->text())
         {
             QMessageBox messageBox;
@@ -83,8 +77,15 @@ void interestData::switchLowTabs()
         else
         {
             // Create the account
-            createAccount(ui->newUsrName->text(), ui->confirmPass->text());
+            createAccount();
         }
+    }
+//This will be moved to checkResponse()
+    else
+    {
+        ui->tabWidget->setCurrentWidget(ui->tab_5);
+        ui->tabWidget->setTabEnabled(3, true);
+        ui->tabWidget->setTabEnabled(1, false);
     }
 }
 
@@ -178,26 +179,59 @@ void interestData::login(QString username, QString password)
     mLoginRequest = mNetworkMgr->sendRequest(request);
 }
 
-void interestData::createAccount(QString username, QString password)
+void interestData::createAccount()
 {
     CreateAccountRequest data;
-    data.username = username;
-    data.password = password;
-    // TODO: the other fields?
+    data.username = ui->newUsrName->text();
+    data.password = ui->confirmPass->text();
+    // the other fields filled out
+    data.email = ui->newEmail->text();
+    data.firstName = ui->lineEdit_FN->text();
+    data.lastName = ui->lineEdit_LN->text();
+    if (ui->malebutt->isChecked())
+        data.gender = ui->malebutt->text();
+    else
+        data.gender = ui->febutt->text();
 
     NetworkObject request(data);
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-/*int or bool interestData::parseUserNames(QString username, QString password)
+void interestData::displayEvents(QVector<base::event> interest)
+{
+    int temp = 0;
+    ui->interestStream->setRowCount(interest.size());
+    for (int i = 0; i < interest.size(); i++)
+    {
+            ui->interestStream->setItem(i, temp, new QTableWidgetItem(interest[i].getName()));
+            ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation().getAddress()));
+            ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getName()));        //date
+            ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getName()));        //time
+            ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(interest[i].getDescription()));
+    }
+
+}
+
+void interestData::displayMyEvents(QVector<base::event> myEvent)
+{
+    int temp = 0;
+    ui->eventStream->setRowCount(myEvent.size());
+    for(int i = 0; i < myEvent.size(); i++)
+    {
+        ui->eventStream->setItem(i, temp, new QTableWidgetItem(myEvent[i].getName()));
+        ui->eventStream->setItem(i, temp+1, new QTableWidgetItem(myEvent[i].getLocation().getAddress()));
+        ui->eventStream->setItem(i, temp+2, new QTableWidgetItem(myEvent[i].getName()));            //date
+        ui->eventStream->setItem(i, temp+3, new QTableWidgetItem(myEvent[i].getName()));            //time
+        ui->eventStream->setItem(i, temp+4, new QTableWidgetItem(myEvent[i].getDescription()));
+    }
+}
+
+/*
+void interestData::createHost()
 {
 
-} */
-
-/*void interestData::displayEvents()
-{
-
-} */
+}
+*/
 
 void interestData::checkResponse(NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
@@ -207,7 +241,7 @@ void interestData::checkResponse(NetworkObject response) {
         if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
             LoginResponse info = response.getLoginResponse();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
-            if (info.valid == 1)
+            if (info.valid)
             {
                 ui->tabWidget->setCurrentWidget(ui->tab_4);
                 ui->tabWidget->setTabEnabled(2, true);
@@ -240,6 +274,5 @@ void interestData::checkResponse(NetworkObject response) {
         }
     }
     //else if (response.getTicket() == mEventRequest) //will grab events
-    //else if (response.getTicket() == mCreateEventRqt) //will create event
-    //else if (response.getTicket() == mUsernamesRequest) //will grab usernames
+    //else if (response.getTicket() == mCreateHostRqt) //will grab events
 }
