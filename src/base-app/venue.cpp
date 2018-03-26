@@ -31,7 +31,9 @@ namespace base {
 
     //utility
     QString venue::toString(){
-        return name;
+        QString theString;
+        theString = name + ", " + address + ", " + phoneNumber + ", " + QString::number(entryFee);
+        return theString;
     }
 
     //setters
@@ -61,16 +63,16 @@ namespace base {
     }
 
     //getters
-    QString venue::getAddress(){
+    QString venue::getAddress() const{
         return address;
     }
-    QString venue::getPhoneNumber(){
+    QString venue::getPhoneNumber() const{
         return phoneNumber;
     }
-    QString venue::getName(){
+    QString venue::getName() const{
         return name;
     }
-    double venue::getEntryFee(){
+    double venue::getEntryFee() const{
         return entryFee;
     }
 
@@ -81,6 +83,20 @@ namespace base {
         setPhoneNumber(newVenue.getPhoneNumber());
         setEntryFee(newVenue.getEntryFee());
         return *this;
+    }
+
+    bool venue::operator==(const venue &rhs) const
+    {
+        bool isEqual = true;
+        if (name != rhs.getName())
+            isEqual = false;
+        if (address != rhs.getAddress())
+            isEqual = false;
+        if (phoneNumber != rhs.getPhoneNumber())
+            isEqual = false;
+        if (entryFee != rhs.getEntryFee())
+            isEqual = false;
+        return isEqual;
     }
 
     //helper class
