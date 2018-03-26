@@ -38,6 +38,19 @@ interestData::interestData(QWidget *parent) :
     connect(ui->matchB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
     connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
+
+    base::venue tempVenue;
+    tempVenue.setAddress(tr("411 Electric Avenue"));
+
+    base::event tempEvent;
+    tempEvent.setName(tr("Wine Night"));
+    tempEvent.setDescription(tr("Come get toasty at Primetime for $2!"));
+    tempEvent.setLocation(tempVenue);
+
+    QVector<base::event> tempVector;
+    tempVector.push_back(tempEvent);
+
+    displayEvents(tempVector);
 }
 
 interestData::~interestData()
@@ -226,12 +239,13 @@ void interestData::displayMyEvents(QVector<base::event> myEvent)
     }
 }
 
-/*
-void interestData::createHost()
-{
 
-}
-*/
+//void interestData::createHost()
+//{
+//    NetworkObject::CreateHostRqt data;
+//}
+
+
 void interestData::checkResponse(base::NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
