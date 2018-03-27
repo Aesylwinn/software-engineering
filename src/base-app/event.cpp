@@ -149,4 +149,45 @@ namespace base{
             category = cat;
 
     }
+
+    bool operator==(const event& right, const event& left) {
+        return
+            right.getName() == left.getName() &&
+            right.getCategory() == left.getCategory() &&
+            right.getAttendingUsers() == left.getAttendingUsers() &&
+            right.getMainHost() == left.getMainHost() &&
+            right.getDescription() == left.getDescription() &&
+            right.getLocation() == left.getLocation() &&
+            right.getID() == left.getID();
+    }
+
+    QDataStream& operator<<(QDataStream& ostream, const event& evt) {
+        // Write everything
+        ostream << evt.getName();
+        ostream << evt.getCategory();
+        ostream << evt.getMainHost();
+        ostream << evt.getAttendingUsers();
+        ostream << evt.getLocation().toString();
+        ostream << evt.getDescription();
+        ostream << evt.getID();
+
+        return ostream;
+    }
+
+    QDataStream& operator>>(QDataStream& istream, event& evt) {
+        // Read everything
+        QString str;
+        QVector<QString> users;
+        qint32 val;
+
+        istream >> str; evt.setName(str);
+        istream >> str; evt.setCategory(str);
+        istream >> str; evt.setHost(str);
+        istream >> users; evt.setUsers(users);
+        istream >> str; evt.setLocation(venue(str));
+        istream >> str; evt.setDescription(str);
+        istream >> val; evt.setID(val);
+
+        return istream;
+    }
 }

@@ -22,10 +22,12 @@ namespace base {
             PT_CreateAccountRequest,
             PT_LoginRequest,
             PT_CreateEventRequest,
+            PT_SuggestEventsRequest,
 
             PT_CreateAccountResponse,
             PT_LoginResponse,
             PT_CreateEventResponse,
+            PT_SuggestEventsResponse,
 
             PT_Message
         };
@@ -33,18 +35,28 @@ namespace base {
 
         // Default ctor, PT_None
         NetworkObject();
+
         // Copy ctor
         NetworkObject(const NetworkObject& other);
+
         // Parameterized ctor
         NetworkObject(PayloadType type, QByteArray payload);
+
         // Message ctor
         NetworkObject(const Message& message);
+
         // Create account request
         NetworkObject(const CreateAccountRequest& request);
+
         // Login request ctor
         NetworkObject(const LoginRequest& request);
+
         // Event request ctor
-        NetworkObject(const CreateEventRequest& data);
+        NetworkObject(const CreateEventRequest& request);
+
+        // Suggest events request ctor
+        NetworkObject(const SuggestEventsRequest& request);
+
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
@@ -56,22 +68,29 @@ namespace base {
         void setPayload(PayloadType type, QByteArray payload);
         void setTicket(qint32 ticket);
 
+
         // Writes to any IO device including sockets!
         void write(QIODevice* device) const;
 
         // Reads the IO device in a nonblocking manner.
         bool tryRead(QIODevice* device);
 
+
         // Converts payload to a message
         Message getMessage() const;
-
-        // Converts payload to a create account request
-        CreateAccountRequest getCreateAccountRequest() const;
 
         // Converts payload to a login request
         LoginRequest getLoginRequest() const;
 
+        // Converts payload to a create account request
+        CreateAccountRequest getCreateAccountRequest() const;
+
+        // Converts a payload to a create event request
         CreateEventRequest getCreateEventRequest() const;
+
+        // Converts a payload to a create event request
+        SuggestEventsRequest getSuggestEventsRequest() const;
+
 
         // Converts payload to a login response
         LoginResponse getLoginResponse() const;
@@ -79,11 +98,18 @@ namespace base {
         // Converts payload to a create account response
         CreateAccountResponse getCreateAccountResponse() const;
 
-        // Creates a response to a CreateAccountRequest
-        NetworkObject createResponse(const CreateAccountResponse& data);
+        // Converts payload to a suggest events response
+        SuggestEventsResponse getSuggestEventsResponse() const;
+
 
         // Creates a response to a LoginRequest
         NetworkObject createResponse(const LoginResponse& data);
+
+        // Creates a response to a CreateAccountRequest
+        NetworkObject createResponse(const CreateAccountResponse& data);
+
+        // Creates a response to a SuggestEventsRequest
+        NetworkObject createResponse(const SuggestEventsResponse& data);
 
     private:
 
@@ -92,6 +118,9 @@ namespace base {
 
         // CreateAccount response ctor
         NetworkObject(const CreateAccountResponse& response);
+
+        // SuggestEvents response ctor
+        NetworkObject(const SuggestEventsResponse& response);
 
         // Ctor helper function
         void init(PayloadType type, QByteArray payload);

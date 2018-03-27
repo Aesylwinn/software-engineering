@@ -3,6 +3,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include <QDataStream>
 #include <QString>
 #include <QVector>
 #include "venue.h"
@@ -51,6 +52,17 @@ namespace  base{
         qint32 id;
 
         void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
+
+        friend bool operator==(const event&, const event&);
+        friend QDataStream& operator<<(QDataStream&, const event&);
+        friend QDataStream& operator>>(QDataStream&, event&);
     };
+
+    // Equality
+    bool operator==(const event&, const event&);
+
+    // Stream output
+    QDataStream& operator<<(QDataStream&, const event&);
+    QDataStream& operator>>(QDataStream&, event&);
 }
 #endif // EVENT_H

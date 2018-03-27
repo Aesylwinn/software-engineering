@@ -1,6 +1,10 @@
 #ifndef BASE_NETWORK_PACKETS_H
 #define BASE_NETWORK_PACKETS_H
 
+#include <QVector>
+
+#include "event.h"
+
 namespace base {
     struct Message {
         QString category;
@@ -22,9 +26,12 @@ namespace base {
         QString password;
     };
 
-    struct LoginResponse {
-        qint32 valid;
-        QString details;
+    struct CreateEventRequest{
+        event data;
+    };
+
+    struct SuggestEventsRequest {
+        int count;
     };
 
     struct CreateAccountResponse {
@@ -32,8 +39,13 @@ namespace base {
         QString details;
     };
 
-    struct CreateEventRequest{
-        event data;
+    struct LoginResponse {
+        qint32 valid;
+        QString details;
+    };
+
+    struct SuggestEventsResponse {
+        QVector<event> events;
     };
 }
 

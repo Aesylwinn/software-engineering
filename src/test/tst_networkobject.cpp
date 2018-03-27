@@ -80,6 +80,18 @@ TEST(base, NetworkObject_EventCreateRequest){
     ASSERT_EQ(myEvent.data.getID(), converted.data.getID());
 }
 
+TEST(base, NetworkObject_suggestEventsRequest) {
+    // Set up state
+    const SuggestEventsRequest request = { 5 };
+
+    // Test conversion to and back again
+    NetworkObject netObj(request);
+    SuggestEventsRequest converted = netObj.getSuggestEventsRequest();
+
+    // Oracle
+    ASSERT_EQ(request.count, converted.count);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -141,6 +153,28 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_suggestEventsResponseCtor) {
+    // Set up state
+    const SuggestEventsRequest request { 2 };
+    const SuggestEventsResponse response {{
+        event("Bob's Emporium", 12, "Fun!"),
+        event("Middle Earth", 232, "Dangerous!")
+    }};
+    const qint32 ticketNumber = 89;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    SuggestEventsResponse converted = netObjResponse.getSuggestEventsResponse();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.events.size(), converted.events.size());
+    ASSERT_EQ(response.events, converted.events);
 }
 
 TEST(base, NetworkObject_write) {
