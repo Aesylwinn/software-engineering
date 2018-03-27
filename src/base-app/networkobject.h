@@ -23,11 +23,13 @@ namespace base {
             PT_LoginRequest,
             PT_CreateEventRequest,
             PT_SuggestEventsRequest,
+            PT_CreateHostRequest,
 
             PT_CreateAccountResponse=0x200,
             PT_LoginResponse,
             PT_CreateEventResponse,
             PT_SuggestEventsResponse,
+            PT_CreateHostResponse,
 
             PT_Message=0x400
         };
@@ -56,6 +58,9 @@ namespace base {
 
         // Suggest events request ctor
         NetworkObject(const SuggestEventsRequest& request);
+
+        // Create host request ctor
+        NetworkObject(const CreateHostRequest& request);
 
 
         // Type and raw data retrieval
@@ -91,6 +96,9 @@ namespace base {
         // Converts a payload to a create event request
         SuggestEventsRequest getSuggestEventsRequest() const;
 
+        // Converts a payload to a create host request
+        CreateHostRequest getCreateHostRequest() const;
+
 
         // Converts payload to a login response
         LoginResponse getLoginResponse() const;
@@ -100,6 +108,9 @@ namespace base {
 
         // Converts payload to a suggest events response
         SuggestEventsResponse getSuggestEventsResponse() const;
+
+        // Converts payload to a create host response
+        CreateHostResponse getCreateHostResponse() const;
 
 
         // Creates a response to a LoginRequest
@@ -111,6 +122,9 @@ namespace base {
         // Creates a response to a SuggestEventsRequest
         NetworkObject createResponse(const SuggestEventsResponse& data);
 
+        // Create a response to a CreateHostRequest
+        NetworkObject createResponse(const CreateHostResponse& data);
+
     private:
 
         // Login response ctor
@@ -121,6 +135,10 @@ namespace base {
 
         // SuggestEvents response ctor
         NetworkObject(const SuggestEventsResponse& response);
+
+        // CreateHost response ctor
+        NetworkObject(const CreateHostResponse& response);
+
 
         // Ctor helper function
         void init(PayloadType type, QByteArray payload);

@@ -30,6 +30,14 @@ namespace base {
         event data;
     };
 
+    struct CreateHostRequest {
+        QString username;
+        QString password;
+        QString displayName;
+        QString businessName;
+        QString bio;
+    };
+
     struct SuggestEventsRequest {
         int count;
     };
@@ -46,6 +54,10 @@ namespace base {
 
     struct SuggestEventsResponse {
         QVector<event> events;
+    };
+
+    struct CreateHostResponse {
+        qint32 valid;
     };
 }
 

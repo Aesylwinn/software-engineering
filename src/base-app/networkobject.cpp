@@ -79,6 +79,19 @@ namespace base {
         stream << request.count;
     }
 
+    NetworkObject::NetworkObject(const CreateHostRequest& request) {
+        init(PT_CreateHostRequest, QByteArray());
+        mTicket = -1;
+
+        QDataStream stream;
+        setupWrite(stream);
+
+        stream << request.username << request.password;
+        stream << request.displayName;
+        stream << request.businessName;
+        stream << request.bio;
+    }
+
     NetworkObject::NetworkObject(const LoginResponse& response)
     {
         init(PT_LoginResponse, QByteArray());
@@ -107,6 +120,15 @@ namespace base {
         QDataStream stream;
         setupWrite(stream);
         stream << response.events;
+    }
+
+    NetworkObject::NetworkObject(const CreateHostResponse& response) {
+        init(PT_CreateHostResponse, QByteArray());
+        mTicket = -1;
+
+        QDataStream stream;
+        setupWrite(stream);
+        stream << response.valid;
     }
 
     NetworkObject::PayloadType NetworkObject::getPayloadType() const {
@@ -261,6 +283,22 @@ namespace base {
         return result;
     }
 
+    CreateHostRequest NetworkObject::getCreateHostRequest() const {
+        mustMatch(PT_CreateHostRequest);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateHostRequest result;
+        stream >> result.username >> result.password;
+        stream >> result.displayName;
+        stream >> result.businessName;
+        stream >> result.bio;
+
+        return result;
+    }
+
     LoginResponse NetworkObject::getLoginResponse() const {
         mustMatch(PT_LoginResponse);
 
@@ -297,6 +335,19 @@ namespace base {
         return result;
     }
 
+    CreateHostResponse NetworkObject::getCreateHostResponse() const {
+        mustMatch(PT_CreateHostResponse);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateHostResponse result;
+        stream >> result.valid;
+
+        return result;
+    }
+
     NetworkObject NetworkObject::createResponse(const LoginResponse& data) {
             mustMatch(PT_LoginRequest);
 
@@ -319,6 +370,15 @@ namespace base {
         mustMatch(PT_SuggestEventsRequest);
 
         // Construct response and match the ticket
+        NetworkObject response(data);
+        response.setTicket(getTicket());
+        return response;
+    }
+
+    NetworkObject NetworkObject::createResponse(const CreateHostResponse& data) {
+        mustMatch(PT_CreateHostRequest);
+
+        // Construct response
         NetworkObject response(data);
         response.setTicket(getTicket());
         return response;

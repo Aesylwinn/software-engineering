@@ -92,6 +92,27 @@ TEST(base, NetworkObject_suggestEventsRequest) {
     ASSERT_EQ(request.count, converted.count);
 }
 
+TEST(base, NetworkObject_createHostRequest) {
+    // State
+    const CreateHostRequest request = {
+        "bob", "ducky",
+        "Master",
+        "The Universe",
+        "Master of the Universe... is proud to present our business to you."
+    };
+
+    // Test
+    NetworkObject netObj(request);
+    CreateHostRequest converted = netObj.getCreateHostRequest();
+
+    // Oracle
+    ASSERT_EQ(request.username, converted.username);
+    ASSERT_EQ(request.password, converted.password);
+    ASSERT_EQ(request.displayName, converted.displayName);
+    ASSERT_EQ(request.businessName, converted.businessName);
+    ASSERT_EQ(request.bio, converted.bio);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -175,6 +196,29 @@ TEST(base, NetworkObject_suggestEventsResponseCtor) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.events.size(), converted.events.size());
     ASSERT_EQ(response.events, converted.events);
+}
+
+TEST(base, NetworkObject_createHostResponse) {
+    // Set up state
+    const CreateHostRequest request {
+        "bob", "baileyR0K2",
+        "Bob",
+        "Wonderman",
+        "Tight ropes are cool. So are you. Why don't we rope our way to a bar together?"
+    };
+    const CreateHostResponse response { 1 };
+    const qint32 ticketNumber = 42;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    CreateHostResponse converted = netObjResponse.getCreateHostResponse();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
 }
 
 TEST(base, NetworkObject_write) {
