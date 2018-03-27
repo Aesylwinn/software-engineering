@@ -17,19 +17,19 @@ namespace base {
     public:
         // The types of payloads
         enum PayloadType {
-            PT_None,
+            PT_None=0,
 
-            PT_CreateAccountRequest,
+            PT_CreateAccountRequest=0x1,
             PT_LoginRequest,
             PT_CreateEventRequest,
             PT_SuggestEventsRequest,
 
-            PT_CreateAccountResponse,
+            PT_CreateAccountResponse=0x200,
             PT_LoginResponse,
             PT_CreateEventResponse,
             PT_SuggestEventsResponse,
 
-            PT_Message
+            PT_Message=0x400
         };
 
 
