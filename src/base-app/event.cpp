@@ -29,7 +29,7 @@ namespace base{
 
     bool event::setLocation(base::venue theVenue)
     {
-        if (theVenue.getName().isEmpty())
+        if (theVenue.getName().isEmpty() && theVenue.getAddress().isEmpty() && theVenue.getPhoneNumber().isEmpty() && theVenue.getEntryFee() == 0)
             return false;
         location.setAddress(theVenue.getAddress());
         location.setEntryFee(theVenue.getEntryFee());
