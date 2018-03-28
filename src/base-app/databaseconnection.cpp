@@ -79,21 +79,121 @@ bool DatabaseConnection::createAccount(QString username, QString password)
 }
 
 bool DatabaseConnection::createHost(qint64 userId, QString displayName, QString businessName, QString bio) {
-    QSqlQuery query(*db);
+    // Start transaction
+    db->transaction();
 
-    if (!query.prepare("INSERT INTO User_Host (id_user, displayName, businessName, bio) VALUES ( :id, :displayName, :businessName, :bio )"))
+    // Add host record
+    {
+        QSqlQuery query(*db);
+        QString statement = "INSERT INTO User_Host (id_user, displayName, businessName, bio) VALUES ( :id, :displayName, :businessName, :bio )";
+
+        if (!query.prepare(statement)) {
+            db->rollback();
+            throw std::runtime_error("Unable to create host account, unable to prepare query");
+        }
+
+        query.bindValue(":id", userId);
+        query.bindValue(":displayName", displayName);
+        query.bindValue(":businessName", businessName);
+        query.bindValue(":bio", bio);
+
+        if (!query.exec()) {
+            db->rollback();
+            return false;
+        }
+    }
+
+    // Set userType to host
+    {
+
+        QSqlQuery query(*db);
+        QString statement = "UPDATE User_basic SET userType = 'HOST' WHERE id = :id";
+
+        if (!query.prepare(statement)) {
+            db->rollback();
+            throw std::runtime_error("Unable to create host account, unable to prepare query; 2");
+        }
+
+        query.bindValue(":id", userId);
+
+        if (!query.exec()) {
+            db->rollback();
+            return false;
+        }
+    }
+
+    return db->commit();
+}
+
+bool DatabaseConnection::getId(QString username, qint64& id) {
+    // Create query
+    QSqlQuery query(*db);
+    QString statement = "SELECT id FROM User_basic WHERE username = :usr";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to get user id, unable to prepare query");
+
+    query.bindValue(":usr", username);
+
+    // Run and process
+    if (!query.exec())
+        return false;
+
+    if (query.isSelect() && query.first()) {
+        id = query.value("id").toInt();
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::isHost(QString username) {
+    // Create query
+    QSqlQuery query(*db);
+    QString statement = "SELECT userType FROM User_basic WHERE username = :usr";
+
+    if (!query.prepare(statement))
         throw std::runtime_error("Unable to create host account, unable to prepare query");
 
-    query.bindValue(":id",userId);
-    query.bindValue(":displayName", displayName);
-    query.bindValue(":businessName", businessName);
-    query.bindValue(":bio", bio);
+    query.bindValue(":usr", username);
 
+    // Run and process
     if (!query.exec()) {
         return false;
     }
 
-    return true;
+    if (query.isSelect() && query.first()) {
+        QString type = query.value("userType").toString();
+        return type == "HOST";
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::getEvents(QVector<base::event>& events) {
+    // Create query
+    QSqlQuery query(*db);
+    QString statement = "SELECT * FROM Event";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to select events, unable to prepare query");
+
+    // Run and process
+    if (!query.exec()) {
+        return false;
+    }
+
+    if (query.isSelect() && query.first()) {
+        do {
+            QString displayName = query.value("displayName").toString();
+            // TODO other fields
+            events.push_back(base::event(displayName));
+        } while (query.next());
+
+        return true;
+    }
+
+    return false;
 }
 
 

@@ -2,11 +2,13 @@
 #define DATABASECONNECTION_H
 
 #include "base-app_global.h"
+#include "event.h"
 #include "networkobject.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QVector>
 #include <QString>
 #include <exception>
 
@@ -19,9 +21,14 @@ namespace base {
         DatabaseConnection(QString hostname);
         ~DatabaseConnection();
         bool checkPassword(QString username, QString password); //can throw run-time error if server unavailable
+
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
         bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
 
+        bool getId(QString username, qint64& id);
+        bool isHost(QString username);
+
+        bool getEvents(QVector<base::event>& events);
 
     private:
         void SetUp(QString hostname, QString databaseName, QString username, QString password);
