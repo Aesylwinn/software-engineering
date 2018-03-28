@@ -34,7 +34,10 @@ public slots:
     void createAccount();
     void displayEvents(QVector<base::event> interest);
     void displayMyEvents(QVector<base::event> myEvent);
-    //void createHost();
+    void createHost();
+    void createEvent();
+    void requestEvents();
+    void requestMyEvents();
 
 private:
     Ui::interestData *ui;
@@ -42,7 +45,9 @@ private:
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
 	//qint32 mEventRequest;
-    //qint32 mCreateHostRqt;
+    qint32 mCreateEventRequest;
+    qint32 mCreateHostRequest;
+    qint32 mSuggestEventsRequest;
 };
 
 #endif // INTERESTDATA_H

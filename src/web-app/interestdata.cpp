@@ -10,7 +10,10 @@ interestData::interestData(QWidget *parent) :
     ui(new Ui::interestData),
     mNetworkMgr(new ClientNetworkMgr(this)),
     mLoginRequest(-1),
-    mCreateAccountRequest(-1)
+    mCreateAccountRequest(-1),
+    mCreateEventRequest(-1),
+    mCreateHostRequest(-1),
+    mSuggestEventsRequest(-1)
 {
     // Connect to the server
     mNetworkMgr->connect(QString(SERVER_ADDRESS), SERVER_PORT);
@@ -168,8 +171,6 @@ void interestData::logout()
     ui->newUsrName->clear();
     ui->newPass->clear();
     ui->confirmPass->clear();
-    // Note: mNetworkMgr memory is managed by Qt
-    mNetworkMgr->disconnect();
 }
 
 void interestData::login(QString username, QString password)
@@ -226,12 +227,38 @@ void interestData::displayMyEvents(QVector<base::event> myEvent)
     }
 }
 
-/*
 void interestData::createHost()
 {
+    CreateHostRequest data;
+    data.username = "existing username";
+    data.password = "existing password";
+    data.displayName = "something";
+    data.businessName = "something else";
+    data.bio = "blah";
 
+    mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
-*/
+
+void interestData::createEvent() {
+    CreateEventRequest request;
+    request.data.setName("Bath Party");
+    request.data.setHost("Billy");
+    request.data.setDescription("Rub-a-dub-dub");
+    request.data.setCategory("Music");
+
+    mCreateEventRequest = mNetworkMgr->sendRequest(NetworkObject(request));
+}
+
+void interestData::requestEvents() {
+    SuggestEventsRequest data;
+    data.count = 5; // How many?
+
+    mSuggestEventsRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
+void interestData::requestMyEvents() {
+    // TODO
+}
 
 void interestData::checkResponse(NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
@@ -273,6 +300,40 @@ void interestData::checkResponse(NetworkObject response) {
             }
         }
     }
-    //else if (response.getTicket() == mEventRequest) //will grab events
-    //else if (response.getTicket() == mCreateHostRqt) //will grab events
+    else if (response.getTicket() == mCreateHostRequest) { //will grab events
+        mCreateHostRequest = -1;
+        if (response.getPayloadType() == NetworkObject::PT_CreateHostResponse) {
+            CreateHostResponse info = response.getCreateHostResponse();
+            qInfo("host created: %d", info.valid);
+            if (info.valid) {
+                // TODO: Success
+            } else {
+                QMessageBox messageBox;
+                messageBox.critical(0, "Error", "Unable to create host account");
+                messageBox.setFixedSize(500, 200);
+            }
+        }
+    }
+    else if (response.getTicket() == mCreateEventRequest) {
+        mCreateEventRequest = -1;
+        if (response.getPayloadType() == NetworkObject::PT_CreateEventRequest) {
+            CreateEventResponse info = response.getCreateEventResponse();
+            qInfo("event created: %d msg %s", info.valid, qUtf8Printable(info.details));
+            if (info.valid) {
+                // TODO: Success
+            } else {
+                QMessageBox messageBox;
+                messageBox.critical(0, "Error", "Unable to create event");
+                messageBox.setFixedSize(500, 200);
+            }
+        }
+    }
+    else if (response.getTicket() == mSuggestEventsRequest) {
+        mSuggestEventsRequest = -1;
+        if (response.getPayloadType() == NetworkObject::PT_SuggestEventsRequest) {
+            SuggestEventsResponse info = response.getSuggestEventsResponse();
+            qInfo("events recieved: %d", info.events.count());
+            displayEvents(info.events);
+        }
+    }
 }
