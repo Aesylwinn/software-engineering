@@ -39,16 +39,16 @@ namespace base {
                 case NetworkObject::PT_CreateAccountRequest:
                     {
                         CreateAccountRequest request = obj.getCreateAccountRequest();
-                        CreateAccountResponse response = { 0, "DB error" };
+                        CreateAccountResponse response = { NotValid, "DB error" };
                         qInfo("create account request for username: %s", qUtf8Printable(request.username));
                         // Add to database
                         try {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.createAccount(request.username, request.password)) {
-                                response = { 1, "Account created" };
+                                response = { IsValid, "Account created" };
                             }
                             else {
-                                response = { 0, "Username taken" };
+                                response = { NotValid, "Username taken" };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
@@ -60,7 +60,7 @@ namespace base {
                 case NetworkObject::PT_LoginRequest:
                     {
                         LoginRequest request = obj.getLoginRequest();
-                        LoginResponse response = {0, "DB Error", 0};
+                        LoginResponse response = { NotValid, "DB Error", 0};
 
                         qInfo("%s: is trying to login with %s",
                                 qUtf8Printable(request.username),
@@ -69,10 +69,10 @@ namespace base {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.checkPassword(request.username, request.password)) {
                                 qint32 isHost = 1;
-                                response = { 1, "Authenticated", isHost };
+                                response = { IsValid, "Authenticated", isHost };
                             }
                             else {
-                                response = { 0, "Unknown Username or Bad Password", 0 };
+                                response = { NotValid, "Unknown Username or Bad Password", 0 };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
@@ -84,7 +84,7 @@ namespace base {
                 case NetworkObject::PT_CreateEventRequest:
                     {
                         CreateEventRequest request = obj.getCreateEventRequest();
-                        CreateEventResponse response = { 1, "event created" };
+                        CreateEventResponse response = { IsValid, "event created" };
 
                         qInfo("create event: %s", qUtf8Printable(request.data.getName()));
 
@@ -96,7 +96,7 @@ namespace base {
                 case NetworkObject::PT_CreateHostRequest:
                     {
                         CreateHostRequest request = obj.getCreateHostRequest();
-                        CreateHostResponse response = { 1 };
+                        CreateHostResponse response = { IsValid };
 
                         qInfo("create host: %s", qUtf8Printable(request.username));
 

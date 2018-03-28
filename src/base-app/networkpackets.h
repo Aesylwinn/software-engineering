@@ -6,6 +6,9 @@
 #include "event.h"
 
 namespace base {
+    const qint32 IsValid = 1;
+    const qint32 NotValid = 0;
+
     struct Message {
         QString category;
         QString message;
