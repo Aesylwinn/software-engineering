@@ -141,7 +141,7 @@ TEST(base, NetworkObject_createAccountResponse) {
 TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
     // Set up state
     const LoginRequest request{ "muah", "hahaha!!!" };
-    const LoginResponse response{ 0, "User password is wrong" };
+    const LoginResponse response{ 0, "User password is wrong", 0 };
     const qint32 ticketNumber = 11;
 
     NetworkObject netObj(request);
@@ -155,12 +155,13 @@ TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
+    ASSERT_EQ(response.isHost, converted.isHost);
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isvalid) {
     // Set up state
     const LoginRequest request{ "oh", "dear" };
-    const LoginResponse response{ 1, "" };
+    const LoginResponse response{ 1, "", 1 };
     const qint32 ticketNumber = 11;
 
     NetworkObject netObj(request);
@@ -174,6 +175,7 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
+    ASSERT_EQ(response.isHost, converted.isHost);
 }
 
 TEST(base, NetworkObject_createEventResponseCtor) {

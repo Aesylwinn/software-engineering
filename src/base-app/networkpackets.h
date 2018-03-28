@@ -50,6 +50,8 @@ namespace base {
     struct LoginResponse {
         qint32 valid;
         QString details;
+
+        qint32 isHost;
     };
 
     struct CreateEventResponse {

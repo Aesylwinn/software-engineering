@@ -100,7 +100,7 @@ namespace base {
         // Combine into a single object
         QDataStream stream;
         setupWrite(stream);
-        stream << response.valid << response.details;
+        stream << response.valid << response.details << response.isHost;
     }
 
     NetworkObject::NetworkObject(const CreateAccountResponse& response) {
@@ -317,7 +317,7 @@ namespace base {
         setupRead(stream);
 
         LoginResponse result;
-        stream >> result.valid >> result.details;
+        stream >> result.valid >> result.details >> result.isHost;
         return result;
     }
 

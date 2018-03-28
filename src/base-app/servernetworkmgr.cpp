@@ -60,7 +60,7 @@ namespace base {
                 case NetworkObject::PT_LoginRequest:
                     {
                         LoginRequest request = obj.getLoginRequest();
-                        LoginResponse response = {0, "DB Error"};
+                        LoginResponse response = {0, "DB Error", 0};
 
                         qInfo("%s: is trying to login with %s",
                                 qUtf8Printable(request.username),
@@ -68,10 +68,11 @@ namespace base {
                         try {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.checkPassword(request.username, request.password)) {
-                                response = { 1, "Authenticated" };
+                                qint32 isHost = 1;
+                                response = { 1, "Authenticated", isHost };
                             }
                             else {
-                                response = { 0, "Unknown Username or Bad Password" };
+                                response = { 0, "Unknown Username or Bad Password", 0 };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
