@@ -35,7 +35,8 @@ HEADERS += \
     venue.h \
     timepoint.h \
     mytime.h \
-    databaseconnection.h
+    databaseconnection.h \
+    networkpackets.h
 
 unix {
     target.path = /usr/lib
