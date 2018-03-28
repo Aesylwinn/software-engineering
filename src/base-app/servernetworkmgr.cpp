@@ -80,6 +80,44 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
+                case NetworkObject::PT_CreateEventRequest:
+                    {
+                        CreateEventRequest request = obj.getCreateEventRequest();
+                        CreateEventResponse response = { 1, "event created" };
+
+                        qInfo("create event: %s", qUtf8Printable(request.data.getName()));
+
+                        // TODO create
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case NetworkObject::PT_CreateHostRequest:
+                    {
+                        CreateHostRequest request = obj.getCreateHostRequest();
+                        CreateHostResponse response = { 1 };
+
+                        qInfo("create host: %s", qUtf8Printable(request.username));
+
+                        // TODO Add it
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case NetworkObject::PT_SuggestEventsRequest:
+                    {
+                        SuggestEventsRequest request = obj.getSuggestEventsRequest();
+                        SuggestEventsResponse response = {};
+
+                        qInfo("suggest events: %d", request.count);
+
+                        // TODO Get events, remove placeholders
+                        response.events.push_back(base::event(QString("Billy's Play Date"), 12, QString("12 and under only"), QString("Billy")));
+                        response.events.push_back(base::event(QString("Jasmine's Kiosk"), 13, QString("Get help!"), QString("Jasmine")));
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
                 default:
                     qInfo("Unknown request encountered: %d", obj.getPayloadType());
                     break;

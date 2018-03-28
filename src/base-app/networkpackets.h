@@ -52,6 +52,11 @@ namespace base {
         QString details;
     };
 
+    struct CreateEventResponse {
+        qint32 valid;
+        QString details;
+    };
+
     struct SuggestEventsResponse {
         QVector<event> events;
     };

@@ -113,6 +113,16 @@ namespace base {
         stream << response.valid << response.details;
     }
 
+    NetworkObject::NetworkObject(const CreateEventResponse& response) {
+        init(PT_CreateEventResponse, QByteArray());
+        mTicket = -1;
+
+        // Combine
+        QDataStream stream;
+        setupWrite(stream);
+        stream << response.valid << response.details;
+    }
+
     NetworkObject::NetworkObject(const SuggestEventsResponse& response) {
         init(PT_SuggestEventsResponse, QByteArray());
         mTicket = -1;
@@ -323,6 +333,18 @@ namespace base {
         return result;
     }
 
+    CreateEventResponse NetworkObject::getCreateEventResponse() const {
+        mustMatch(PT_CreateEventResponse);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        CreateEventResponse result;
+        stream >> result.valid >> result.details;
+        return result;
+    }
+
     SuggestEventsResponse NetworkObject::getSuggestEventsResponse() const {
         mustMatch(PT_SuggestEventsResponse);
 
@@ -361,6 +383,15 @@ namespace base {
         mustMatch(PT_CreateAccountRequest);
 
         // Construct response and match the ticket
+        NetworkObject response(data);
+        response.setTicket(getTicket());
+        return response;
+    }
+
+    NetworkObject NetworkObject::createResponse(const CreateEventResponse& data) {
+        mustMatch(PT_CreateEventRequest);
+
+        // Construct response
         NetworkObject response(data);
         response.setTicket(getTicket());
         return response;

@@ -106,6 +106,9 @@ namespace base {
         // Converts payload to a create account response
         CreateAccountResponse getCreateAccountResponse() const;
 
+        // Converts payload to a create event response
+        CreateEventResponse getCreateEventResponse() const;
+
         // Converts payload to a suggest events response
         SuggestEventsResponse getSuggestEventsResponse() const;
 
@@ -118,6 +121,9 @@ namespace base {
 
         // Creates a response to a CreateAccountRequest
         NetworkObject createResponse(const CreateAccountResponse& data);
+
+        // Creates a response to a CreateEventRequest
+        NetworkObject createResponse(const CreateEventResponse& data);
 
         // Creates a response to a SuggestEventsRequest
         NetworkObject createResponse(const SuggestEventsResponse& data);
@@ -132,6 +138,9 @@ namespace base {
 
         // CreateAccount response ctor
         NetworkObject(const CreateAccountResponse& response);
+
+        // CreateEvent response ctor
+        NetworkObject(const CreateEventResponse& response);
 
         // SuggestEvents response ctor
         NetworkObject(const SuggestEventsResponse& response);

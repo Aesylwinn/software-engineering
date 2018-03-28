@@ -176,6 +176,21 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
     ASSERT_EQ(response.details, converted.details);
 }
 
+TEST(base, NetworkObject_createEventResponseCtor) {
+    const CreateEventRequest request{ event("Jade's Salon", 5, "Drink up...", "Jade") };
+    const CreateEventResponse response{ 1, "success" };
+    const qint32 ticketNumber = 324;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    CreateEventResponse converted = netObjResponse.getCreateEventResponse();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, 1);
+}
+
 TEST(base, NetworkObject_suggestEventsResponseCtor) {
     // Set up state
     const SuggestEventsRequest request { 2 };
