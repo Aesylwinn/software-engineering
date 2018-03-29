@@ -35,8 +35,11 @@ void eventPopUp::setHostInfo()
     QVector<QString> categories;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 5; j++){
-            QString item = ui->category->itemAt(i,j)->text(i);
-            categories.push_front(item);
+            if(ui->category->itemAt(i,j)->isSelected())
+            {
+                QString item = ui->category->itemAt(i,j)->text(i);
+                categories.push_front(item);
+            }
         }
 
     info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText());
