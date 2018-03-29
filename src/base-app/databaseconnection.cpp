@@ -60,6 +60,48 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
 }
 
+/* bool DatabaseConnection::createEvent(event evt)
+{
+    int hostID, venueID;
+
+    QSqlQuery query(*db);
+
+    //search for hostID
+    if (!query.prepare("SELECT id_user FROM User_Host WHERE displayName = :dispName"))
+        throw std::runtime_error("Unable to retrieve hostID, unable to prepare query");
+
+    query.bindValue(":dispName", evt.getMainHost());
+
+    if (!query.exec())
+        throw std::runtime_error("Unable to retrieve hostID, unable to execute query");
+
+    if( query.isSelect() && query.first() )
+    {
+        int hostID = query.value("id_user").toInt();
+    }
+
+    //search for venueID
+    if (!query.prepare("SELECT id FROM Venue WHERE displayName = :dispName"))
+        throw std::runtime_error("Unable to retrieve venueID, unable to prepare query");
+
+    query.bindValue(":dispName", evt.getLocation().getName());
+
+    if (!query.exec())
+        throw std::runtime_error("Unable to retrieve venueID, unable to execute query");
+
+    if( query.isSelect() && query.first() )
+    {
+        int hostID = query.value("id").toInt();
+    }
+
+    //set db values
+    if (!query.prepare("INSERT INTO Event (,) VALUES ( :usern, :passw )"))
+        throw std::runtime_error("Unable to create account, unable to prepare query");
+
+    query.bindValue(":usern",username);
+    query.bindValue(":passw",password);
+} */
+
 bool DatabaseConnection::createAccount(QString username, QString password)
 {
     QSqlQuery query(*db);
