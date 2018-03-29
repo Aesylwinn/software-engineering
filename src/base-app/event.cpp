@@ -82,37 +82,37 @@ namespace base{
         return true;
     }
 
-    QString event::getName()
+    event::getName() const
     {
         return name;
     }
 
-    QString event::getCategory()
+    QString event::getCategory() const
     {
         return category;
     }
 
-    QString event::getMainHost()
+    QString event::getMainHost() const
     {
         return mainHost;
     }
 
-    QVector<QString> event::getAttendingUsers()
+    QVector<QString> event::getAttendingUsers() const
     {
         return attendingUsers;
     }
 
-    venue event::getLocation()
+    venue event::getLocation() const
     {
         return location;
     }
 
-    QString event::getDescription()
+    QString event::getDescription() const
     {
         return description;
     }
 
-    qint32 event::getID()
+    qint32 event::getID() const
     {
         return id;
     }

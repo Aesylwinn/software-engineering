@@ -77,7 +77,13 @@ TEST(base, NetworkObject_EventCreateRequest){
 
     CreateEventRequest converted = netObj.getCreateEventRequest();
     // TODO
-    //ASSERT_EQ(myEvent.data, converted.data);
+    ASSERT_EQ(myEvent.data.getName(), converted.data.getName());
+    ASSERT_EQ(myEvent.data.getCategory(), converted.data.getCategory());
+    ASSERT_EQ(myEvent.data.getAttendingUsers(), converted.data.getAttendingUsers());
+    ASSERT_EQ(myEvent.data.getMainHost(), converted.data.getMainHost());
+    ASSERT_EQ(myEvent.data.getDescription(), converted.data.getDescription());
+    ASSERT_EQ(myEvent.data.getLocation(), converted.data.getLocation());
+    ASSERT_EQ(myEvent.data.getID(), converted.data.getID());
 }
 
 TEST(base, NetworkObject_messageCtor) {

@@ -25,12 +25,13 @@ namespace base {
             bool setEntryFee(double f);
 
             //getters
-            QString getAddress();
-            QString getPhoneNumber();
-            QString getName();
-            double getEntryFee();
+            QString getAddress() const;
+            QString getPhoneNumber() const;
+            QString getName() const;
+            double getEntryFee() const;
 
             venue operator=(const QString& data);
+            bool operator==(const venue &rhs) const;
         private:
             QString name;
             QString address;
