@@ -14,10 +14,12 @@ class eventPopUp : public QDialog
 
 public:
     explicit eventPopUp(QWidget *parent = 0);
+
     ~eventPopUp();
 
 public slots:
     void openingCalendar();
+    void setHostInfo();
 
 private:
     Ui::eventPopUp *ui;

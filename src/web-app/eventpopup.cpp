@@ -32,13 +32,11 @@ void eventPopUp::openingCalendar()
 void eventPopUp::setHostInfo()
 {
     interestData *info;
-    for(int i = 0; i < 6; i++)
-        for(int j = 0; j < 6; j++){
-            QString item = ui->category->itemAt(i,y);
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < 5; j++){
+            QString item = ui->category->itemAt(i,j)->text(i);
         }
-    QString item = ui->category->it
-    ui->category->isItemSelected()
-    info->createEvent(ui->eventName_2->text(), ,ui->descriptionText->toPlainText());
+    //info->createEvent(ui->eventName_2->text(), ,ui->descriptionText->toPlainText());
     
     
 }
