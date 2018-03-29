@@ -35,7 +35,7 @@ public slots:
     void displayEvents(QVector<base::event> interest);
     void displayMyEvents(QVector<base::event> myEvent);
     void createHost();
-    void createEvent();
+    void createEvent(QString eName, QVector<QString> categories, QString desc);
     void requestEvents();
     void requestMyEvents();
 

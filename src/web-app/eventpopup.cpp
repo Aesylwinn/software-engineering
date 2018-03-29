@@ -1,6 +1,7 @@
 /*Written by Darius and Parker*/
 #include "eventpopup.h"
 #include "ui_eventpopup.h"
+#include "interestdata.h"
 
 eventPopUp::eventPopUp(QWidget *parent) :
     QDialog(parent),
@@ -9,6 +10,7 @@ eventPopUp::eventPopUp(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->yes, SIGNAL(clicked()), this, SLOT(openingCalendar()));
     connect(ui->no, SIGNAL(clicked()), this, SLOT(openingCalendar()));
+    
 }
 
 
@@ -25,4 +27,22 @@ void eventPopUp::openingCalendar()
         ui->recurringDate->setEnabled(true);
     else
         ui->recurringDate->setEnabled(false);
+}
+
+void eventPopUp::setHostInfo()
+{
+    interestData *info;
+    QVector<QString> categories;
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < 5; j++){
+            if(ui->category->itemAt(i,j)->isSelected())
+            {
+                QString item = ui->category->itemAt(i,j)->text(i);
+                categories.push_front(item);
+            }
+        }
+
+    info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText());
+    
+    
 }

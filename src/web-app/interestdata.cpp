@@ -243,16 +243,16 @@ void interestData::displayMyEvents(QVector<base::event> myEvent)
 void interestData::createHost()
 {
     CreateHostRequest data;
-    data.username = "existing username";
-    data.password = "existing password";
-    data.displayName = "something";
-    data.businessName = "something else";
-    data.bio = "blah";
+    data.username = ui->userNameHostEd->text();
+    data.password = ui->passwordHostEd->text();
+    data.displayName = ui->hostDisplay->text();
+    data.businessName = ui->hostBusiness->text();
+    data.bio = ui->hostBio->toPlainText();
 
     mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
-void interestData::createEvent() {
+void interestData::createEvent(QString eName, QVector<QString> categories, QString desc) {
     CreateEventRequest request;
     request.data.setName("Bath Party");
     request.data.setHost("Billy");
