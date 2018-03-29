@@ -27,6 +27,9 @@ namespace  base{
         bool setCategory(QString cat);
         bool setID(qint32 a);
         bool setTimes(QDateTime t);
+        bool setStartTime(QString date);
+        bool setEndTime(QString date);
+        int setReoccurring(int o);
 
         //getters
         QString getName()const;
@@ -36,11 +39,18 @@ namespace  base{
         venue getLocation() const;
         QString getDescription() const;
         qint32 getID() const;
-        QVector<QDateTime> getTimes();
+        QVector< QPair<QDateTime, QDateTime> > getTimes();
+        QDateTime getStartTime();
+        QDateTime getEndTime();
+        qint64 getDaysTo();
 
         //adders
         bool addHost(QString newHost);
         bool addUser(QString newUser);
+        int addTimes(QDateTime start, QDateTime end);
+
+        //not adders
+        bool delTime(int pos);
 
 
     private:
@@ -52,7 +62,14 @@ namespace  base{
         venue location;
         QString description;
         qint32 id;
-        QVector<QDateTime> times;
+
+        QVector< QPair<QDateTime, QDateTime> > timeSlots;
+        QDateTime startTime;
+        QDateTime endTime;
+        qint64 daysTo;
+        bool reoccurring;
+        bool startTimeSet;
+        bool endTimeSet;
 
         void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
     };
