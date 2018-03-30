@@ -96,11 +96,23 @@ namespace base {
                 case NetworkObject::PT_CreateHostRequest:
                     {
                         CreateHostRequest request = obj.getCreateHostRequest();
-                        CreateHostResponse response = { IsValid };
+                        CreateHostResponse response = { NotValid };
 
                         qInfo("create host: %s", qUtf8Printable(request.username));
 
-                        // TODO Add it
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.checkPassword(request.username, request.password)) {
+                                qint64 id = 0;
+                                if (dbConnection.getId(request.username, id)) {
+                                    if (dbConnection.createHost(id, request.displayName, request.businessName, request.bio)) {
+                                        response = { IsValid };
+                                    }
+                                }
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }
