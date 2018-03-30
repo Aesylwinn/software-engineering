@@ -124,9 +124,17 @@ namespace base {
 
                         qInfo("suggest events: %d", request.count);
 
-                        // TODO Get events, remove placeholders
-                        response.events.push_back(base::event(QString("Billy's Play Date"), 12, QString("12 and under only"), QString("Billy")));
-                        response.events.push_back(base::event(QString("Jasmine's Kiosk"), 13, QString("Get help!"), QString("Jasmine")));
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.getEvents(response.events)) {
+                                // Trim count, eventually choose best fit
+                                response.events.resize(request.count);
+                            } else {
+                                qInfo("failed to retrieve any events");
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }
