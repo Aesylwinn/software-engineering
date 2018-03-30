@@ -60,7 +60,7 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
 }
 
-/* bool DatabaseConnection::createEvent(event evt)
+bool DatabaseConnection::createEvent(base::event evt)
 {
     int hostID, venueID;
 
@@ -72,12 +72,15 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
     query.bindValue(":dispName", evt.getMainHost());
 
-    if (!query.exec())
-        throw std::runtime_error("Unable to retrieve hostID, unable to execute query");
+    if (!query.exec()) {
+        return false;
+    }
 
     if( query.isSelect() && query.first() )
     {
-        int hostID = query.value("id_user").toInt();
+        hostID = query.value("id_user").toInt();
+    } else {
+        return false;
     }
 
     //search for venueID
@@ -86,21 +89,35 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
     query.bindValue(":dispName", evt.getLocation().getName());
 
-    if (!query.exec())
-        throw std::runtime_error("Unable to retrieve venueID, unable to execute query");
+    if (!query.exec()) {
+        return false;
+    }
 
     if( query.isSelect() && query.first() )
     {
-        int hostID = query.value("id").toInt();
+        venueID = query.value("id").toInt();
+    } else {
+        return false;
     }
 
     //set db values
-    if (!query.prepare("INSERT INTO Event (,) VALUES ( :usern, :passw )"))
+    if (!query.prepare("INSERT INTO Event (id_host,standardOperation, recurring, displayName, id_category, id_venue, dateStart, description)"
+                                 " VALUES (  :host,            FALSE,     FALSE,       :disp,        :cat,     :ven,     :date,        :bio)"))
         throw std::runtime_error("Unable to create account, unable to prepare query");
 
-    query.bindValue(":usern",username);
-    query.bindValue(":passw",password);
-} */
+    query.bindValue(":host", hostID);
+    query.bindValue(":disp", evt.getName());
+    query.bindValue(":cat", 0);
+    query.bindValue(":ven", 0);
+    query.bindValue(":date", "2018-4-20");
+    query.bindValue(":bio", evt.getDescription());
+
+    if (!query.exec()) {
+        return false;
+    }
+
+    return true;
+}
 
 bool DatabaseConnection::createAccount(QString username, QString password)
 {

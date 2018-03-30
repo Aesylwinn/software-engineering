@@ -84,11 +84,18 @@ namespace base {
                 case NetworkObject::PT_CreateEventRequest:
                     {
                         CreateEventRequest request = obj.getCreateEventRequest();
-                        CreateEventResponse response = { IsValid, "event created" };
+                        CreateEventResponse response = { NotValid, "event was not created" };
 
                         qInfo("create event: %s", qUtf8Printable(request.data.getName()));
 
-                        // TODO create
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.createEvent(request.data)) {
+                                response = { IsValid, "event created" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }

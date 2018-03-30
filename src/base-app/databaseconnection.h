@@ -24,6 +24,7 @@ namespace base {
 
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
         bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
+        bool createEvent(base::event event);
 
         bool getId(QString username, qint64& id);
         bool isHost(QString username);
