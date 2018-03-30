@@ -137,9 +137,16 @@ namespace base {
 
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
         // Try to read
-        NetworkObject netObj;
-        if (netObj.tryRead(socket))
-            handleRequest(socket, netObj);
+        try {
+            NetworkObject netObj;
+            if (netObj.tryRead(socket)) {
+                handleRequest(socket, netObj);
+            }
+        } catch (std::exception& e) {
+            qInfo("Exception in readyRead: %s", e.what());
+        } catch (...) {
+            qInfo("Unrecognized exception in readyRead");
+        }
     }
 
     void ServerNetworkMgr::newConnection() {
