@@ -1,18 +1,25 @@
 #include "registerpage.h"
 #include "ui_registerpage.h"
 
-RegisterPage::RegisterPage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::RegisterPage)
-{
-    ui->setupUi(this);
+#include <exception>
 
-    connect(ui->registerButton, &QPushButton::clicked, this, &RegisterPage::onRegisterClicked);
+RegisterPage::RegisterPage(base::ClientNetworkMgr* mgr, QWidget *parent)
+    : QWidget(parent)
+    , mUi(new Ui::RegisterPage)
+    , mNetworkMgr(mgr)
+{
+    if (!mgr) {
+        throw std::runtime_error("LoginPage requires network mgr");
+    }
+
+    mUi->setupUi(this);
+
+    connect(mUi->registerButton, &QPushButton::clicked, this, &RegisterPage::onRegisterClicked);
 }
 
 RegisterPage::~RegisterPage()
 {
-    delete ui;
+    delete mUi;
 }
 
 void RegisterPage::onRegisterClicked(bool)

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "../base-app/clientnetworkmgr.h"
+
 namespace Ui {
 class LoginPage;
 }
@@ -12,14 +14,17 @@ class LoginPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit LoginPage(QWidget *parent = 0);
+    explicit LoginPage(base::ClientNetworkMgr* mgr, QWidget *parent = 0);
     ~LoginPage();
 
 private:
-    Ui::LoginPage *ui;
+    Ui::LoginPage *mUi;
+    base::ClientNetworkMgr* mNetworkMgr;
+
 private slots:
     void onLoginClicked(bool);
     void onRegisterClicked(bool);
+
 signals:
     void onSuccess();
     void onRegister();

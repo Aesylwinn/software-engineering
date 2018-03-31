@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "../base-app/clientnetworkmgr.h"
+
 namespace Ui {
 class RegisterPage;
 }
@@ -12,11 +14,13 @@ class RegisterPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit RegisterPage(QWidget *parent = 0);
+    explicit RegisterPage(base::ClientNetworkMgr* mgr, QWidget *parent = 0);
     ~RegisterPage();
 
 private:
-    Ui::RegisterPage *ui;
+    Ui::RegisterPage *mUi;
+    base::ClientNetworkMgr* mNetworkMgr;
+
 private slots:
     void onRegisterClicked(bool checked);
 signals:
