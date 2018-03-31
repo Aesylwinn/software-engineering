@@ -7,17 +7,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
     loginpage.cpp \
     registerpage.cpp
 
 HEADERS += \
-        mainwindow.h \
     loginpage.h \
     registerpage.h
 
 FORMS += \
-        mainwindow.ui \
     loginpage.ui \
     registerpage.ui
 
