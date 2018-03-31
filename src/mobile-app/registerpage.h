@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::RegisterPage *ui;
+private slots:
+    void onRegisterClicked(bool checked);
+signals:
+    void onSuccess();
+    void onCanceled();
 };
 
 #endif // REGISTERPAGE_H

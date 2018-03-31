@@ -17,6 +17,12 @@ public:
 
 private:
     Ui::LoginPage *ui;
+private slots:
+    void onLoginClicked(bool);
+    void onRegisterClicked(bool);
+signals:
+    void onSuccess();
+    void onRegister();
 };
 
 #endif // LOGINPAGE_H
