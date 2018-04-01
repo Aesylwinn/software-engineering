@@ -118,7 +118,7 @@ bool DatabaseConnection::getOrCreateVenue(venue location, qint64& id) {
 
         // Should never fails
         if (!query.prepare("INSERT INTO Venue (displayName, address, phoneNumber, entryFee)"
-                      "                VALUES (      :disp,   addr:,      :phone,     :fee)"))
+                           "           VALUES (      :disp,   :addr,      :phone,     :fee)"))
             throw std::runtime_error("Unable to create venue, unable to prepare query");
 
         query.bindValue(":disp", location.getName());
