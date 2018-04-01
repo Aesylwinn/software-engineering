@@ -35,8 +35,6 @@ void LoginPage::onLoginClicked(bool)
 
     base::NetworkObject request(base::LoginRequest{ username, password });
     mLoginTicket = mNetworkMgr->sendRequest(request);
-
-    emit onSuccess();
 }
 
 void LoginPage::onRegisterClicked(bool)
