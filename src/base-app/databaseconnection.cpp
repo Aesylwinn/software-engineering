@@ -272,5 +272,24 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
     return false;
 }
 
+QString UserData::ObjectName = "UserData";
+
+UserData::UserData(QObject *parent, QString dbName, QString username, QString password)
+    : QObject(parent)
+{
+    DatabaseConnection dbConnection(dbName);
+
+    // Validate
+    if (dbConnection.checkPassword(username, password)) {
+        mValid = true;
+        mHost = dbConnection.isHost(username);
+        dbConnection.getId(dbName, mUserId);
+    } else {
+        mValid = false;
+        mHost = false;
+        mUserId = -1;
+    }
+}
+
 
 }

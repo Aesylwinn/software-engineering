@@ -9,16 +9,24 @@
 #include "networkobject.h"
 
 namespace base {
+    class UserData;
+
     /* Implemented by Kyle and Anthony */
     class BASEAPPSHARED_EXPORT ServerNetworkMgr : public QObject {
         Q_OBJECT
     public:
         ServerNetworkMgr(QObject* parent=NULL);
         void listen(int port);
+
     private:
         void handleRequest(QTcpSocket* socket, NetworkObject obj);
         void sendResponse(QTcpSocket* socket, NetworkObject obj);
+
+        UserData* getUserData(QTcpSocket* socket);
+        void removeUserData(QTcpSocket* socket);
+
         QTcpServer* mServer;
+
     private slots:
         void readyRead(QTcpSocket* socket);
 

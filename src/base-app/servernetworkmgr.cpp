@@ -62,17 +62,19 @@ namespace base {
                         LoginRequest request = obj.getLoginRequest();
                         LoginResponse response = { NotValid, "DB Error", 0};
 
-                        qInfo("%s: is trying to login with %s",
-                                qUtf8Printable(request.username),
-                                qUtf8Printable(request.password));
+                        qInfo("%s: is trying to login", qUtf8Printable(request.username));
+
                         try {
-                            DatabaseConnection dbConnection(DbName);
-                            if (dbConnection.checkPassword(request.username, request.password)) {
-                                qint32 isHost = 1;
-                                response = { IsValid, "Authenticated", isHost };
-                            }
-                            else {
-                                response = { NotValid, "Unknown Username or Bad Password", 0 };
+                            // Get rid of the old
+                            removeUserData(socket);
+
+                            // Add the new
+                            UserData* userData = new UserData(socket, DbName, request.username, request.password);
+                            userData->setObjectName(UserData::ObjectName);
+
+                            // Generate response
+                            if (userData->isValid()) {
+                                response = { IsValid, "Success", userData->isHost() };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
@@ -175,6 +177,17 @@ namespace base {
     void ServerNetworkMgr::sendResponse(QTcpSocket* socket, NetworkObject obj) {
         // This should eventually be asynchronous
         obj.write(socket);
+    }
+
+    UserData* ServerNetworkMgr::getUserData(QTcpSocket *socket)
+    {
+        return socket->findChild<UserData*>(UserData::ObjectName);
+    }
+
+    void ServerNetworkMgr::removeUserData(QTcpSocket *socket)
+    {
+        UserData* userData = getUserData(socket);
+        delete userData;
     }
 
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {

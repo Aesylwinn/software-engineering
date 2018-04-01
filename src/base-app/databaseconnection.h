@@ -41,6 +41,23 @@ namespace base {
         QSqlDatabase *db;
         QString connectionName;
     };
+
+    class BASEAPPSHARED_EXPORT UserData : public QObject {
+        Q_OBJECT
+    public:
+        static QString ObjectName;
+
+        UserData(QObject* parent, QString dbName, QString username, QString password);
+
+        bool isValid() const { return mValid; }
+        bool isHost() const { return mHost; }
+        qint64 getUserId() const { return mUserId; }
+
+     private:
+        bool mValid;
+        bool mHost;
+        qint64 mUserId;
+    };
 }
 
 #endif // DATABASECONNECTION_H
