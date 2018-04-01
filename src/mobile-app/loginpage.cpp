@@ -3,6 +3,8 @@
 
 #include <exception>
 
+#include <QMessageBox>
+
 LoginPage::LoginPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     : QWidget(parent)
     , mUi(new Ui::LoginPage)
@@ -50,7 +52,13 @@ void LoginPage::onResponseRecieved(base::NetworkObject response)
             base::LoginResponse info = response.getLoginResponse();
             qInfo("authenticated: %d host: %d msg: %s",
                   info.valid, info.isHost, qUtf8Printable(info.details));
-            emit onSuccess();
+
+            if (info.valid) {
+                emit onSuccess();
+            } else {
+                QMessageBox messageBox;
+                messageBox.critical(this, "Error", "Invalid username or password!");
+            }
         }
         break;
 
