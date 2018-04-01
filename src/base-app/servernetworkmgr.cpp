@@ -84,14 +84,29 @@ namespace base {
                 case NetworkObject::PT_CreateEventRequest:
                     {
                         CreateEventRequest request = obj.getCreateEventRequest();
-                        CreateEventResponse response = { NotValid, "event was not created" };
+                        CreateEventResponse response = { NotValid, "Event was not created" };
 
                         qInfo("create event: %s", qUtf8Printable(request.data.getName()));
 
                         try {
                             DatabaseConnection dbConnection(DbName);
-                            if (dbConnection.createEvent(request.data)) {
-                                response = { IsValid, "event created" };
+                            qint64 hostId, venueId;
+
+                            // User
+                            if (dbConnection.getId(request.data.getMainHost(), hostId)) {
+                                // Venue
+                                if (dbConnection.getOrCreateVenue(request.data.getLocation(), venueId)) {
+                                    // Event
+                                    if (dbConnection.createEvent(request.data, hostId, venueId)) {
+                                        response = { IsValid, "Event created" };
+                                    } else {
+                                        response = { NotValid, "Invalid event" };
+                                    }
+                                } else {
+                                    response = { NotValid, "Invalid venue" };
+                                }
+                            } else {
+                                response = { NotValid, "Invalid host" };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
