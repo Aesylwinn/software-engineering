@@ -24,6 +24,10 @@ int main(int argc, char *argv[])
 
     // Slots and Signals
     QObject::connect(&networkMgr, &base::ClientNetworkMgr::disconnected, [&] {
+        // Need to go back to the login page
+        createEventPage.hide();
+        loginPage.show();
+
         int retry = QMessageBox::StandardButton::Retry;
         int abort = QMessageBox::StandardButton::Abort;
         if (QMessageBox::critical(&loginPage, "Error", "Disconnected", retry, abort) == retry) {
