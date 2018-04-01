@@ -91,15 +91,16 @@ namespace base {
                         qInfo("create event: %s", qUtf8Printable(request.data.getName()));
 
                         try {
-                            DatabaseConnection dbConnection(DbName);
-                            qint64 hostId, venueId;
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                // Set up db access
+                                DatabaseConnection dbConnection(DbName);
+                                qint64 venueId;
 
-                            // User
-                            if (dbConnection.getId(request.data.getMainHost(), hostId)) {
-                                // Venue
+                                // Handle venue
                                 if (dbConnection.getOrCreateVenue(request.data.getLocation(), venueId)) {
                                     // Event
-                                    if (dbConnection.createEvent(request.data, hostId, venueId)) {
+                                    if (dbConnection.createEvent(request.data, userData->getUserId(), venueId)) {
                                         response = { IsValid, "Event created" };
                                     } else {
                                         response = { NotValid, "Invalid event" };
@@ -108,7 +109,7 @@ namespace base {
                                     response = { NotValid, "Invalid venue" };
                                 }
                             } else {
-                                response = { NotValid, "Invalid host" };
+                                response = { NotValid, "Not logged in" };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
