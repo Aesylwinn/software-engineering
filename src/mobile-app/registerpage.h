@@ -23,6 +23,8 @@ private:
 
 private slots:
     void onRegisterClicked(bool checked);
+    void onResponseRecieved(base::NetworkObject response);
+
 signals:
     void onSuccess();
     void onCanceled();

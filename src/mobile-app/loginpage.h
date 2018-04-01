@@ -21,9 +21,12 @@ private:
     Ui::LoginPage *mUi;
     base::ClientNetworkMgr* mNetworkMgr;
 
+    qint32 mLoginTicket;
+
 private slots:
     void onLoginClicked(bool);
     void onRegisterClicked(bool);
+    void onResponseRecieved(base::NetworkObject response);
 
 signals:
     void onSuccess();

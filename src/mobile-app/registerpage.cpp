@@ -10,6 +10,8 @@ RegisterPage::RegisterPage(base::ClientNetworkMgr* mgr, QWidget *parent)
 {
     if (!mgr) {
         throw std::runtime_error("LoginPage requires network mgr");
+    } else {
+        connect(mgr, &base::ClientNetworkMgr::responseRecieved, this, &RegisterPage::onResponseRecieved);
     }
 
     mUi->setupUi(this);
@@ -28,4 +30,12 @@ void RegisterPage::onRegisterClicked(bool)
     emit onSuccess();
     // No longer show window
     hide();
+}
+
+void RegisterPage::onResponseRecieved(base::NetworkObject response) {
+    switch (response.getPayloadType()) {
+    default:
+        // Do nothing
+        break;
+    }
 }
