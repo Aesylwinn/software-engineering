@@ -8,15 +8,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     loginpage.cpp \
-    registerpage.cpp
+    registerpage.cpp \
+    mainpage.cpp \
+    createeventpage.cpp
 
 HEADERS += \
     loginpage.h \
-    registerpage.h
+    registerpage.h \
+    mainpage.h \
+    createeventpage.h
 
 FORMS += \
     loginpage.ui \
-    registerpage.ui
+    registerpage.ui \
+    mainpage.ui \
+    createeventpage.ui
 
 # base-app
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
