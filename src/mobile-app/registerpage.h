@@ -21,8 +21,11 @@ private:
     Ui::RegisterPage *mUi;
     base::ClientNetworkMgr* mNetworkMgr;
 
+    qint32 mRegisterTicket;
+
 private slots:
-    void onRegisterClicked(bool checked);
+    void onRegisterClicked(bool);
+    void onCancelClicked(bool);
     void onResponseRecieved(base::NetworkObject response);
 
 signals:
