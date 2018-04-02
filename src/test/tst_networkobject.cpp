@@ -113,6 +113,18 @@ TEST(base, NetworkObject_createHostRequest) {
     ASSERT_EQ(request.bio, converted.bio);
 }
 
+TEST(base, NetworkObject_joinEventRequest) {
+    // State
+    const JoinEventRequest request = { 42 };
+
+    // Test
+    NetworkObject netObj(request);
+    JoinEventRequest converted = netObj.getJoinEventRequest();
+
+    // Oracle
+    ASSERT_EQ(request.eventId, converted.eventId);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -236,6 +248,24 @@ TEST(base, NetworkObject_createHostResponse) {
     // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
+}
+
+TEST(base, NetworkObject_joinEventResponse) {
+    // Setup state
+    const JoinEventRequest request{ 829 };
+    const JoinEventResponse response { 1, "You got it!!!" };
+    const qint32 ticketNumber = 46;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    JoinEventResponse converted = netObjResponse.getJoinEventResponse();
+
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
 }
 
 TEST(base, NetworkObject_write) {

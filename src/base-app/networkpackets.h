@@ -6,14 +6,17 @@
 #include "event.h"
 
 namespace base {
+    // Constants used to ensure consistency between the server and clients
     const qint32 IsValid = 1;
     const qint32 NotValid = 0;
 
+    // A packet to store a generic message
     struct Message {
         QString category;
         QString message;
     };
 
+    // A packet to store a request to create an account
     struct CreateAccountRequest {
         QString username;
         QString password;
@@ -24,15 +27,18 @@ namespace base {
         QString birthDate;
     };
 
+    // A packet to store a request to log in to an account
     struct LoginRequest {
         QString username;
         QString password;
     };
 
+    // A packet to store a request to create an event
     struct CreateEventRequest{
         event data;
     };
 
+    // A packet to store a request to become a host
     struct CreateHostRequest {
         QString username;
         QString password;
@@ -41,15 +47,23 @@ namespace base {
         QString bio;
     };
 
+    // A packet to store a request to receive interesting events
     struct SuggestEventsRequest {
         int count;
     };
 
+    // A packet to store a request to attend an event
+    struct JoinEventRequest {
+        qint64 eventId;
+    };
+
+    // A packet to store a response regarding account creation
     struct CreateAccountResponse {
         qint32 valid;
         QString details;
     };
 
+    // A packet to store a response regarding logging in
     struct LoginResponse {
         qint32 valid;
         QString details;
@@ -57,17 +71,26 @@ namespace base {
         qint32 isHost;
     };
 
+    // A packet to store a response regarding event creation
     struct CreateEventResponse {
         qint32 valid;
         QString details;
     };
 
+    // A packet to store a response for recommended events
     struct SuggestEventsResponse {
         QVector<event> events;
     };
 
+    // A packet to store a response to upgrade an account to become a host
     struct CreateHostResponse {
         qint32 valid;
+    };
+
+    // A packet to store a response to attend an event
+    struct JoinEventResponse {
+        qint32 valid;
+        QString details;
     };
 }
 

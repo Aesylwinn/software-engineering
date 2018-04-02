@@ -24,12 +24,14 @@ namespace base {
             PT_CreateEventRequest,
             PT_SuggestEventsRequest,
             PT_CreateHostRequest,
+            PT_JoinEventRequest,
 
             PT_CreateAccountResponse=0x200,
             PT_LoginResponse,
             PT_CreateEventResponse,
             PT_SuggestEventsResponse,
             PT_CreateHostResponse,
+            PT_JointEventResponse,
 
             PT_Message=0x400
         };
@@ -41,38 +43,41 @@ namespace base {
         // Copy ctor
         NetworkObject(const NetworkObject& other);
 
-        // Parameterized ctor
+        // Parameterized ctor, only use this if you know what you are doing
         NetworkObject(PayloadType type, QByteArray payload);
 
-        // Message ctor
+        // Message packet ctor
         NetworkObject(const Message& message);
 
-        // Create account request
+        // CreateAccountRequest packet ctor
         NetworkObject(const CreateAccountRequest& request);
 
-        // Login request ctor
+        // LoginRequest packet ctor
         NetworkObject(const LoginRequest& request);
 
-        // Event request ctor
+        // CreateEventRequest packet ctor
         NetworkObject(const CreateEventRequest& request);
 
-        // Suggest events request ctor
+        // SuggestEventsRequest packet ctor
         NetworkObject(const SuggestEventsRequest& request);
 
-        // Create host request ctor
+        // CreateHostRequest packet ctor
         NetworkObject(const CreateHostRequest& request);
+
+        // JoinEventRequest packet ctor
+        NetworkObject(const JoinEventRequest& request);
 
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
         QByteArray getPayload() const;
-        // Response tracking
+
+        // Enables response tracking
         qint32 getTicket() const;
 
         // Type and data setting
         void setPayload(PayloadType type, QByteArray payload);
         void setTicket(qint32 ticket);
-
 
         // Writes to any IO device including sockets!
         void write(QIODevice* device) const;
@@ -81,72 +86,84 @@ namespace base {
         bool tryRead(QIODevice* device);
 
 
-        // Converts payload to a message
+        // Converts payload to a Message packet
         Message getMessage() const;
 
-        // Converts payload to a login request
+        // Converts payload to a LoginRequest packet
         LoginRequest getLoginRequest() const;
 
-        // Converts payload to a create account request
+        // Converts payload to a CreateAccountRequest packet
         CreateAccountRequest getCreateAccountRequest() const;
 
-        // Converts a payload to a create event request
+        // Converts a payload to a CreateEventRequest packet
         CreateEventRequest getCreateEventRequest() const;
 
-        // Converts a payload to a create event request
+        // Converts a payload to a SuggestEventsRequest packet
         SuggestEventsRequest getSuggestEventsRequest() const;
 
-        // Converts a payload to a create host request
+        // Converts a payload to a CreateHostRequest packet
         CreateHostRequest getCreateHostRequest() const;
 
+        // Converts a payload to a JoinEventRequest packet
+        JoinEventRequest getJoinEventRequest() const;
 
-        // Converts payload to a login response
+
+        // Converts payload to a LoginResponse packet
         LoginResponse getLoginResponse() const;
 
-        // Converts payload to a create account response
+        // Converts payload to a CreateAccountResponse packet
         CreateAccountResponse getCreateAccountResponse() const;
 
-        // Converts payload to a create event response
+        // Converts payload to a CreateEventResponse packet
         CreateEventResponse getCreateEventResponse() const;
 
-        // Converts payload to a suggest events response
+        // Converts payload to a SuggestEventsResponse packet
         SuggestEventsResponse getSuggestEventsResponse() const;
 
-        // Converts payload to a create host response
+        // Converts payload to a CreateHostResponse packet
         CreateHostResponse getCreateHostResponse() const;
 
+        // Converts payload to a JoinEventResponse packet
+        JoinEventResponse getJoinEventResponse() const;
 
-        // Creates a response to a LoginRequest
+
+        // Creates a NetworkObject containing a LoginResponse packet
         NetworkObject createResponse(const LoginResponse& data);
 
-        // Creates a response to a CreateAccountRequest
+        // Creates a NetworkObject containing a CreateAccountResponse packet
         NetworkObject createResponse(const CreateAccountResponse& data);
 
-        // Creates a response to a CreateEventRequest
+        // Creates a NetworkObject containing a CreateEventResponse packet
         NetworkObject createResponse(const CreateEventResponse& data);
 
-        // Creates a response to a SuggestEventsRequest
+        // Creates a NetworkObject containing a SuggestEventsResponse packet
         NetworkObject createResponse(const SuggestEventsResponse& data);
 
-        // Create a response to a CreateHostRequest
+        // Creates a NetworkObject containing a CreateHostResponse packet
         NetworkObject createResponse(const CreateHostResponse& data);
+
+        // Create a NetworkObject containing a JoinEventResponse packet
+        NetworkObject createResponse(const JoinEventResponse& data);
 
     private:
 
-        // Login response ctor
+        // LoginResponse packet ctor
         NetworkObject(const LoginResponse& response);
 
-        // CreateAccount response ctor
+        // CreateAccountResponse packet ctor
         NetworkObject(const CreateAccountResponse& response);
 
-        // CreateEvent response ctor
+        // CreateEventResponse packet ctor
         NetworkObject(const CreateEventResponse& response);
 
-        // SuggestEvents response ctor
+        // SuggestEventsResponse packet ctor
         NetworkObject(const SuggestEventsResponse& response);
 
-        // CreateHost response ctor
+        // CreateHostResponse packet ctor
         NetworkObject(const CreateHostResponse& response);
+
+        // JoinEventResponse packet ctor
+        NetworkObject(const JoinEventResponse& response);
 
 
         // Ctor helper function
