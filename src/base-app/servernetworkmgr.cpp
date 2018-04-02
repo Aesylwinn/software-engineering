@@ -153,7 +153,8 @@ namespace base {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.getEvents(response.events)) {
                                 // Trim count, eventually choose best fit
-                                response.events.resize(request.count);
+                                if (response.events.count() > request.count)
+                                    response.events.resize(request.count);
                             } else {
                                 qInfo("failed to retrieve any events");
                             }
