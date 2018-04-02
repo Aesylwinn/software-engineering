@@ -57,11 +57,35 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="createEventButton">
-         <property name="text">
-          <string>Create Event</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="buttonLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="logoutButton">
+           <property name="text">
+            <string>Logout</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="createEventButton">
+           <property name="text">
+            <string>Create Event</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
