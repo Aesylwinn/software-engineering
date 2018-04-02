@@ -29,6 +29,8 @@ namespace  base{
         bool setID(qint32 a);
         bool setTimes(QDateTime t);
         bool setStartTime(QString date);
+        bool setStartTime(QDateTime date);
+        bool setEndTime(QDateTime date);
         bool setEndTime(QString date);
         int setReoccurring(int o);
 

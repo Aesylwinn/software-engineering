@@ -189,6 +189,18 @@ namespace base{
         }
     }
 
+    bool event::setStartTime(QDateTime date)
+    {
+        startTime = date;
+        return true;
+    }
+
+    bool event::setEndTime(QDateTime date)
+    {
+        endTime = date;
+        return true;
+    }
+
     bool event::setEndTime(QString date) {
         QString format = "MM/dd/yyyy.hh:mm";
         QDateTime temp = QDateTime::fromString(date, format);
