@@ -261,9 +261,12 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
 
     if (query.isSelect() && query.first()) {
         do {
-            QString displayName = query.value("displayName").toString();
+            event evt;
+            evt.setName(query.value("displayName").toString());
+            evt.setDescription(query.value("description").toString());
             // TODO other fields
-            events.push_back(base::event(displayName));
+
+            events.push_back(evt);
         } while (query.next());
 
         return true;
