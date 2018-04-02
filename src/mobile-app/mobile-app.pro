@@ -33,3 +33,6 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base-app/debug/ 
 else:unix: LIBS += -L$$OUT_PWD/../base-app/ -lbase-app
 
 DEPENDPATH += $$PWD/../base-app
+
+RESOURCES += \
+    utilities.qrc
