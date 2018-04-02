@@ -99,9 +99,7 @@ void interestData::switchLowTabs()
 //This will be moved to checkResponse()
     else
     {
-        ui->tabWidget->setCurrentWidget(ui->tab_5);
-        ui->tabWidget->setTabEnabled(3, true);
-        ui->tabWidget->setTabEnabled(1, false);
+       createHost();
     }
 }
 
@@ -252,19 +250,19 @@ void interestData::createHost()
     mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
-void interestData::createEvent(QString eName, QVector<QString> categories, QString desc) {
+void interestData::createEvent(QString eName, /*QString hostName*/, QVector<QString> categories, QString desc) {
     CreateEventRequest request;
-    request.data.setName("Bath Party");
-    request.data.setHost("Billy");
-    request.data.setDescription("Rub-a-dub-dub");
-    request.data.setCategory("Music");
+    request.data.setName(eName);
+  //  request.data.setHost(hostName); //Need to see if this is doable, Need to try and find the host name
+    request.data.setDescription(desc);
+    request.data.setCategory(categories);
 
     mCreateEventRequest = mNetworkMgr->sendRequest(NetworkObject(request));
 }
 
 void interestData::requestEvents() {
     SuggestEventsRequest data;
-    data.count = 5; // How many?
+    data.count = 5; // How many? Is there a limit to how many can be sent?
 
     mSuggestEventsRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
@@ -319,7 +317,9 @@ void interestData::checkResponse(NetworkObject response) {
             CreateHostResponse info = response.getCreateHostResponse();
             qInfo("host created: %d", info.valid);
             if (info.valid) {
-                // TODO: Success
+                ui->tabWidget->setCurrentWidget(ui->tab_5);	
+                ui->tabWidget->setTabEnabled(3, true);
+                ui->tabWidget->setTabEnabled(1, false);
             } else {
                 QMessageBox messageBox;
                 messageBox.critical(0, "Error", "Unable to create host account");
@@ -333,7 +333,9 @@ void interestData::checkResponse(NetworkObject response) {
             CreateEventResponse info = response.getCreateEventResponse();
             qInfo("event created: %d msg %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
-                // TODO: Success
+                QMessageBox messageBox;
+                messageBox.information(0, "Success", "Event successfully created!");
+                messageBox.setFixedSize(500, 200);
             } else {
                 QMessageBox messageBox;
                 messageBox.critical(0, "Error", "Unable to create event");

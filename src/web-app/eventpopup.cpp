@@ -13,8 +13,6 @@ eventPopUp::eventPopUp(QWidget *parent) :
     
 }
 
-
-
 eventPopUp::~eventPopUp()
 {
     delete ui;
@@ -42,7 +40,7 @@ void eventPopUp::setHostInfo()
             }
         }
 
-    info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText());
+    info->createEvent(ui->eventNameEd->text(), /*something*/, categories ,ui->descriptionText->toPlainText());
     
     
 }
