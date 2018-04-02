@@ -92,6 +92,16 @@ namespace base {
         stream << request.bio;
     }
 
+    NetworkObject::NetworkObject(const JoinEventRequest& request) {
+        init(PT_JoinEventRequest, QByteArray());
+        mTicket = -1;
+
+        QDataStream stream;
+        setupWrite(stream);
+
+        stream << request.eventId;
+    }
+
     NetworkObject::NetworkObject(const LoginResponse& response)
     {
         init(PT_LoginResponse, QByteArray());
@@ -139,6 +149,17 @@ namespace base {
         QDataStream stream;
         setupWrite(stream);
         stream << response.valid;
+    }
+
+    NetworkObject::NetworkObject(const JoinEventResponse& response) {
+        init(PT_JointEventResponse, QByteArray());
+        mTicket = -1;
+
+        QDataStream stream;
+        setupWrite(stream);
+
+        stream << response.valid;
+        stream << response.details;
     }
 
     NetworkObject::PayloadType NetworkObject::getPayloadType() const {
@@ -309,6 +330,19 @@ namespace base {
         return result;
     }
 
+    JoinEventRequest NetworkObject::getJoinEventRequest() const {
+        mustMatch(PT_JoinEventRequest);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        JoinEventRequest result;
+        stream >> result.eventId;
+
+        return result;
+    }
+
     LoginResponse NetworkObject::getLoginResponse() const {
         mustMatch(PT_LoginResponse);
 
@@ -370,6 +404,20 @@ namespace base {
         return result;
     }
 
+    JoinEventResponse NetworkObject::getJoinEventResponse() const {
+        mustMatch(PT_JointEventResponse);
+
+        // Convert
+        QDataStream stream;
+        setupRead(stream);
+
+        JoinEventResponse result;
+        stream >> result.valid;
+        stream >> result.details;
+
+        return result;
+    }
+
     NetworkObject NetworkObject::createResponse(const LoginResponse& data) {
             mustMatch(PT_LoginRequest);
 
@@ -408,6 +456,15 @@ namespace base {
 
     NetworkObject NetworkObject::createResponse(const CreateHostResponse& data) {
         mustMatch(PT_CreateHostRequest);
+
+        // Construct response
+        NetworkObject response(data);
+        response.setTicket(getTicket());
+        return response;
+    }
+
+    NetworkObject NetworkObject::createResponse(const JoinEventResponse& data) {
+        mustMatch(PT_JoinEventRequest);
 
         // Construct response
         NetworkObject response(data);

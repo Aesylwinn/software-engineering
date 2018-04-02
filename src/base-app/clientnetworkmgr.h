@@ -24,8 +24,11 @@ namespace base {
     private:
         QTcpSocket* mSocket;
         qint32 mRequestCounter;
+
     private slots:
         void readyRead();
+        void socketError(QAbstractSocket::SocketError err);
+
     signals:
         void connected();
         void disconnected();

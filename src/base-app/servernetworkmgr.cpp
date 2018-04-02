@@ -62,17 +62,19 @@ namespace base {
                         LoginRequest request = obj.getLoginRequest();
                         LoginResponse response = { NotValid, "DB Error", 0};
 
-                        qInfo("%s: is trying to login with %s",
-                                qUtf8Printable(request.username),
-                                qUtf8Printable(request.password));
+                        qInfo("%s: is trying to login", qUtf8Printable(request.username));
+
                         try {
-                            DatabaseConnection dbConnection(DbName);
-                            if (dbConnection.checkPassword(request.username, request.password)) {
-                                qint32 isHost = 1;
-                                response = { IsValid, "Authenticated", isHost };
-                            }
-                            else {
-                                response = { NotValid, "Unknown Username or Bad Password", 0 };
+                            // Get rid of the old
+                            removeUserData(socket);
+
+                            // Add the new
+                            UserData* userData = new UserData(socket, DbName, request.username, request.password);
+                            userData->setObjectName(UserData::ObjectName);
+
+                            // Generate response
+                            if (userData->isValid()) {
+                                response = { IsValid, "Success", userData->isHost() };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
@@ -84,11 +86,34 @@ namespace base {
                 case NetworkObject::PT_CreateEventRequest:
                     {
                         CreateEventRequest request = obj.getCreateEventRequest();
-                        CreateEventResponse response = { IsValid, "event created" };
+                        CreateEventResponse response = { NotValid, "Event was not created" };
 
                         qInfo("create event: %s", qUtf8Printable(request.data.getName()));
 
-                        // TODO create
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                // Set up db access
+                                DatabaseConnection dbConnection(DbName);
+                                qint64 venueId;
+
+                                // Handle venue
+                                if (dbConnection.getOrCreateVenue(request.data.getLocation(), venueId)) {
+                                    // Event
+                                    if (dbConnection.createEvent(request.data, userData->getUserId(), venueId)) {
+                                        response = { IsValid, "Event created" };
+                                    } else {
+                                        response = { NotValid, "Invalid event" };
+                                    }
+                                } else {
+                                    response = { NotValid, "Invalid venue" };
+                                }
+                            } else {
+                                response = { NotValid, "Not logged in" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }
@@ -96,11 +121,23 @@ namespace base {
                 case NetworkObject::PT_CreateHostRequest:
                     {
                         CreateHostRequest request = obj.getCreateHostRequest();
-                        CreateHostResponse response = { IsValid };
+                        CreateHostResponse response = { NotValid };
 
                         qInfo("create host: %s", qUtf8Printable(request.username));
 
-                        // TODO Add it
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.checkPassword(request.username, request.password)) {
+                                qint64 id = 0;
+                                if (dbConnection.getId(request.username, id)) {
+                                    if (dbConnection.createHost(id, request.displayName, request.businessName, request.bio)) {
+                                        response = { IsValid };
+                                    }
+                                }
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }
@@ -112,9 +149,18 @@ namespace base {
 
                         qInfo("suggest events: %d", request.count);
 
-                        // TODO Get events, remove placeholders
-                        response.events.push_back(base::event(QString("Billy's Play Date"), 12, QString("12 and under only"), QString("Billy")));
-                        response.events.push_back(base::event(QString("Jasmine's Kiosk"), 13, QString("Get help!"), QString("Jasmine")));
+                        try {
+                            DatabaseConnection dbConnection(DbName);
+                            if (dbConnection.getEvents(response.events)) {
+                                // Trim count, eventually choose best fit
+                                if (response.events.count() > request.count)
+                                    response.events.resize(request.count);
+                            } else {
+                                qInfo("failed to retrieve any events");
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }
@@ -135,11 +181,29 @@ namespace base {
         obj.write(socket);
     }
 
+    UserData* ServerNetworkMgr::getUserData(QTcpSocket *socket)
+    {
+        return socket->findChild<UserData*>(UserData::ObjectName);
+    }
+
+    void ServerNetworkMgr::removeUserData(QTcpSocket *socket)
+    {
+        UserData* userData = getUserData(socket);
+        delete userData;
+    }
+
     void ServerNetworkMgr::readyRead(QTcpSocket* socket) {
         // Try to read
-        NetworkObject netObj;
-        if (netObj.tryRead(socket))
-            handleRequest(socket, netObj);
+        try {
+            NetworkObject netObj;
+            if (netObj.tryRead(socket)) {
+                handleRequest(socket, netObj);
+            }
+        } catch (std::exception& e) {
+            qInfo("Exception in readyRead: %s", e.what());
+        } catch (...) {
+            qInfo("Unrecognized exception in readyRead");
+        }
     }
 
     void ServerNetworkMgr::newConnection() {

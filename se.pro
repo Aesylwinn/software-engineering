@@ -1,11 +1,8 @@
 TEMPLATE = subdirs
 
-SUBDIRS +=      \
-    baseapp     \
-    webapp      \
-    mobileapp   \
-    server      \
-    test
+SUBDIRS += baseapp
+!android:SUBDIRS += webapp server test
+android:SUBDIRS += mobileapp
 
 baseapp.subdir = src/base-app
 webapp.subdir = src/web-app
