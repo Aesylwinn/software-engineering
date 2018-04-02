@@ -20,6 +20,9 @@ public:
 private:
     void showEvent(QShowEvent* event) override;
 
+    void setMyEvents(QVector<base::event> events);
+    void setEvents(QVector<base::event> events);
+
     Ui::MainPage *mUi;
     base::ClientNetworkMgr* mNetworkMgr;
 
@@ -29,6 +32,7 @@ private slots:
     void onResponseReceived(base::NetworkObject obj);
     void onCreateEventClicked(bool);
     void onLogoutClicked(bool);
+    void onJoinEvent(base::event evt);
 
 signals:
     void onCreateEvent();

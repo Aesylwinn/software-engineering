@@ -2,8 +2,9 @@
 #include "ui_mainpage.h"
 
 #include <QShowEvent>
-
 #include <exception>
+
+#include "eventtablewidget.h"
 
 MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     : QWidget(parent)
@@ -39,6 +40,30 @@ void MainPage::showEvent(QShowEvent *event) {
     mSuggestTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::SuggestEventsRequest{ NumEvents }));
 }
 
+void MainPage::setMyEvents(QVector<base::event> events)
+{
+    // TODO
+}
+
+void MainPage::setEvents(QVector<base::event> events)
+{
+    // Update list
+    mUi->eventListView->clear();
+    for (int i = 0; i < events.count(); ++i) {
+        // List item
+        EventTableWidget* itemWidget = new EventTableWidget(events[i]);
+        connect(itemWidget, &EventTableWidget::onJoinEvent, this, &MainPage::onJoinEvent);
+
+        // Dummy container
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setSizeHint(itemWidget->sizeHint());
+
+        // Add to list
+        mUi->eventListView->addItem(item);
+        mUi->eventListView->setItemWidget(item, itemWidget);
+    }
+}
+
 void MainPage::onResponseReceived(base::NetworkObject obj) {
     switch (obj.getPayloadType()) {
     case base::NetworkObject::PT_SuggestEventsResponse:
@@ -47,15 +72,7 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
             base::SuggestEventsResponse info = obj.getSuggestEventsResponse();
             qInfo("suggested events: %d", info.events.count());
 
-            // Update list
-            mUi->eventsListView->clear();
-            mUi->eventsListView->setRowCount(info.events.count());
-            for (int i = 0; i < info.events.count(); ++i) {
-                int column = 0;
-                mUi->eventsListView->setItem(i, column++, new QTableWidgetItem(info.events[i].getName()));
-                mUi->eventsListView->setItem(i, column++, new QTableWidgetItem(info.events[i].getLocation().getAddress()));
-                mUi->eventsListView->setItem(i, column++, new QTableWidgetItem(info.events[i].getDescription()));
-            }
+            setEvents(info.events);
         }
         break;
 
@@ -72,4 +89,10 @@ void MainPage::onCreateEventClicked(bool) {
 void MainPage::onLogoutClicked(bool) {
     emit onLogout();
     hide();
+}
+
+void MainPage::onJoinEvent(base::event evt)
+{
+    // TODO
+    qInfo("Join event: %s", qUtf8Printable(evt.getName()));
 }
