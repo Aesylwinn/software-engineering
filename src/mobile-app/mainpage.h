@@ -18,8 +18,12 @@ public:
     ~MainPage();
 
 private:
+    void showEvent(QShowEvent* event) override;
+
     Ui::MainPage *mUi;
-    base::ClientNetworkMgr mNetworkMgr;
+    base::ClientNetworkMgr* mNetworkMgr;
+
+    qint32 mSuggestTicket;
 
 private slots:
     void onResponseReceived(base::NetworkObject obj);
