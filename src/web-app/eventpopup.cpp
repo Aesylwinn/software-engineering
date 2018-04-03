@@ -39,7 +39,5 @@ void eventPopUp::setHostInfo()
             }
         }
 
-    info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText());
-    
-    
+    info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText(), ui->fromDate->dateTime(), ui->toDate->dateTime());
 }

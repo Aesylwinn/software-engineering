@@ -41,19 +41,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->matchB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
     connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
-
-    base::venue tempVenue;
-    tempVenue.setAddress(tr("411 Electric Avenue"));
-
-    base::event tempEvent;
-    tempEvent.setName(tr("Wine Night"));
-    tempEvent.setDescription(tr("Come get toasty at Primetime for $2!"));
-    tempEvent.setLocation(tempVenue);
-
-    QVector<base::event> tempVector;
-    tempVector.push_back(tempEvent);
-
-    displayEvents(tempVector);
+    connect(ui->logoutHost, SIGNAL(clicked()), this, SLOT(logout()));
 }
 
 interestData::~interestData()
@@ -80,7 +68,14 @@ void interestData::switchLowTabs()
     //just lets us grey out certain tabs that do not need to be used at that time
     if(button == ui->Login)
     {
-        login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
+        if (ui->usrName->text().isEmpty() || ui->password->text().isEmpty())
+        {
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error","Please insert username or password");
+            messageBox.setFixedSize(500,200);
+        }
+        else
+            login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
     else if(button == ui->SignUp)
     {
@@ -92,14 +87,27 @@ void interestData::switchLowTabs()
         }
         else
         {
-            // Create the account
-            createAccount();
+            if (ui->lineEdit_FN->text().isEmpty() || ui->lineEdit_LN->text().isEmpty() || ui->newUsrName->text().isEmpty() || ui->newPass->text().isEmpty())
+            {
+                QMessageBox messageBox;
+                messageBox.critical(0,"Error","Please fill out all fields: \nFirst name, Last name, Username, and Password");
+                messageBox.setFixedSize(500,200);
+            }
+            else
+                // Create the account
+                createAccount();
         }
     }
-//This will be moved to checkResponse()
     else
     {
-       createHost();
+       if (ui->userNameHostEd->text().isEmpty() || ui->passwordHostEd->text().isEmpty() || ui->hostDisplay->text().isEmpty())
+       {
+           QMessageBox messageBox;
+           messageBox.critical(0,"Error","Please enter username, password, and display name");
+           messageBox.setFixedSize(500,200);
+       }
+       else
+           createHost();
     }
 }
 
@@ -182,6 +190,13 @@ void interestData::logout()
     ui->newUsrName->clear();
     ui->newPass->clear();
     ui->confirmPass->clear();
+    ui->userNameHostEd->clear();
+    ui->passwordHostEd->clear();
+    ui->hostDisplay->clear();
+    ui->hostBusiness->clear();
+    ui->hostBio->clear();
+    ui->interestStream->clear();
+    ui->eventStream->clear();
 }
 
 void interestData::login(QString username, QString password)
@@ -250,15 +265,17 @@ void interestData::createHost()
     mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
-void interestData::createEvent(QString eName, QString categories, QString desc) {
+void interestData::createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end) {
     CreateEventRequest request;
     request.data.setName(eName);
-    if (ui->usrName->text() == "")
+    if (ui->usrName->text().isEmpty())
         request.data.setHost(ui->userNameHostEd->text());
     else
         request.data.setHost(ui->usrName->text());
     request.data.setDescription(desc);
     request.data.setCategory(categories);
+    request.data.setStartTime(start);
+    request.data.setEndTime(end);
 
     mCreateEventRequest = mNetworkMgr->sendRequest(NetworkObject(request));
 }
@@ -282,7 +299,13 @@ void interestData::checkResponse(NetworkObject response) {
         if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
             LoginResponse info = response.getLoginResponse();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
-            if (info.valid)
+            if (info.valid && info.isHost)
+            {
+                ui->tabWidget->setCurrentWidget(ui->tab_5);
+                ui->tabWidget->setTabEnabled(3, true);
+                ui->tabWidget->setTabEnabled(1, false);
+            }
+            else if (info.valid)
             {
                 ui->tabWidget->setCurrentWidget(ui->tab_4);
                 ui->tabWidget->setTabEnabled(2, true);
@@ -304,7 +327,6 @@ void interestData::checkResponse(NetworkObject response) {
             if (info.valid) {
                 ui->tabWidget_2->setTabEnabled(1, true);
                 ui->Nam_Display->setText(tr("Alright, %1!").arg(ui->lineEdit_FN->text()));
-                ui->Nam_Display_2->setText(tr("%1 %2").arg(ui->lineEdit_FN->text(), ui->lineEdit_LN->text()));
                 ui->tabWidget_2->setCurrentWidget(ui->tab_3);
                 ui->tabWidget_2->setTabEnabled(0, false);
             } else {

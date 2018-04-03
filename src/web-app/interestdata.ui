@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Get Going</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>:/Utilities/GG_Train.png</normalon>
+   </iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
    <property name="sizeConstraint">
     <enum>QLayout::SetNoConstraint</enum>
@@ -378,7 +383,7 @@ p, li { white-space: pre-wrap; }
                   </layout>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QLabel" name="label_4">
+                  <widget class="QLabel" name="socialNet">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -431,7 +436,7 @@ p, li { white-space: pre-wrap; }
                       <number>0</number>
                      </property>
                      <item row="0" column="0">
-                      <widget class="QLabel" name="label_3">
+                      <widget class="QLabel" name="signUpFee">
                        <property name="font">
                         <font>
                          <pointsize>15</pointsize>
@@ -511,7 +516,7 @@ p, li { white-space: pre-wrap; }
                      <item row="2" column="1">
                       <layout class="QVBoxLayout" name="verticalLayout_16">
                        <item>
-                        <widget class="QLabel" name="label_5">
+                        <widget class="QLabel" name="usrNameLabel">
                          <property name="text">
                           <string>Username:</string>
                          </property>
@@ -570,7 +575,7 @@ p, li { white-space: pre-wrap; }
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="label">
+                        <widget class="QLabel" name="confirmPasslabel">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -619,7 +624,7 @@ p, li { white-space: pre-wrap; }
                         <widget class="QDateEdit" name="dateEdit">
                          <property name="maximumSize">
                           <size>
-                           <width>75</width>
+                           <width>80</width>
                            <height>16777215</height>
                           </size>
                          </property>
@@ -677,7 +682,7 @@ p, li { white-space: pre-wrap; }
                  <item row="2" column="0">
                   <layout class="QGridLayout" name="gridLayout">
                    <item row="0" column="0" colspan="2">
-                    <widget class="QLabel" name="label_6">
+                    <widget class="QLabel" name="interestedHost">
                      <property name="font">
                       <font>
                        <pointsize>15</pointsize>
@@ -1070,12 +1075,39 @@ Get Verified and share an experience with someone whose interests are cohesive w
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="1">
+            <widget class="QLabel" name="Nam_Display_2">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>75</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>500</width>
+               <height>75</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>34</pointsize>
+              </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="text">
+              <string>Hey Goers!</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0" rowspan="2">
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_29">
                <item>
-                <widget class="QLabel" name="label_7">
+                <widget class="QLabel" name="eventStreamLbl">
                  <property name="minimumSize">
                   <size>
                    <width>171</width>
@@ -1178,7 +1210,7 @@ Get Verified and share an experience with someone whose interests are cohesive w
              <item>
               <layout class="QVBoxLayout" name="verticalLayout">
                <item>
-                <widget class="QLabel" name="label_2">
+                <widget class="QLabel" name="interestStreamLbl">
                  <property name="minimumSize">
                   <size>
                    <width>171</width>
@@ -1280,39 +1312,31 @@ Get Verified and share an experience with someone whose interests are cohesive w
              </item>
             </layout>
            </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="Nam_Display_2">
-             <property name="minimumSize">
-              <size>
-               <width>500</width>
-               <height>75</height>
-              </size>
-             </property>
+           <item row="2" column="2">
+            <widget class="QPushButton" name="logout">
              <property name="maximumSize">
               <size>
-               <width>500</width>
-               <height>75</height>
+               <width>100</width>
+               <height>16777215</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <pointsize>34</pointsize>
-              </font>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
-             </property>
              <property name="text">
-              <string>Hey Goers!</string>
+              <string>Logout</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1" colspan="2">
             <layout class="QFormLayout" name="formLayout_3">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
              <item row="0" column="0">
               <layout class="QVBoxLayout" name="verticalLayout_17">
                <property name="bottomMargin">
-                <number>100</number>
+                <number>40</number>
                </property>
                <item>
                 <widget class="QTextEdit" name="textEdit">
@@ -1369,7 +1393,7 @@ p, li { white-space: pre-wrap; }
              <item row="0" column="1">
               <layout class="QVBoxLayout" name="verticalLayout_19">
                <property name="bottomMargin">
-                <number>250</number>
+                <number>200</number>
                </property>
                <item>
                 <widget class="QPlainTextEdit" name="plainTextEdit_2">
@@ -1424,20 +1448,23 @@ p, li { white-space: pre-wrap; }
                </item>
               </layout>
              </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QLabel" name="parkFamily">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="utilities.qrc">:/Utilities/pr-featured.jpg</pixmap>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
             </layout>
-           </item>
-           <item row="2" column="2">
-            <widget class="QPushButton" name="logout">
-             <property name="maximumSize">
-              <size>
-               <width>100</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Logout</string>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -1469,12 +1496,37 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>10</x>
              <y>10</y>
-             <width>80</width>
+             <width>75</width>
              <height>21</height>
             </rect>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>75</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Create Event</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="logoutHost">
+           <property name="geometry">
+            <rect>
+             <x>1150</x>
+             <y>770</y>
+             <width>75</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>75</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Logout</string>
            </property>
           </widget>
          </widget>
