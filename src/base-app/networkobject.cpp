@@ -225,6 +225,8 @@ namespace base {
         writeBlocking(device, (const char*) &type, sizeof(type));
         writeBlocking(device, (const char*) &size, sizeof(size));
         writeBlocking(device, payload.data(), payload.size());
+        // Flush device
+        device->waitForBytesWritten(-1);
     }
 
     bool NetworkObject::tryRead(QIODevice* device) {

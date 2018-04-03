@@ -6,6 +6,7 @@
 #include <exception>
 
 #include "eventtablewidget.h"
+#include "myeventtablewidget.h"
 
 MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     : QWidget(parent)
@@ -13,6 +14,7 @@ MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     , mNetworkMgr(mgr)
     , mSuggestTicket(-1)
     , mJoinTicket(-1)
+    , mMyEventsTicket(-1)
 {
     if (!mgr) {
         throw std::runtime_error("MainPage requires network mgr");
@@ -40,11 +42,26 @@ void MainPage::showEvent(QShowEvent *event) {
     // Update list of events
     const qint32 NumEvents = 10;
     mSuggestTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::SuggestEventsRequest{ NumEvents }));
+
+    // My events
+    mMyEventsTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::RetrieveMyEventsRequest{ NumEvents }));
 }
 
 void MainPage::setMyEvents(QVector<base::event> events)
 {
-    // TODO
+    // Recreate list
+    mUi->myEventsListView->clear();
+    for (int i = 0; i < events.count(); ++i) {
+        // List item
+        MyEventTableWidget* itemWidget = new MyEventTableWidget(events[i]);
+
+        // Dummy container
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setSizeHint(itemWidget->sizeHint());
+
+        mUi->myEventsListView->addItem(item);
+        mUi->myEventsListView->setItemWidget(item, itemWidget);
+    }
 }
 
 void MainPage::setEvents(QVector<base::event> events)
@@ -90,6 +107,17 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
                 QMessageBox::critical(this, "Error", "Failed to join event");
             }
         }
+        break;
+
+    case base::NetworkObject::PT_RetrieveMyEventsResponse:
+        if (obj.getTicket() == mMyEventsTicket) {
+            // Convert
+            base::RetrieveMyEventsResponse info = obj.getRetrieveMyEventsResponse();
+            qInfo("my events: %d", info.events.count());
+
+            setMyEvents(info.events);
+        }
+        break;
 
     default:
         // Do nothing

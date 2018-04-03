@@ -11,21 +11,24 @@ SOURCES += \
     registerpage.cpp \
     mainpage.cpp \
     createeventpage.cpp \
-    eventtablewidget.cpp
+    eventtablewidget.cpp \
+    myeventtablewidget.cpp
 
 HEADERS += \
     loginpage.h \
     registerpage.h \
     mainpage.h \
     createeventpage.h \
-    eventtablewidget.h
+    eventtablewidget.h \
+    myeventtablewidget.h
 
 FORMS += \
     loginpage.ui \
     registerpage.ui \
     mainpage.ui \
     createeventpage.ui \
-    eventtablewidget.ui
+    eventtablewidget.ui \
+    myeventtablewidget.ui
 
 # base-app
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
