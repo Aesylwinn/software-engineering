@@ -223,6 +223,7 @@ bool DatabaseConnection::getUserId(QString username, qint64& id) {
         return true;
     }
 
+    id = -1;
     return false;
 }
 
@@ -315,7 +316,7 @@ UserData::UserData(QObject *parent, QString dbName, QString username, QString pa
     if (dbConnection.checkPassword(username, password)) {
         mValid = true;
         mHost = dbConnection.isHost(username);
-        dbConnection.getUserId(dbName, mUserId);
+        dbConnection.getUserId(username, mUserId);
     } else {
         mValid = false;
         mHost = false;

@@ -1,6 +1,7 @@
 #include "mainpage.h"
 #include "ui_mainpage.h"
 
+#include <QMessageBox>
 #include <QShowEvent>
 #include <exception>
 
@@ -11,6 +12,7 @@ MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     , mUi(new Ui::MainPage)
     , mNetworkMgr(mgr)
     , mSuggestTicket(-1)
+    , mJoinTicket(-1)
 {
     if (!mgr) {
         throw std::runtime_error("MainPage requires network mgr");
@@ -76,6 +78,19 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
         }
         break;
 
+    case base::NetworkObject::PT_JointEventResponse:
+        if (obj.getTicket() == mJoinTicket) {
+            // Convert
+            base::JoinEventResponse info = obj.getJoinEventResponse();
+            qInfo("join event: %d msg: %s", info.valid, qUtf8Printable(info.details));
+
+            if (info.valid) {
+                QMessageBox::information(this, "Success", "Joined event");
+            } else {
+                QMessageBox::critical(this, "Error", "Failed to join event");
+            }
+        }
+
     default:
         // Do nothing
         break;
@@ -93,6 +108,7 @@ void MainPage::onLogoutClicked(bool) {
 
 void MainPage::onJoinEvent(base::event evt)
 {
-    // TODO
     qInfo("Join event: %s", qUtf8Printable(evt.getName()));
+    base::NetworkObject request(base::JoinEventRequest{ evt.getID() });
+    mJoinTicket = mNetworkMgr->sendRequest(request);
 }
