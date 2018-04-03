@@ -78,7 +78,7 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
         }
         break;
 
-    case base::NetworkObject::PT_JointEventResponse:
+    case base::NetworkObject::PT_JoinEventResponse:
         if (obj.getTicket() == mJoinTicket) {
             // Convert
             base::JoinEventResponse info = obj.getJoinEventResponse();

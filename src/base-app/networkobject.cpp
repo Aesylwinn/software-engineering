@@ -162,7 +162,7 @@ namespace base {
     }
 
     NetworkObject::NetworkObject(const JoinEventResponse& response) {
-        init(PT_JointEventResponse, QByteArray());
+        init(PT_JoinEventResponse, QByteArray());
         mTicket = -1;
 
         QDataStream stream;
@@ -438,7 +438,7 @@ namespace base {
     }
 
     JoinEventResponse NetworkObject::getJoinEventResponse() const {
-        mustMatch(PT_JointEventResponse);
+        mustMatch(PT_JoinEventResponse);
 
         // Convert
         QDataStream stream;

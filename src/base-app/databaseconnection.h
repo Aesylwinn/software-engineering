@@ -34,6 +34,7 @@ namespace base {
         bool isHost(QString username);
 
         bool getEvents(QVector<base::event>& events);
+        bool getMyEvents(qint64 userId, QVector<base::event>& events);
 
         bool joinEvent(qint64 userId, qint64 eventId);
 

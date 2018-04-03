@@ -32,7 +32,7 @@ namespace base {
             PT_CreateEventResponse,
             PT_SuggestEventsResponse,
             PT_CreateHostResponse,
-            PT_JointEventResponse,
+            PT_JoinEventResponse,
             PT_RetrieveMyEventsResponse,
 
             PT_Message=0x400

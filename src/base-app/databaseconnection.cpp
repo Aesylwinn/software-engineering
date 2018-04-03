@@ -291,6 +291,49 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
     return false;
 }
 
+bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::event>& events) {
+    // Create query
+    QSqlQuery query(*db);
+    QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to select user events, unable to prepare query");
+
+    query.bindValue(":id", userId);
+
+    // Run and process
+    if (!query.exec()) {
+        return false;
+    }
+
+    if (query.isSelect() && query.first()) {
+        do {
+            base::event evt;
+            QDateTime dateTime;
+
+            evt.setName(query.value("displayName").toString());
+            evt.setDescription(query.value("description").toString());
+            evt.setID(query.value("id").toInt());
+
+            dateTime.setDate(query.value("dateStart").toDate());
+            dateTime.setTime(query.value("timeStart").toTime());
+            evt.setStartTime(dateTime);
+
+            dateTime.setDate(query.value("dateEnd").toDate());
+            dateTime.setTime(query.value("timeEnd").toTime());
+            evt.setEndTime(dateTime);
+
+            // TODO other fields
+
+            events.push_back(evt);
+        } while (query.next());
+
+        return true;
+    }
+
+    return false;
+}
+
 bool DatabaseConnection::joinEvent(qint64 userId, qint64 eventId)
 {
     QSqlQuery query(*db);

@@ -189,6 +189,26 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
+                case NetworkObject::PT_RetrieveMyEventsRequest:
+                    {
+                        RetrieveMyEventsRequest request = obj.getRetrieveMyEventsRequest();
+                        RetrieveMyEventsResponse response;
+
+                        qInfo("my events: %d", request.count);
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection dbConnection(DbName);
+                                dbConnection.getMyEvents(userData->getUserId(), response.events);
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("DB error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
                 default:
                     qInfo("Unknown request encountered: %d", obj.getPayloadType());
                     break;
