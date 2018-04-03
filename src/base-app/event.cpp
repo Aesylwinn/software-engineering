@@ -113,6 +113,25 @@ namespace base{
         return id;
     }
 
+    QVector< QPair<QDateTime, QDateTime> > event::getTimes() {
+        return timeSlots;
+    }
+
+    QDateTime event::getStartTime() {
+        return startTime;
+    }
+
+    QDateTime event::getEndTime() {
+        return endTime;
+    }
+
+    qint64 event::getDaysTo() {
+        //no idea how to convert qint64 to QString, but doing
+        //QDebug() << getDaysTo(); should show the correct
+        //result in the output
+        return QDateTime::currentDateTime().daysTo(startTime);
+    }
+
     bool event::addUser(QString newUser)
     {
         if (newUser.isEmpty())
@@ -148,6 +167,142 @@ namespace base{
         else
             category = cat;
 
+        startTime = QDateTime::currentDateTime();
+        endTime = QDateTime::currentDateTime();
+        startTimeSet = false;
+        endTimeSet = false;
+        reoccurring = false;
+    }
+
+    bool event::setStartTime(QString date) {
+        QString format = "MM/dd/yyyy.hh:mm";
+        QDateTime temp = QDateTime::fromString(date, format);
+        // valid input must be current time or greater, might
+        // return false if the user's system clock is wrong
+        if(temp < QDateTime::currentDateTime()) {
+            return false;
+        }
+        else {
+            startTime = temp;
+            startTimeSet = true;
+            return true;
+        }
+    }
+
+    bool event::setStartTime(QDateTime date)
+    {
+        startTime = date;
+        return true;
+    }
+
+    bool event::setEndTime(QDateTime date)
+    {
+        endTime = date;
+        return true;
+    }
+
+    bool event::setEndTime(QString date) {
+        QString format = "MM/dd/yyyy.hh:mm";
+        QDateTime temp = QDateTime::fromString(date, format);
+        // valid input must be greater than startTime
+        if(temp <= startTime) {
+            return false;
+        }
+        else {
+            endTime = temp;
+            endTimeSet = true;
+            return true;
+        }
+    }
+
+    int event::setReoccurring(int o) {
+    /* Assumes that this function can't be called unless
+     * there is ONLY 1 element in timeSlots
+     *
+     * -2: this should never be reached
+     * -1: error (really bad)
+     *  0: not reoccurring
+     *  1: reoccurring weekly
+     */
+        QDateTime newStart;
+        QDateTime newEnd;
+
+        // not reoccurring
+        if(o == 0) {
+            reoccurring = false;
+            // keep initial timeSlot and delete all other timeSlots
+            newStart = timeSlots.at(0).first;
+            newEnd = timeSlots.at(0).second;
+            timeSlots.clear();
+            timeSlots.push_back(qMakePair(newStart, newEnd));
+            return 0;
+        }
+
+        // reoccurring weekly
+        if(o > 0) {
+            // might cause outofbounds error if addTimes() returns an error
+            // not sure how to check to see
+            for(int i = 0; i < o; i++) {
+                newStart = timeSlots.at(i).first.addDays(7);
+                newEnd = timeSlots.at(i).second.addDays(7);
+                startTimeSet = true;
+                endTimeSet = true;
+                if(addTimes(newStart, newEnd) != 1) {
+                    return -1;
+                }
+            }
+            reoccurring = true;
+            return 1;
+        }
+        return -2;
+    }
+
+    int event::addTimes(QDateTime start, QDateTime end) {
+    /*
+     * -2: coinciding timeslots
+     * -1: timeslot has already been created
+     *  0: missing either start or end time
+     *  1: success
+     */
+        if(startTimeSet && endTimeSet) {    // checks if both start and end times are set
+
+            // user-input error checking
+            for(int i = 0; i < timeSlots.size(); i++) {
+                // checks if the new pair does not already exist
+                if(start == timeSlots.at(i).first && end == timeSlots.at(i).second) {
+                    return -1;
+                }
+                // checks if the new timeslot coincides with another timeslot
+                if(start > timeSlots.at(i).first && start < timeSlots.at(i).second) {
+                    return -2;
+                }
+                if(end > timeSlots.at(i).first && end < timeSlots.at(i).second) {
+                    return -2;
+                }
+            }
+
+            // creates a new pair, resets values, and returns 1
+            timeSlots.push_back(qMakePair(start, end));
+            startTime = QDateTime::currentDateTime();
+            endTime = QDateTime::currentDateTime();
+            startTimeSet = false;
+            endTimeSet = false;
+
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    bool event::delTime(int pos) {
+        if(timeSlots.size() > 0) {
+            timeSlots.erase(timeSlots.begin() + pos);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     bool operator==(const event& right, const event& left) {
