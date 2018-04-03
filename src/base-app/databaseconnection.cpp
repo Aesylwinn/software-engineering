@@ -299,7 +299,7 @@ bool DatabaseConnection::joinEvent(qint64 userId, qint64 eventId)
         throw std::runtime_error("Unable to join event, unable to prepare query");
 
     query.bindValue(":user", userId);
-    query.bindValue("event", eventId);
+    query.bindValue(":event", eventId);
 
     return query.exec();
 }
