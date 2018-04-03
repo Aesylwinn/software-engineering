@@ -125,6 +125,18 @@ TEST(base, NetworkObject_joinEventRequest) {
     ASSERT_EQ(request.eventId, converted.eventId);
 }
 
+TEST(base, NetworkObject_retrieveMyEventsRequest) {
+    // State
+    const RetrieveMyEventsRequest request = { 199 };
+
+    // Test
+    NetworkObject netObj(request);
+    RetrieveMyEventsRequest converted = netObj.getRetrieveMyEventsRequest();
+
+    // Oracle
+    ASSERT_EQ(request.count, converted.count);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -266,6 +278,28 @@ TEST(base, NetworkObject_joinEventResponse) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_retrieveMyEventsResponse) {
+    // Set up state
+    const RetrieveMyEventsRequest request { 2 };
+    const RetrieveMyEventsResponse response {{
+        event("Bob's Funner Emporium", 799, "Fun!"),
+        event("Earth", 92, "Nuclear waste!")
+    }};
+    const qint32 ticketNumber = 31;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    RetrieveMyEventsResponse converted = netObjResponse.getRetrieveMyEventsResponse();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.events.size(), converted.events.size());
+    ASSERT_EQ(response.events, converted.events);
 }
 
 TEST(base, NetworkObject_write) {

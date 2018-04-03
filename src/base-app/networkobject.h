@@ -25,6 +25,7 @@ namespace base {
             PT_SuggestEventsRequest,
             PT_CreateHostRequest,
             PT_JoinEventRequest,
+            PT_RetrieveMyEventsRequest,
 
             PT_CreateAccountResponse=0x200,
             PT_LoginResponse,
@@ -32,6 +33,7 @@ namespace base {
             PT_SuggestEventsResponse,
             PT_CreateHostResponse,
             PT_JointEventResponse,
+            PT_RetrieveMyEventsResponse,
 
             PT_Message=0x400
         };
@@ -66,6 +68,9 @@ namespace base {
 
         // JoinEventRequest packet ctor
         NetworkObject(const JoinEventRequest& request);
+
+        // RetrieveMyEventsRequest packet ctor
+        NetworkObject(const RetrieveMyEventsRequest& request);
 
 
         // Type and raw data retrieval
@@ -107,6 +112,9 @@ namespace base {
         // Converts a payload to a JoinEventRequest packet
         JoinEventRequest getJoinEventRequest() const;
 
+        // Converts a payload to a RetrieveMyEventsRequest packet
+        RetrieveMyEventsRequest getRetrieveMyEventsRequest() const;
+
 
         // Converts payload to a LoginResponse packet
         LoginResponse getLoginResponse() const;
@@ -125,6 +133,9 @@ namespace base {
 
         // Converts payload to a JoinEventResponse packet
         JoinEventResponse getJoinEventResponse() const;
+
+        // Converts payload to a RetrieveMyEventsResponse packet
+        RetrieveMyEventsResponse getRetrieveMyEventsResponse() const;
 
 
         // Creates a NetworkObject containing a LoginResponse packet
@@ -145,6 +156,9 @@ namespace base {
         // Create a NetworkObject containing a JoinEventResponse packet
         NetworkObject createResponse(const JoinEventResponse& data);
 
+        // Create a NetworkObject containing a RetrieveMyEventsResponse packet
+        NetworkObject createResponse(const RetrieveMyEventsResponse& data);
+
     private:
 
         // LoginResponse packet ctor
@@ -164,6 +178,9 @@ namespace base {
 
         // JoinEventResponse packet ctor
         NetworkObject(const JoinEventResponse& response);
+
+        // RetrieveMyEventsResponse packet ctor
+        NetworkObject(const RetrieveMyEventsResponse& data);
 
 
         // Ctor helper function

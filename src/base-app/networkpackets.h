@@ -57,6 +57,11 @@ namespace base {
         qint64 eventId;
     };
 
+    // A packet to store a request for a users events (attending)
+    struct RetrieveMyEventsRequest {
+        qint32 count;
+    };
+
     // A packet to store a response regarding account creation
     struct CreateAccountResponse {
         qint32 valid;
@@ -91,6 +96,11 @@ namespace base {
     struct JoinEventResponse {
         qint32 valid;
         QString details;
+    };
+
+    // A packet to store a response for a users events (attending)
+    struct RetrieveMyEventsResponse {
+        QVector<base::event> events;
     };
 }
 
