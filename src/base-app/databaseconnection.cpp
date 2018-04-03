@@ -295,7 +295,7 @@ bool DatabaseConnection::joinEvent(qint64 userId, qint64 eventId)
     QSqlQuery query(*db);
     QString statement = "INSERT INTO Join_Event (id_user, id_event) VALUES (:user, :event)";
 
-    if (query.prepare(statement))
+    if (!query.prepare(statement))
         throw std::runtime_error("Unable to join event, unable to prepare query");
 
     query.bindValue(":user", userId);
