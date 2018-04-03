@@ -250,10 +250,13 @@ void interestData::createHost()
     mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
-void interestData::createEvent(QString eName, /*QString hostName*/, QVector<QString> categories, QString desc) {
+void interestData::createEvent(QString eName, QString categories, QString desc) {
     CreateEventRequest request;
     request.data.setName(eName);
-  //  request.data.setHost(hostName); //Need to see if this is doable, Need to try and find the host name
+    if (ui->usrName->text() == "")
+        request.data.setHost(ui->userNameHostEd->text());
+    else
+        request.data.setHost(ui->usrName->text());
     request.data.setDescription(desc);
     request.data.setCategory(categories);
 
@@ -262,7 +265,7 @@ void interestData::createEvent(QString eName, /*QString hostName*/, QVector<QStr
 
 void interestData::requestEvents() {
     SuggestEventsRequest data;
-    data.count = 5; // How many? Is there a limit to how many can be sent?
+    data.count = 10;
 
     mSuggestEventsRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }

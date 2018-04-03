@@ -29,18 +29,17 @@ void eventPopUp::openingCalendar()
 
 void eventPopUp::setHostInfo()
 {
-    interestData *info;
-    QVector<QString> categories;
+    interestData *info = new interestData(this);
+    QString categories;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 5; j++){
             if(ui->category->itemAt(i,j)->isSelected())
             {
-                QString item = ui->category->itemAt(i,j)->text(i);
-                categories.push_front(item);
+                categories = ui->category->itemAt(i,j)->text(i);
             }
         }
 
-    info->createEvent(ui->eventNameEd->text(), /*something*/, categories ,ui->descriptionText->toPlainText());
+    info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText());
     
     
 }
