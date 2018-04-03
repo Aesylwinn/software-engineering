@@ -98,7 +98,7 @@ namespace base {
                                 qint64 venueId;
 
                                 // Handle venue
-                                if (dbConnection.getOrCreateVenue(request.data.getLocation(), venueId)) {
+                                if (dbConnection.getOrCreateVenueId(request.data.getLocation(), venueId)) {
                                     // Event
                                     if (dbConnection.createEvent(request.data, userData->getUserId(), venueId)) {
                                         response = { IsValid, "Event created" };
@@ -129,7 +129,7 @@ namespace base {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.checkPassword(request.username, request.password)) {
                                 qint64 id = 0;
-                                if (dbConnection.getId(request.username, id)) {
+                                if (dbConnection.getUserId(request.username, id)) {
                                     if (dbConnection.createHost(id, request.displayName, request.businessName, request.bio)) {
                                         response = { IsValid };
                                     }
@@ -157,6 +157,30 @@ namespace base {
                                     response.events.resize(request.count);
                             } else {
                                 qInfo("failed to retrieve any events");
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case NetworkObject::PT_JoinEventRequest:
+                    {
+                        JoinEventRequest request = obj.getJoinEventRequest();
+                        JoinEventResponse response = { NotValid, "Failed to join the event" };
+
+                        qInfo("join event: %lld", request.eventId);
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection dbConnection(DbName);
+                                if (dbConnection.joinEvent(userData->getUserId(), request.eventId)) {
+                                    response = { IsValid, "Event joint" };
+                                }
+                            } else {
+                                response = { NotValid, "Not logged in" };
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());

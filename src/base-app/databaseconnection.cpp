@@ -65,15 +65,18 @@ bool DatabaseConnection::createEvent(base::event evt, qint64 hostID, qint64 venu
     QSqlQuery query(*db);
 
     //set db values
-    if (!query.prepare("INSERT INTO Event (id_host,standardOperation, recurring, displayName, id_category, id_venue, dateStart, description)"
-                                 " VALUES (  :host,            FALSE,     FALSE,       :disp,        :cat,     :ven,     :date,        :bio)"))
+    if (!query.prepare("INSERT INTO Event (id_host,standardOperation, recurring, displayName, id_category, id_venue, dateStart, dateEnd, timeStart, timeEnd, description)"
+                                 " VALUES (  :host,            FALSE,     FALSE,       :disp,        :cat,     :ven, :dateStrt,:dateEnd, :timeStrt,:timeEnd,        :bio)"))
         throw std::runtime_error("Unable to create event, unable to prepare query");
 
     query.bindValue(":host", hostID);
     query.bindValue(":disp", evt.getName());
     query.bindValue(":cat", 0);
     query.bindValue(":ven", venueID);
-    query.bindValue(":date", "2018-4-20");
+    query.bindValue(":dateStrt", evt.getStartTime().date());
+    query.bindValue(":dateEnd", evt.getEndTime().date());
+    query.bindValue(":timeStrt", evt.getStartTime().time());
+    query.bindValue(":timeEnd", evt.getEndTime().time());
     query.bindValue(":bio", evt.getDescription());
 
     if (!query.exec()) {
@@ -83,7 +86,7 @@ bool DatabaseConnection::createEvent(base::event evt, qint64 hostID, qint64 venu
     return true;
 }
 
-bool DatabaseConnection::getVenue(venue location, qint64& id) {
+bool DatabaseConnection::getVenueId(venue location, qint64& id) {
     // Try to retrieve the id from the database
     QSqlQuery query(*db);
 
@@ -106,9 +109,9 @@ bool DatabaseConnection::getVenue(venue location, qint64& id) {
     }
 }
 
-bool DatabaseConnection::getOrCreateVenue(venue location, qint64& id) {
+bool DatabaseConnection::getOrCreateVenueId(venue location, qint64& id) {
     // Check for existing
-    if (getVenue(location, id)) {
+    if (getVenueId(location, id)) {
         return true;
     }
 
@@ -133,7 +136,7 @@ bool DatabaseConnection::getOrCreateVenue(venue location, qint64& id) {
     }
 
     // Look it up
-    return getVenue(location, id);
+    return getVenueId(location, id);
 }
 
 bool DatabaseConnection::createAccount(QString username, QString password)
@@ -201,7 +204,7 @@ bool DatabaseConnection::createHost(qint64 userId, QString displayName, QString 
     return db->commit();
 }
 
-bool DatabaseConnection::getId(QString username, qint64& id) {
+bool DatabaseConnection::getUserId(QString username, qint64& id) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT id FROM User_basic WHERE username = :usr";
@@ -262,8 +265,20 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
     if (query.isSelect() && query.first()) {
         do {
             base::event evt;
+            QDateTime dateTime;
+
             evt.setName(query.value("displayName").toString());
             evt.setDescription(query.value("description").toString());
+            evt.setID(query.value("id").toInt());
+
+            dateTime.setDate(query.value("dateStart").toDate());
+            dateTime.setTime(query.value("timeStart").toTime());
+            evt.setStartTime(dateTime);
+
+            dateTime.setDate(query.value("dateEnd").toDate());
+            dateTime.setTime(query.value("timeEnd").toTime());
+            evt.setEndTime(dateTime);
+
             // TODO other fields
 
             events.push_back(evt);
@@ -273,6 +288,20 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
     }
 
     return false;
+}
+
+bool DatabaseConnection::joinEvent(qint64 userId, qint64 eventId)
+{
+    QSqlQuery query(*db);
+    QString statement = "INSERT INTO Join_Event (id_user, id_event) VALUES (:user, :event)";
+
+    if (query.prepare(statement))
+        throw std::runtime_error("Unable to join event, unable to prepare query");
+
+    query.bindValue(":user", userId);
+    query.bindValue("event", eventId);
+
+    return query.exec();
 }
 
 QString UserData::ObjectName = "UserData";
@@ -286,7 +315,7 @@ UserData::UserData(QObject *parent, QString dbName, QString username, QString pa
     if (dbConnection.checkPassword(username, password)) {
         mValid = true;
         mHost = dbConnection.isHost(username);
-        dbConnection.getId(dbName, mUserId);
+        dbConnection.getUserId(dbName, mUserId);
     } else {
         mValid = false;
         mHost = false;
