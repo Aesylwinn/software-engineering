@@ -22,6 +22,7 @@ namespace base {
         PT_CreateHostRequest,
         PT_JoinEventRequest,
         PT_RetrieveMyEventsRequest,
+        PT_SetInterestsRequest,
 
         PT_CreateAccountResponse=0x200,
         PT_LoginResponse,
@@ -30,6 +31,7 @@ namespace base {
         PT_CreateHostResponse,
         PT_JoinEventResponse,
         PT_RetrieveMyEventsResponse,
+        PT_SetInterestsResponse,
 
         PT_Message=0x400
     };
@@ -126,6 +128,16 @@ namespace base {
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMyEventsRequest& req);
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMyEventsRequest& req);
 
+    // A packet to store a request to set a users interests
+    struct SetInterestsRequest {
+        static const size_t Type = PT_SetInterestsRequest;
+
+        QVector<QString> interests;
+    };
+
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SetInterestsRequest& req);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, SetInterestsRequest& req);
+
     // A packet to store a response regarding account creation
     struct CreateAccountResponse {
         static const size_t Type = PT_CreateAccountResponse;
@@ -208,6 +220,18 @@ namespace base {
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMyEventsResponse& resp);
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMyEventsResponse& resp);
+
+    // A packet to store a request to set a users interests
+    struct SetInterestsResponse {
+        static const size_t Type = PT_SetInterestsResponse;
+        static const size_t RequestType = PT_SetInterestsRequest;
+
+        int valid;
+        QString details;
+    };
+
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SetInterestsResponse& req);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, SetInterestsResponse& req);
 }
 
 #endif

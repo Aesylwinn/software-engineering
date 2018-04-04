@@ -95,6 +95,15 @@ namespace base {
         return ds >> req.count;
     }
 
+    // SetInterestsRequest
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SetInterestsRequest& req) {
+        return ds << req.interests;
+    }
+
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, SetInterestsRequest& req) {
+        return ds >> req.interests;
+    }
+
     // CreateAccountResponse
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateAccountResponse& resp) {
         return ds << resp.valid << resp.details;
@@ -156,5 +165,14 @@ namespace base {
 
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMyEventsResponse& resp) {
         return ds >> resp.events;
+    }
+
+    // SetInterestsResponse
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SetInterestsResponse& req) {
+        return ds << req.valid << req.details;
+    }
+
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, SetInterestsResponse& req) {
+        return ds >> req.valid >> req.details;
     }
 }
