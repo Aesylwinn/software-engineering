@@ -150,6 +150,18 @@ TEST(base, NetworkObject_setInterestsRequest) {
     ASSERT_EQ(request.interests, converted.interests);
 }
 
+TEST(base, NetworkObject_findMatchRequest) {
+    // State
+    const FindMatchRequest request = { 2788591231 };
+
+    // Test
+    NetworkObject netObj(request);
+    auto converted = netObj.convert<FindMatchRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.event_id, converted.event_id);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -327,6 +339,25 @@ TEST(base, NetworkObject_setInterestsResponse) {
     // Test
     NetworkObject netObjResponse = netObj.createResponse(response);
     SetInterestsResponse converted = netObjResponse.convert<SetInterestsResponse>();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_findMatchResponse) {
+    // Set up state
+    const FindMatchRequest request { 168924 };
+    const FindMatchResponse response { IsValid, "You have been matched with TheGrinch!" };
+    const qint32 ticketNumber = 9314;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    auto converted = netObjResponse.convert<FindMatchResponse>();
 
     // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);

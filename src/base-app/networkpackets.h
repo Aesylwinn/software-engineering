@@ -23,6 +23,7 @@ namespace base {
         PT_JoinEventRequest,
         PT_RetrieveMyEventsRequest,
         PT_SetInterestsRequest,
+        PT_FindMatchRequest,
 
         PT_CreateAccountResponse=0x200,
         PT_LoginResponse,
@@ -32,6 +33,7 @@ namespace base {
         PT_JoinEventResponse,
         PT_RetrieveMyEventsResponse,
         PT_SetInterestsResponse,
+        PT_FindMatchResponse,
 
         PT_Message=0x400
     };
@@ -138,6 +140,17 @@ namespace base {
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SetInterestsRequest& req);
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, SetInterestsRequest& req);
 
+    // A packet to store a request for a match at an event
+    struct FindMatchRequest {
+        static const size_t Type = PT_FindMatchRequest;
+
+        qint64 event_id;
+    };
+
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const FindMatchRequest& req);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, FindMatchRequest& req);
+
+
     // A packet to store a response regarding account creation
     struct CreateAccountResponse {
         static const size_t Type = PT_CreateAccountResponse;
@@ -232,6 +245,19 @@ namespace base {
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SetInterestsResponse& req);
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, SetInterestsResponse& req);
+
+    // A packet to store a response to a find a match
+    struct FindMatchResponse {
+        static const size_t Type = PT_FindMatchResponse;
+        static const size_t RequestType = PT_FindMatchRequest;
+
+        int valid;
+        QString details;
+    };
+
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const FindMatchResponse& req);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, FindMatchResponse& req);
+
 }
 
 #endif
