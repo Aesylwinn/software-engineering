@@ -12,7 +12,6 @@ SOURCES += \
     tst_networkobject.cpp \
     tst_recurringtime.cpp \
     tst_simpleclass.cpp \
-    test_timepoint.cpp \
     tst_clientnetworkmgr.cpp \
     tst_venue.cpp \
     tst_databaseconnection.cpp \
