@@ -301,7 +301,8 @@ void interestData::checkResponse(NetworkObject response) {
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid && info.isHost)
             {
-                ui->tabWidget->setCurrentWidget(ui->tab_5);
+                ui->tabWidget->setCurrentWidget(ui->tab_4);
+                ui->tabWidget->setTabEnabled(2,true);
                 ui->tabWidget->setTabEnabled(3, true);
                 ui->tabWidget->setTabEnabled(1, false);
             }
@@ -347,7 +348,7 @@ void interestData::checkResponse(NetworkObject response) {
                 ui->tabWidget->setTabEnabled(1, false);
             } else {
                 QMessageBox messageBox;
-                messageBox.critical(0, "Error", "Unable to create host account");
+                messageBox.critical(0, "Error", "Unable to create host account\nYou must first create a regular account and use THAT username and password for the new host account");
                 messageBox.setFixedSize(500, 200);
             }
         }

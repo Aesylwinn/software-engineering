@@ -136,7 +136,7 @@ p, li { white-space: pre-wrap; }
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="utilities.qrc">:/Utilities/party-istock-resize-600x338.jpg</pixmap>
+                <pixmap resource="../mobile-app/utilities.qrc">:/Utilities/party-istock-resize-600x338.jpg</pixmap>
                </property>
               </widget>
              </item>
@@ -195,7 +195,7 @@ p, li { white-space: pre-wrap; }
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="utilities.qrc">:/Utilities/crowd.PNG</pixmap>
+                <pixmap resource="../mobile-app/utilities.qrc">:/Utilities/crowd.PNG</pixmap>
                </property>
               </widget>
              </item>
@@ -400,7 +400,7 @@ p, li { white-space: pre-wrap; }
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="utilities.qrc">:/Utilities/social.jpg</pixmap>
+                    <pixmap resource="../mobile-app/utilities.qrc">:/Utilities/social.jpg</pixmap>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -700,6 +700,9 @@ p, li { white-space: pre-wrap; }
                        <width>150</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
                      </property>
                     </widget>
                    </item>
@@ -1512,7 +1515,7 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="createEvent">
            <property name="geometry">
             <rect>
-             <x>10</x>
+             <x>20</x>
              <y>10</y>
              <width>75</width>
              <height>21</height>
@@ -1531,8 +1534,8 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="logoutHost">
            <property name="geometry">
             <rect>
-             <x>1150</x>
-             <y>770</y>
+             <x>100</x>
+             <y>10</y>
              <width>75</width>
              <height>21</height>
             </rect>
@@ -1558,6 +1561,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../mobile-app/utilities.qrc"/>
   <include location="utilities.qrc"/>
  </resources>
  <connections/>
