@@ -16,7 +16,7 @@ using namespace base;
 
 TEST(base, NetworkObject_defaultCtor) {
     NetworkObject netObj;
-    ASSERT_EQ(netObj.getPayloadType(), NetworkObject::PT_None);
+    ASSERT_EQ(netObj.getPayloadType(), PT_None);
     try {
         QByteArray payload = netObj.getPayload();
         // Shold have thrown
@@ -27,7 +27,7 @@ TEST(base, NetworkObject_defaultCtor) {
 }
 
 TEST(base, NetworkObject_parametizedCtor) {
-    auto type = NetworkObject::PT_Message;
+    auto type = PT_Message;
     auto payload = QString("10 .. 9 .. 8 ..").toUtf8();
     NetworkObject netObj(type, payload);
     ASSERT_EQ(netObj.getPayloadType(), type);
@@ -46,7 +46,7 @@ TEST(base, NetworkObject_createAccountRequestCtor) {
 
     NetworkObject netObj((const CreateAccountRequest) request);
 
-    CreateAccountRequest converted = netObj.getCreateAccountRequest();
+    CreateAccountRequest converted = netObj.convert<CreateAccountRequest>();
     ASSERT_EQ(request.username, converted.username);
     ASSERT_EQ(request.password, converted.password);
     ASSERT_EQ(request.email, converted.email);
@@ -60,7 +60,7 @@ TEST(base, NetworkObject_loginRequestCtor) {
     const LoginRequest request{ "Bob", "password" };
     NetworkObject netObj(request);
 
-    LoginRequest converted = netObj.getLoginRequest();
+    LoginRequest converted = netObj.convert<LoginRequest>();
     ASSERT_EQ(request.username, converted.username);
     ASSERT_EQ(request.password, converted.password);
 }
@@ -69,7 +69,7 @@ TEST(base, NetworkObject_EventCreateRequest){
     const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
     NetworkObject netObj(myEvent);
 
-    CreateEventRequest converted = netObj.getCreateEventRequest();
+    CreateEventRequest converted = netObj.convert<CreateEventRequest>();
     // TODO
     ASSERT_EQ(myEvent.data.getName(), converted.data.getName());
     ASSERT_EQ(myEvent.data.getCategory(), converted.data.getCategory());
@@ -86,7 +86,7 @@ TEST(base, NetworkObject_suggestEventsRequest) {
 
     // Test conversion to and back again
     NetworkObject netObj(request);
-    SuggestEventsRequest converted = netObj.getSuggestEventsRequest();
+    SuggestEventsRequest converted = netObj.convert<SuggestEventsRequest>();
 
     // Oracle
     ASSERT_EQ(request.count, converted.count);
@@ -103,7 +103,7 @@ TEST(base, NetworkObject_createHostRequest) {
 
     // Test
     NetworkObject netObj(request);
-    CreateHostRequest converted = netObj.getCreateHostRequest();
+    CreateHostRequest converted = netObj.convert<CreateHostRequest>();
 
     // Oracle
     ASSERT_EQ(request.username, converted.username);
@@ -119,7 +119,7 @@ TEST(base, NetworkObject_joinEventRequest) {
 
     // Test
     NetworkObject netObj(request);
-    JoinEventRequest converted = netObj.getJoinEventRequest();
+    JoinEventRequest converted = netObj.convert<JoinEventRequest>();
 
     // Oracle
     ASSERT_EQ(request.eventId, converted.eventId);
@@ -131,7 +131,7 @@ TEST(base, NetworkObject_retrieveMyEventsRequest) {
 
     // Test
     NetworkObject netObj(request);
-    RetrieveMyEventsRequest converted = netObj.getRetrieveMyEventsRequest();
+    RetrieveMyEventsRequest converted = netObj.convert<RetrieveMyEventsRequest>();
 
     // Oracle
     ASSERT_EQ(request.count, converted.count);
@@ -141,7 +141,7 @@ TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
 
-    base::Message converted = netObj.getMessage();
+    base::Message converted = netObj.convert<base::Message>();
     ASSERT_EQ(message.category, converted.category);
     ASSERT_EQ(message.message, converted.message);
 }
@@ -156,7 +156,7 @@ TEST(base, NetworkObject_createAccountResponse) {
 
     NetworkObject netObjResponse = netObj.createResponse(response);
 
-    CreateAccountResponse converted = netObjResponse.getCreateAccountResponse();
+    CreateAccountResponse converted = netObjResponse.convert<CreateAccountResponse>();
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
@@ -175,7 +175,7 @@ TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
     NetworkObject netObjResponse = netObj.createResponse(response);
 
     // The all seeing Oracle
-    LoginResponse converted = netObjResponse.getLoginResponse();
+    LoginResponse converted = netObjResponse.convert<LoginResponse>();
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
@@ -195,7 +195,7 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
     NetworkObject netObjResponse = netObj.createResponse(response);
 
     // The all seeing Oracle
-    LoginResponse converted = netObjResponse.getLoginResponse();
+    LoginResponse converted = netObjResponse.convert<LoginResponse>();
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
@@ -212,7 +212,7 @@ TEST(base, NetworkObject_createEventResponseCtor) {
 
     NetworkObject netObjResponse = netObj.createResponse(response);
 
-    CreateEventResponse converted = netObjResponse.getCreateEventResponse();
+    CreateEventResponse converted = netObjResponse.convert<CreateEventResponse>();
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, 1);
 }
@@ -231,7 +231,7 @@ TEST(base, NetworkObject_suggestEventsResponseCtor) {
 
     // Test
     NetworkObject netObjResponse = netObj.createResponse(response);
-    SuggestEventsResponse converted = netObjResponse.getSuggestEventsResponse();
+    SuggestEventsResponse converted = netObjResponse.convert<SuggestEventsResponse>();
 
     // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
@@ -255,7 +255,7 @@ TEST(base, NetworkObject_createHostResponse) {
 
     // Test
     NetworkObject netObjResponse = netObj.createResponse(response);
-    CreateHostResponse converted = netObjResponse.getCreateHostResponse();
+    CreateHostResponse converted = netObjResponse.convert<CreateHostResponse>();
 
     // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
@@ -273,7 +273,7 @@ TEST(base, NetworkObject_joinEventResponse) {
 
     // Test
     NetworkObject netObjResponse = netObj.createResponse(response);
-    JoinEventResponse converted = netObjResponse.getJoinEventResponse();
+    JoinEventResponse converted = netObjResponse.convert<JoinEventResponse>();
 
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
@@ -294,7 +294,7 @@ TEST(base, NetworkObject_retrieveMyEventsResponse) {
 
     // Test
     NetworkObject netObjResponse = netObj.createResponse(response);
-    RetrieveMyEventsResponse converted = netObjResponse.getRetrieveMyEventsResponse();
+    RetrieveMyEventsResponse converted = netObjResponse.convert<RetrieveMyEventsResponse>();
 
     // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
@@ -341,7 +341,7 @@ TEST(base, NetworkObject_read) {
     ASSERT_TRUE(outputObj.tryRead(&buffer));
     buffer.close();
 
-    base::Message output = outputObj.getMessage();
+    base::Message output = outputObj.convert<base::Message>();
     ASSERT_EQ(outputObj.getTicket(), ticketNum);
     ASSERT_EQ(msg.category, output.category);
     ASSERT_EQ(msg.message, output.message);

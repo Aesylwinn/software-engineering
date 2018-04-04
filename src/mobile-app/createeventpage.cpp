@@ -31,9 +31,9 @@ CreateEventPage::~CreateEventPage()
 void CreateEventPage::onResponseReceived(base::NetworkObject response)
 {
     switch (response.getPayloadType()) {
-    case base::NetworkObject::PT_CreateEventResponse:
+    case base::PT_CreateEventResponse:
         if (response.getTicket() == mCreateEventTicket) {
-            base::CreateEventResponse info = response.getCreateEventResponse();
+            base::CreateEventResponse info = response.convert<base::CreateEventResponse>();
             qInfo("create event: %d msg: %s", info.valid, qUtf8Printable(info.details));
 
             if (info.valid) {

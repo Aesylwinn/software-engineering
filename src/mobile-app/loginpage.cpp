@@ -45,9 +45,9 @@ void LoginPage::onRegisterClicked(bool)
 void LoginPage::onResponseRecieved(base::NetworkObject response)
 {
     switch (response.getPayloadType()) {
-    case base::NetworkObject::PT_LoginResponse:
+    case base::PT_LoginResponse:
         if (response.getTicket() == mLoginTicket) {
-            base::LoginResponse info = response.getLoginResponse();
+            base::LoginResponse info = response.convert<base::LoginResponse>();
             qInfo("authenticated: %d host: %d msg: %s",
                   info.valid, info.isHost, qUtf8Printable(info.details));
 

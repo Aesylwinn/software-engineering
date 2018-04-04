@@ -85,20 +85,20 @@ void MainPage::setEvents(QVector<base::event> events)
 
 void MainPage::onResponseReceived(base::NetworkObject obj) {
     switch (obj.getPayloadType()) {
-    case base::NetworkObject::PT_SuggestEventsResponse:
+    case base::PT_SuggestEventsResponse:
         if (obj.getTicket() == mSuggestTicket) {
             // Convert
-            base::SuggestEventsResponse info = obj.getSuggestEventsResponse();
+            base::SuggestEventsResponse info = obj.convert<base::SuggestEventsResponse>();
             qInfo("suggested events: %d", info.events.count());
 
             setEvents(info.events);
         }
         break;
 
-    case base::NetworkObject::PT_JoinEventResponse:
+    case base::PT_JoinEventResponse:
         if (obj.getTicket() == mJoinTicket) {
             // Convert
-            base::JoinEventResponse info = obj.getJoinEventResponse();
+            base::JoinEventResponse info = obj.convert<base::JoinEventResponse>();
             qInfo("join event: %d msg: %s", info.valid, qUtf8Printable(info.details));
 
             if (info.valid) {
@@ -109,10 +109,10 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
         }
         break;
 
-    case base::NetworkObject::PT_RetrieveMyEventsResponse:
+    case base::PT_RetrieveMyEventsResponse:
         if (obj.getTicket() == mMyEventsTicket) {
             // Convert
-            base::RetrieveMyEventsResponse info = obj.getRetrieveMyEventsResponse();
+            base::RetrieveMyEventsResponse info = obj.convert<base::RetrieveMyEventsResponse>();
             qInfo("my events: %d", info.events.count());
 
             setMyEvents(info.events);

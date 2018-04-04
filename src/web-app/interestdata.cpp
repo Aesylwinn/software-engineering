@@ -278,8 +278,8 @@ void interestData::checkResponse(NetworkObject response) {
         // Reset ticket
         mLoginRequest = -1;
         // Handle response
-        if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
-            LoginResponse info = response.getLoginResponse();
+        if (response.getPayloadType() == PT_LoginResponse) {
+            LoginResponse info = response.convert<LoginResponse>();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid)
             {
@@ -297,8 +297,8 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mCreateAccountRequest) {
         mCreateAccountRequest = -1;
-        if (response.getPayloadType() == NetworkObject::PT_CreateAccountResponse) {
-            CreateAccountResponse info = response.getCreateAccountResponse();
+        if (response.getPayloadType() == PT_CreateAccountResponse) {
+            CreateAccountResponse info = response.convert<CreateAccountResponse>();
             qInfo("account created: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
                 ui->tabWidget_2->setTabEnabled(1, true);
@@ -315,8 +315,8 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mCreateHostRequest) { //will grab events
         mCreateHostRequest = -1;
-        if (response.getPayloadType() == NetworkObject::PT_CreateHostResponse) {
-            CreateHostResponse info = response.getCreateHostResponse();
+        if (response.getPayloadType() == PT_CreateHostResponse) {
+            CreateHostResponse info = response.convert<CreateHostResponse>();
             qInfo("host created: %d", info.valid);
             if (info.valid) {
                 // TODO: Success
@@ -329,8 +329,8 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mCreateEventRequest) {
         mCreateEventRequest = -1;
-        if (response.getPayloadType() == NetworkObject::PT_CreateEventRequest) {
-            CreateEventResponse info = response.getCreateEventResponse();
+        if (response.getPayloadType() == PT_CreateEventRequest) {
+            CreateEventResponse info = response.convert<CreateEventResponse>();
             qInfo("event created: %d msg %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
                 // TODO: Success
@@ -343,8 +343,8 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mSuggestEventsRequest) {
         mSuggestEventsRequest = -1;
-        if (response.getPayloadType() == NetworkObject::PT_SuggestEventsRequest) {
-            SuggestEventsResponse info = response.getSuggestEventsResponse();
+        if (response.getPayloadType() == PT_SuggestEventsRequest) {
+            SuggestEventsResponse info = response.convert<SuggestEventsResponse>();
             qInfo("events recieved: %d", info.events.count());
             displayEvents(info.events);
         }

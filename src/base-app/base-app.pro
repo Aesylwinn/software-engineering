@@ -20,7 +20,8 @@ SOURCES += \
     simpleclass.cpp \
     venue.cpp \
     timepoint.cpp \
-    mytime.cpp
+    mytime.cpp \
+    networkpackets.cpp
 
 !android:SOURCES += servernetworkmgr.cpp databaseconnection.cpp
 
