@@ -10,7 +10,10 @@ interestData::interestData(QWidget *parent) :
     ui(new Ui::interestData),
     mNetworkMgr(new ClientNetworkMgr(this)),
     mLoginRequest(-1),
-    mCreateAccountRequest(-1)
+    mCreateAccountRequest(-1),
+    mCreateEventRequest(-1),
+    mCreateHostRequest(-1),
+    mSuggestEventsRequest(-1)
 {
     // Connect to the server
     mNetworkMgr->connect(QString(SERVER_ADDRESS), SERVER_PORT);
@@ -37,6 +40,20 @@ interestData::interestData(QWidget *parent) :
     connect(ui->GetVerifiedB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->matchB, SIGNAL(clicked()), this, SLOT(popUpWindow()));
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
+    connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
+
+    base::venue tempVenue;
+    tempVenue.setAddress(tr("411 Electric Avenue"));
+
+    base::event tempEvent;
+    tempEvent.setName(tr("Wine Night"));
+    tempEvent.setDescription(tr("Come get toasty at Primetime for $2!"));
+    tempEvent.setLocation(tempVenue);
+
+    QVector<base::event> tempVector;
+    tempVector.push_back(tempEvent);
+
+    displayEvents(tempVector);
 }
 
 interestData::~interestData()
@@ -61,19 +78,12 @@ void interestData::switchLowTabs()
     QObject* button = QObject::sender();    //allows us to see which button is pushed
 
     //just lets us grey out certain tabs that do not need to be used at that time
-    if(button == ui->Login){
-        /* //function that will parse through the usernames to match up password
-        int or bool temp = parseUserNames(ui->userName->text(), ui->password->text());	//function can return an int or boolean of some kind
-        if (temp == true or 1){
-            login(ui->usrName->text(), ui->password->text());  } //logins to the server to communicate
-        else {
-            QMessageBox messageBox;
-            messageBox.critical(0,"Error","Incorrect user name or password");
-            messageBox.setFixedSize(500,200);
-        } */
+    if(button == ui->Login)
+    {
         login(ui->usrName->text(), ui->password->text());   //logins to the server to communicate
     }
-    else{
+    else if(button == ui->SignUp)
+    {
         if (ui->newPass->text() != ui->confirmPass->text())
         {
             QMessageBox messageBox;
@@ -83,8 +93,15 @@ void interestData::switchLowTabs()
         else
         {
             // Create the account
-            createAccount(ui->newUsrName->text(), ui->confirmPass->text());
+            createAccount();
         }
+    }
+//This will be moved to checkResponse()
+    else
+    {
+        ui->tabWidget->setCurrentWidget(ui->tab_5);
+        ui->tabWidget->setTabEnabled(3, true);
+        ui->tabWidget->setTabEnabled(1, false);
     }
 }
 
@@ -167,47 +184,104 @@ void interestData::logout()
     ui->newUsrName->clear();
     ui->newPass->clear();
     ui->confirmPass->clear();
-    // Note: mNetworkMgr memory is managed by Qt
-    mNetworkMgr->disconnect();
 }
 
 void interestData::login(QString username, QString password)
 {
     // Send request. The ticket will match to the response.
-    NetworkObject request(NetworkObject::LoginRequest{ username, password });
+    NetworkObject request(LoginRequest{ username, password });
     mLoginRequest = mNetworkMgr->sendRequest(request);
 }
 
-void interestData::createAccount(QString username, QString password)
+void interestData::createAccount()
 {
-    NetworkObject::CreateAccountRequest data;
-    data.username = username;
-    data.password = password;
-    // TODO: the other fields?
+    CreateAccountRequest data;
+    data.username = ui->newUsrName->text();
+    data.password = ui->confirmPass->text();
+    // the other fields filled out
+    data.email = ui->newEmail->text();
+    data.firstName = ui->lineEdit_FN->text();
+    data.lastName = ui->lineEdit_LN->text();
+    if (ui->malebutt->isChecked())
+        data.gender = ui->malebutt->text();
+    else
+        data.gender = ui->febutt->text();
 
     NetworkObject request(data);
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-/*int or bool interestData::parseUserNames(QString username, QString password)
+void interestData::displayEvents(QVector<base::event> interest)
 {
+    int temp = 0;
+    ui->interestStream->setRowCount(interest.size());
+    for (int i = 0; i < interest.size(); i++)
+    {
+            ui->interestStream->setItem(i, temp, new QTableWidgetItem(interest[i].getName()));
+            ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation().getAddress()));
+            ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getName()));        //date
+            ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getName()));        //time
+            ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(interest[i].getDescription()));
+    }
 
-} */
+}
 
-/*void interestData::displayEvents()
+void interestData::displayMyEvents(QVector<base::event> myEvent)
 {
+    int temp = 0;
+    ui->eventStream->setRowCount(myEvent.size());
+    for(int i = 0; i < myEvent.size(); i++)
+    {
+        ui->eventStream->setItem(i, temp, new QTableWidgetItem(myEvent[i].getName()));
+        ui->eventStream->setItem(i, temp+1, new QTableWidgetItem(myEvent[i].getLocation().getAddress()));
+        ui->eventStream->setItem(i, temp+2, new QTableWidgetItem(myEvent[i].getName()));            //date
+        ui->eventStream->setItem(i, temp+3, new QTableWidgetItem(myEvent[i].getName()));            //time
+        ui->eventStream->setItem(i, temp+4, new QTableWidgetItem(myEvent[i].getDescription()));
+    }
+}
 
-} */
+void interestData::createHost()
+{
+    CreateHostRequest data;
+    data.username = ui->userNameHostEd->text();
+    data.password = ui->passwordHostEd->text();
+    data.displayName = ui->hostDisplay->text();
+    data.businessName = ui->hostBusiness->text();
+    data.bio = ui->hostBio->toPlainText();
 
-void interestData::checkResponse(base::NetworkObject response) {
+    mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
+void interestData::createEvent(QString eName, QVector<QString> categories, QString desc) {
+    CreateEventRequest request;
+    request.data.setName("Bath Party");
+    request.data.setHost("Billy");
+    request.data.setDescription("Rub-a-dub-dub");
+    request.data.setCategory("Music");
+
+    mCreateEventRequest = mNetworkMgr->sendRequest(NetworkObject(request));
+}
+
+void interestData::requestEvents() {
+    SuggestEventsRequest data;
+    data.count = 5; // How many?
+
+    mSuggestEventsRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
+void interestData::requestMyEvents() {
+    // TODO
+}
+
+void interestData::checkResponse(NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
         mLoginRequest = -1;
         // Handle response
-        if (response.getPayloadType() == NetworkObject::PT_LoginResponse) {
-            NetworkObject::LoginResponse info = response.getLoginResponse();
+        if (response.getPayloadType() == PT_LoginResponse) {
+            LoginResponse info = response.convert<LoginResponse>();
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
-            if (info.valid == 1)
+            if (info.valid)
             {
                 ui->tabWidget->setCurrentWidget(ui->tab_4);
                 ui->tabWidget->setTabEnabled(2, true);
@@ -223,8 +297,8 @@ void interestData::checkResponse(base::NetworkObject response) {
     }
     else if (response.getTicket() == mCreateAccountRequest) {
         mCreateAccountRequest = -1;
-        if (response.getPayloadType() == NetworkObject::PT_CreateAccountResponse) {
-            NetworkObject::CreateAccountResponse info = response.getCreateAccountResponse();
+        if (response.getPayloadType() == PT_CreateAccountResponse) {
+            CreateAccountResponse info = response.convert<CreateAccountResponse>();
             qInfo("account created: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
                 ui->tabWidget_2->setTabEnabled(1, true);
@@ -239,7 +313,40 @@ void interestData::checkResponse(base::NetworkObject response) {
             }
         }
     }
-    //else if (response.getTicket() == mEventRequest) //will grab events
-    //else if (response.getTicket() == mCreateEventRqt) //will create event
-    //else if (response.getTicket() == mUsernamesRequest) //will grab usernames
+    else if (response.getTicket() == mCreateHostRequest) { //will grab events
+        mCreateHostRequest = -1;
+        if (response.getPayloadType() == PT_CreateHostResponse) {
+            CreateHostResponse info = response.convert<CreateHostResponse>();
+            qInfo("host created: %d", info.valid);
+            if (info.valid) {
+                // TODO: Success
+            } else {
+                QMessageBox messageBox;
+                messageBox.critical(0, "Error", "Unable to create host account");
+                messageBox.setFixedSize(500, 200);
+            }
+        }
+    }
+    else if (response.getTicket() == mCreateEventRequest) {
+        mCreateEventRequest = -1;
+        if (response.getPayloadType() == PT_CreateEventRequest) {
+            CreateEventResponse info = response.convert<CreateEventResponse>();
+            qInfo("event created: %d msg %s", info.valid, qUtf8Printable(info.details));
+            if (info.valid) {
+                // TODO: Success
+            } else {
+                QMessageBox messageBox;
+                messageBox.critical(0, "Error", "Unable to create event");
+                messageBox.setFixedSize(500, 200);
+            }
+        }
+    }
+    else if (response.getTicket() == mSuggestEventsRequest) {
+        mSuggestEventsRequest = -1;
+        if (response.getPayloadType() == PT_SuggestEventsRequest) {
+            SuggestEventsResponse info = response.convert<SuggestEventsResponse>();
+            qInfo("events recieved: %d", info.events.count());
+            displayEvents(info.events);
+        }
+    }
 }

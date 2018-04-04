@@ -9,106 +9,38 @@
 
 #include "base-app_global.h"
 #include "event.h"
+#include "networkpackets.h"
 
 namespace base {
     /* Implemented by Kyle and Anthony */
     class BASEAPPSHARED_EXPORT NetworkObject {
     public:
-        // The types of payloads
-        enum PayloadType {
-            PT_None,
-
-            PT_CreateAccountRequest,
-            PT_LoginRequest,
-            PT_CreateEventRequest,
-
-            PT_CreateAccountResponse,
-            PT_LoginResponse,
-            PT_CreateEventResponse,
-
-            PT_Message
-        };
-
-        struct Message {
-            QString category;
-            QString message;
-        };
-
-        struct CreateAccountRequest {
-            QString username;
-            QString password;
-            QString email;
-            QString firstName;
-            QString lastName;
-            QString gender;
-            QString birthDate;
-        };
-
-        struct LoginRequest {
-            QString username;
-            QString password;
-        };
-
-        struct LoginResponse {
-            qint32 valid;
-            QString details;
-        };
-
-        struct CreateAccountResponse {
-            qint32 valid;
-            QString details;
-        };
-
-        struct CreateEventRequest{
-            event data;
-        };
-
-//        //Darius and Parker inserted ;)
-//        struct EventRequest {
-//            QString username;
-//            QVector<QString> interest;
-//        };
-
-//        //Darius and Parker inserted ;)
-//        struct EventResponse {
-//            qint32 valid;
-//            //Dont know if this is where you want it??
-//            QVector<QString> musicEvents;
-//            QVector<QString> sportEvents;
-//            QVector<QString> foodEvents;
-//            QVector<QString> leisureEvents;
-//        };
-
-//		  //Darius inserted, i dont know exactly what to put but need a request for usernames again im guessing so I dont know if correct
-//		  struct UsernameRequest {
-//				//dont really need to provide anything for the request but
-//				qint32 dummy;
-//		  };
-
-//		  struct UsernameResponse (
-//				qint32 vaild;
-//				QVector<QString> usernames;
-//		  };
 
         // Default ctor, PT_None
         NetworkObject();
+
         // Copy ctor
         NetworkObject(const NetworkObject& other);
-        // Parameterized ctor
+
+        // Parameterized ctor, only use this if you know what you are doing
         NetworkObject(PayloadType type, QByteArray payload);
-        // Message ctor
-        NetworkObject(const Message& message);
-        // Create account request
-        NetworkObject(const CreateAccountRequest& request);
-        // Login request ctor
-        NetworkObject(const LoginRequest& request);
-        // Event request ctor
-        NetworkObject(const CreateEventRequest& data);
+
+        template <typename Request>
+        explicit NetworkObject(const Request& request)  {
+            init((PayloadType)Request::Type);
+
+            // Combine into a single object
+            QDataStream stream;
+            setupWrite(stream);
+
+            stream << request;
+        }
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
         QByteArray getPayload() const;
-        // Response tracking
+
+        // Enables response tracking
         qint32 getTicket() const;
 
         // Type and data setting
@@ -121,39 +53,33 @@ namespace base {
         // Reads the IO device in a nonblocking manner.
         bool tryRead(QIODevice* device);
 
-        // Converts payload to a message
-        Message getMessage() const;
+        template <typename Packet>
+        Packet convert() const {
+            mustMatch((PayloadType)Packet::Type);
 
-        // Converts payload to a create account request
-        CreateAccountRequest getCreateAccountRequest() const;
+            // Convert
+            QDataStream stream;
+            setupRead(stream);
 
-        // Converts payload to a login request
-        LoginRequest getLoginRequest() const;
+            Packet result;
+            stream >> result;
+            return result;
+        }
 
-        CreateEventRequest getCreateEventRequest() const;
+        template <typename Response>
+        NetworkObject createResponse(const Response& response) {
+            mustMatch((PayloadType)Response::RequestType);
 
-        // Converts payload to a login response
-        LoginResponse getLoginResponse() const;
-
-        // Converts payload to a create account response
-        CreateAccountResponse getCreateAccountResponse() const;
-
-        // Creates a response to a CreateAccountRequest
-        NetworkObject createResponse(const CreateAccountResponse& data);
-
-        // Creates a response to a LoginRequest
-        NetworkObject createResponse(const LoginResponse& data);
+            // Construct response and match the ticket
+            NetworkObject obj(response);
+            obj.setTicket(getTicket());
+            return obj;
+        }
 
     private:
 
-        // Login response ctor
-        NetworkObject(const LoginResponse& response);
-
-        // CreateAccount response ctor
-        NetworkObject(const CreateAccountResponse& response);
-
         // Ctor helper function
-        void init(PayloadType type, QByteArray payload);
+        void init(PayloadType type, QByteArray payload=QByteArray());
 
         // Buffer setup helper functions
         void setupRead(QDataStream& stream) const;

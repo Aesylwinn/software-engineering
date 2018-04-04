@@ -14,6 +14,9 @@ namespace base {
                 this, &ClientNetworkMgr::disconnected);
         QObject::connect(mSocket, &QTcpSocket::readyRead,
                 this, &ClientNetworkMgr::readyRead);
+        // Yick... Unfortunately necessary.
+        QObject::connect(mSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QAbstractSocket::error),
+                this, &ClientNetworkMgr::socketError);
     }
 
     void ClientNetworkMgr::connect(QString address, int port) {
@@ -35,5 +38,19 @@ namespace base {
         NetworkObject netObj;
         if (netObj.tryRead(mSocket))
             emit responseRecieved(netObj);
+    }
+
+    void ClientNetworkMgr::socketError(QAbstractSocket::SocketError err)
+    {
+        switch (err) {
+        case QAbstractSocket::SocketError::ConnectionRefusedError:
+        case QAbstractSocket::SocketError::HostNotFoundError:
+            emit disconnected();
+            break;
+
+        default:
+            // Do nothing
+            break;
+        }
     }
 }

@@ -3,8 +3,10 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include <QDataStream>
 #include <QString>
 #include <QVector>
+#include <QDateTime>
 #include "venue.h"
 
 #include "base-app_global.h"
@@ -14,15 +16,7 @@ namespace  base{
     {
     public:
         //constructors
-        event();
-        event(QString n);
-        event(QString n, int a);
-        event(QString n, int a, QString des);
-        event(QString n, int a, QString des, QString theHost);
-        event(QString n, int a, QString des, QString theHost, bool standardOp);
-        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers);
-        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue);
-        event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat);
+        event(QString n = "", qint32 a = 0, QString des = "", QString theHost = "", bool standardOp = false, QVector<QString> theUsers = {""}, venue theVenue = venue(QString("name,address,8675-309,0.00")), QString cat = "");
 
         //setters
         bool setHost(QString theHost);
@@ -33,10 +27,33 @@ namespace  base{
         bool setOperation(bool standardOp);
         bool setCategory(QString cat);
         bool setID(qint32 a);
+        bool setTimes(QDateTime t);
+        bool setStartTime(QString date);
+        bool setStartTime(QDateTime date);
+        bool setEndTime(QDateTime date);
+        bool setEndTime(QString date);
+        int setReoccurring(int o);
+
+        //getters
+        QString getName()const;
+        QString getCategory() const;
+        QString getMainHost() const;
+        QVector<QString> getAttendingUsers() const;
+        venue getLocation() const;
+        QString getDescription() const;
+        qint32 getID() const;
+        QVector< QPair<QDateTime, QDateTime> > getTimes();
+        QDateTime getStartTime();
+        QDateTime getEndTime();
+        qint64 getDaysTo();
 
         //adders
         bool addHost(QString newHost);
         bool addUser(QString newUser);
+        int addTimes(QDateTime start, QDateTime end);
+
+        //not adders
+        bool delTime(int pos);
 
 
     private:
@@ -49,8 +66,26 @@ namespace  base{
         QString description;
         qint32 id;
 
-        void initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat);
-        friend class NetworkObject;
+        QVector< QPair<QDateTime, QDateTime> > timeSlots;
+        QDateTime startTime;
+        QDateTime endTime;
+        qint64 daysTo;
+        bool reoccurring;
+        bool startTimeSet;
+        bool endTimeSet;
+
+        void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
+
+        friend BASEAPPSHARED_EXPORT bool operator==(const event&, const event&);
+        friend BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream&, const event&);
+        friend BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, event&);
     };
+
+    // Equality
+    BASEAPPSHARED_EXPORT bool operator==(const event&, const event&);
+
+    // Stream output
+    BASEAPPSHARED_EXPORT QDataStream&  operator<<(QDataStream&, const event&);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, event&);
 }
 #endif // EVENT_H

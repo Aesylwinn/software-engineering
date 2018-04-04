@@ -4,6 +4,7 @@
 #define BASE_VENUE_H
 
 #include <QString>
+#include <QStringList>
 
 #include "base-app_global.h"
 
@@ -11,9 +12,6 @@ namespace base {
     class BASEAPPSHARED_EXPORT venue{
         public:
             venue();
-            venue(QString n, QString addr);
-            venue(QString n, QString addr, QString phone);
-            venue(QString n, QString addr, double fee);
             venue(QString n, QString addr, QString phone, double fee);
             venue(QString data);    //conversion constructor
 
@@ -27,10 +25,13 @@ namespace base {
             bool setEntryFee(double f);
 
             //getters
-            QString getAddress();
-            QString getPhoneNumber();
-            QString getName();
-            double getEntryFee();
+            QString getAddress() const;
+            QString getPhoneNumber() const;
+            QString getName() const;
+            double getEntryFee() const;
+
+            venue operator=(const QString& data);
+            bool operator==(const venue &rhs) const;
         private:
             QString name;
             QString address;

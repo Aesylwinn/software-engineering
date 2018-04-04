@@ -1,5 +1,7 @@
-QT += widgets network sql
+QT += widgets network
 QT -= gui
+!android:QT += sql
+
 CONFIG += c++11
 TARGET = base-app
 TEMPLATE = lib
@@ -15,12 +17,13 @@ SOURCES += \
     match.cpp \
     networkobject.cpp \
     recurringtime.cpp \
-    servernetworkmgr.cpp \
     simpleclass.cpp \
     venue.cpp \
     timepoint.cpp \
     mytime.cpp \
-    databaseconnection.cpp
+    networkpackets.cpp
+
+!android:SOURCES += servernetworkmgr.cpp databaseconnection.cpp
 
 HEADERS += \
     baseapp.h \
@@ -30,12 +33,13 @@ HEADERS += \
     match.h \
     networkobject.h \
     recurringtime.h \
-    servernetworkmgr.h \
     simpleclass.h \
     venue.h \
     timepoint.h \
     mytime.h \
-    databaseconnection.h
+    networkpackets.h
+
+!android:HEADERS += servernetworkmgr.h databaseconnection.h
 
 unix {
     target.path = /usr/lib

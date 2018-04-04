@@ -22,81 +22,7 @@ namespace base {
         mTicket = -1;
     }
 
-    NetworkObject::NetworkObject(const Message& message) {
-        init(PT_Message, QByteArray());
-        mTicket = -1;
-
-        // Combine into a single object
-        QDataStream stream;
-        setupWrite(stream);
-        stream << message.category << message.message;
-    }
-
-    NetworkObject::NetworkObject(const LoginRequest& request)
-    {
-        init(PT_LoginRequest, QByteArray());
-        mTicket = -1;
-
-        // Combine into a single object
-        QDataStream stream;
-        setupWrite(stream);
-        stream << request.username << request.password;
-    }
-
-
-    NetworkObject::NetworkObject(const CreateAccountRequest& request) {
-        init(PT_CreateAccountRequest, QByteArray());
-        mTicket = -1;
-
-        // Combine into a single object
-        QDataStream stream;
-        setupWrite(stream);
-        stream << request.username << request.password;
-        stream << request.email;
-        stream << request.firstName << request.lastName;
-        stream << request.gender;
-        stream << request.birthDate;
-    }
-
-    NetworkObject::NetworkObject(const CreateEventRequest& input)
-    {
-        init(PT_CreateEventRequest, QByteArray());
-        mTicket = -1;
-
-        //Combine into single object
-        QDataStream stream;
-        setupWrite(stream);
-        stream << input.data.name;
-        stream << input.data.category;
-        stream << input.data.mainHost;
-        stream << input.data.attendingUsers;
-        //stream << input.data.location;
-        stream << input.data.description;
-        stream << input.data.id;
-    }
-
-    NetworkObject::NetworkObject(const CreateAccountResponse& response) {
-        init(PT_CreateAccountResponse, QByteArray());
-        mTicket = -1;
-
-        // Combine into a single object
-        QDataStream stream;
-        setupWrite(stream);
-        stream << response.valid << response.details;
-    }
-
-    NetworkObject::NetworkObject(const LoginResponse& response)
-    {
-        init(PT_LoginResponse, QByteArray());
-        mTicket = -1;
-
-        // Combine into a single object
-        QDataStream stream;
-        setupWrite(stream);
-        stream << response.valid << response.details;
-    }
-
-    NetworkObject::PayloadType NetworkObject::getPayloadType() const {
+    PayloadType NetworkObject::getPayloadType() const {
         return mPayloadType;
     }
 
@@ -139,6 +65,8 @@ namespace base {
         writeBlocking(device, (const char*) &type, sizeof(type));
         writeBlocking(device, (const char*) &size, sizeof(size));
         writeBlocking(device, payload.data(), payload.size());
+        // Flush device
+        device->waitForBytesWritten(-1);
     }
 
     bool NetworkObject::tryRead(QIODevice* device) {
@@ -184,109 +112,10 @@ namespace base {
         return true;
     }
 
-    NetworkObject::Message NetworkObject::getMessage() const {
-        mustMatch(PT_Message);
-
-        // Convert
-        QDataStream stream;
-        setupRead(stream);
-
-        Message result;
-        stream >> result.category >> result.message;
-        return result;
-    }
-
-    NetworkObject::CreateAccountRequest NetworkObject::getCreateAccountRequest() const {
-        mustMatch(PT_CreateAccountRequest);
-
-        // Convert
-        QDataStream stream;
-        setupRead(stream);
-
-        CreateAccountRequest result;
-        stream >> result.username >> result.password;
-        stream >> result.email;
-        stream >> result.firstName >> result.lastName;
-        stream >> result.gender;
-        stream >> result.birthDate;
-        return result;
-    }
-
-    NetworkObject::LoginRequest NetworkObject::getLoginRequest() const {
-        mustMatch(PT_LoginRequest);
-
-        // Convert
-        QDataStream stream;
-        setupRead(stream);
-
-        LoginRequest result;
-        stream >> result.username >> result.password;
-        return result;
-    }
-
-    NetworkObject::CreateEventRequest NetworkObject::getCreateEventRequest() const {
-        mustMatch(PT_CreateEventRequest);
-
-        // Convert
-        QDataStream stream;
-        setupRead(stream);
-
-        CreateEventRequest result;
-        stream >> result.data.name;
-        stream >> result.data.category;
-        stream >> result.data.mainHost;
-        stream >> result.data.attendingUsers;
-        //stream >> result.data.location;
-        stream >> result.data.description;
-        stream >> result.data.id;
-        return result;
-    }
-
-    NetworkObject::CreateAccountResponse NetworkObject::getCreateAccountResponse() const {
-        mustMatch(PT_CreateAccountResponse);
-
-        // Convert
-        QDataStream stream;
-        setupRead(stream);
-
-        CreateAccountResponse result;
-        stream >> result.valid >> result.details;
-        return result;
-    }
-
-    NetworkObject::LoginResponse NetworkObject::getLoginResponse() const {
-        mustMatch(PT_LoginResponse);
-
-        // Convert
-        QDataStream stream;
-        setupRead(stream);
-
-        LoginResponse result;
-        stream >> result.valid >> result.details;
-        return result;
-    }
-
-    NetworkObject NetworkObject::createResponse(const CreateAccountResponse& data) {
-        mustMatch(PT_CreateAccountRequest);
-
-        // Construct response and match the ticket
-        NetworkObject response(data);
-        response.setTicket(getTicket());
-        return response;
-    }
-
-    NetworkObject NetworkObject::createResponse(const LoginResponse& data) {
-            mustMatch(PT_LoginRequest);
-
-            // Construct response and match the ticket
-            NetworkObject response(data);
-            response.setTicket(getTicket());
-            return response;
-    }
-
     void NetworkObject::init(PayloadType type, QByteArray payload) {
         mPayloadType = type;
         mPayload = payload;
+        mTicket = -1;
         mBuffer.setBuffer(nullptr);
     }
 

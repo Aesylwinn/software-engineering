@@ -1,5 +1,5 @@
 /* Implemented by Anthony and Kyle. */
-create table User_basic(		--unverified access profile
+create table User_basic(		-- unverified access profile
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	userType ENUM('BASIC','PROFILE','HOST') NOT NULL,
 	username CHAR(20) NOT NULL UNIQUE,
@@ -7,7 +7,7 @@ create table User_basic(		--unverified access profile
 	verified BOOLEAN NOT NULL
 );
 
-create table User_Profile(		--std profile
+create table User_Profile(		-- std profile
 	id_user INT NOT NULL UNIQUE,
 	firstName VARCHAR(40) NOT NULL,
 	lastName VARCHAR(40) NOT NULL,
@@ -15,28 +15,28 @@ create table User_Profile(		--std profile
 	email VARCHAR(40),
 	gender ENUM('MALE','FEMALE','OTHER'),
 	otherGender VARCHAR(40),
-	orientation VARCHAR(3),		--space for 3 char flags, m,f,o. used to say interest in male, female, and or other
+	orientation VARCHAR(3),		-- space for 3 char flags, m,f,o. used to say interest in male, female, and or other
 	bio TEXT
 	
 );
 
-create table User_Host(			--business/host profile
+create table User_Host(			-- business/host profile
 	id_user INT NOT NULL UNIQUE,
 	displayName VARCHAR(80) NOT NULL,
 	businessName VARCHAR(40) NOT NULL,
 	bio TEXT
 );
 
-create table Event(				--previously titled interest, changed for clarity
+create table Event(				-- previously titled interest, changed for clarity
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_host INT NOT NULL,
-	standardOperation BOOLEAN NOT NULL,	--if true, this event represents the business' normal hours and procedure
+	standardOperation BOOLEAN NOT NULL,	-- if true, this event represents the business' normal hours and procedure
 	recurring BOOLEAN NOT NULL,
 	displayName VARCHAR(20) NOT NULL,	
 	id_category INT NOT NULL,
 	id_venue INT NOT NULL,
 	dateStart DATE NOT NULL,
-	dateEnd DATE,-----------------used for long events, otherwise ignored
+	dateEnd DATE,-- ---------------used for long events, otherwise ignored
 	timeStart TIME NOT NULL,
 	timeEnd TIME NOT NULL,
 	recurringType ENUM('DAILY','WEEKLY','MONTHLY','FIRST','SECOND','THIRD','FOURTH','LAST'), 	--first,last etc used for first friday, last tuesday, etc

@@ -16,7 +16,7 @@ using namespace base;
 
 TEST(base, NetworkObject_defaultCtor) {
     NetworkObject netObj;
-    ASSERT_EQ(netObj.getPayloadType(), NetworkObject::PT_None);
+    ASSERT_EQ(netObj.getPayloadType(), PT_None);
     try {
         QByteArray payload = netObj.getPayload();
         // Shold have thrown
@@ -27,7 +27,7 @@ TEST(base, NetworkObject_defaultCtor) {
 }
 
 TEST(base, NetworkObject_parametizedCtor) {
-    auto type = NetworkObject::PT_Message;
+    auto type = PT_Message;
     auto payload = QString("10 .. 9 .. 8 ..").toUtf8();
     NetworkObject netObj(type, payload);
     ASSERT_EQ(netObj.getPayloadType(), type);
@@ -35,8 +35,6 @@ TEST(base, NetworkObject_parametizedCtor) {
 }
 
 TEST(base, NetworkObject_createAccountRequestCtor) {
-    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
-
     CreateAccountRequest request;
     request.username = "WillyWonka";
     request.password = "chocolate";
@@ -48,7 +46,7 @@ TEST(base, NetworkObject_createAccountRequestCtor) {
 
     NetworkObject netObj((const CreateAccountRequest) request);
 
-    CreateAccountRequest converted = netObj.getCreateAccountRequest();
+    CreateAccountRequest converted = netObj.convert<CreateAccountRequest>();
     ASSERT_EQ(request.username, converted.username);
     ASSERT_EQ(request.password, converted.password);
     ASSERT_EQ(request.email, converted.email);
@@ -59,42 +57,121 @@ TEST(base, NetworkObject_createAccountRequestCtor) {
 }
 
 TEST(base, NetworkObject_loginRequestCtor) {
-    using LoginRequest = NetworkObject::LoginRequest;
-
     const LoginRequest request{ "Bob", "password" };
     NetworkObject netObj(request);
 
-    LoginRequest converted = netObj.getLoginRequest();
+    LoginRequest converted = netObj.convert<LoginRequest>();
     ASSERT_EQ(request.username, converted.username);
     ASSERT_EQ(request.password, converted.password);
 }
 
 TEST(base, NetworkObject_EventCreateRequest){
-    using CreateEventRequest = NetworkObject::CreateEventRequest;
-
     const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
     NetworkObject netObj(myEvent);
 
-    CreateEventRequest converted = netObj.getCreateEventRequest();
+    CreateEventRequest converted = netObj.convert<CreateEventRequest>();
     // TODO
-    //ASSERT_EQ(myEvent.data, converted.data);
+    ASSERT_EQ(myEvent.data.getName(), converted.data.getName());
+    ASSERT_EQ(myEvent.data.getCategory(), converted.data.getCategory());
+    ASSERT_EQ(myEvent.data.getAttendingUsers(), converted.data.getAttendingUsers());
+    ASSERT_EQ(myEvent.data.getMainHost(), converted.data.getMainHost());
+    ASSERT_EQ(myEvent.data.getDescription(), converted.data.getDescription());
+    ASSERT_EQ(myEvent.data.getLocation(), converted.data.getLocation());
+    ASSERT_EQ(myEvent.data.getID(), converted.data.getID());
+}
+
+TEST(base, NetworkObject_suggestEventsRequest) {
+    // Set up state
+    const SuggestEventsRequest request = { 5 };
+
+    // Test conversion to and back again
+    NetworkObject netObj(request);
+    SuggestEventsRequest converted = netObj.convert<SuggestEventsRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.count, converted.count);
+}
+
+TEST(base, NetworkObject_createHostRequest) {
+    // State
+    const CreateHostRequest request = {
+        "bob", "ducky",
+        "Master",
+        "The Universe",
+        "Master of the Universe... is proud to present our business to you."
+    };
+
+    // Test
+    NetworkObject netObj(request);
+    CreateHostRequest converted = netObj.convert<CreateHostRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.username, converted.username);
+    ASSERT_EQ(request.password, converted.password);
+    ASSERT_EQ(request.displayName, converted.displayName);
+    ASSERT_EQ(request.businessName, converted.businessName);
+    ASSERT_EQ(request.bio, converted.bio);
+}
+
+TEST(base, NetworkObject_joinEventRequest) {
+    // State
+    const JoinEventRequest request = { 42 };
+
+    // Test
+    NetworkObject netObj(request);
+    JoinEventRequest converted = netObj.convert<JoinEventRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.eventId, converted.eventId);
+}
+
+TEST(base, NetworkObject_retrieveMyEventsRequest) {
+    // State
+    const RetrieveMyEventsRequest request = { 199 };
+
+    // Test
+    NetworkObject netObj(request);
+    RetrieveMyEventsRequest converted = netObj.convert<RetrieveMyEventsRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.count, converted.count);
+}
+
+TEST(base, NetworkObject_setInterestsRequest) {
+    // State
+    const SetInterestsRequest request = { { "Fun", "Horror", "Bbop"} };
+
+    // Test
+    NetworkObject netObj(request);
+    SetInterestsRequest converted = netObj.convert<SetInterestsRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.interests.count(), converted.interests.count());
+    ASSERT_EQ(request.interests, converted.interests);
+}
+
+TEST(base, NetworkObject_findMatchRequest) {
+    // State
+    const FindMatchRequest request = { 2788591231 };
+
+    // Test
+    NetworkObject netObj(request);
+    auto converted = netObj.convert<FindMatchRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.event_id, converted.event_id);
 }
 
 TEST(base, NetworkObject_messageCtor) {
-    using Message = NetworkObject::Message;
-
-    const Message message = { "general", "Hello!!!" };
+    const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
 
-    Message converted = netObj.getMessage();
+    base::Message converted = netObj.convert<base::Message>();
     ASSERT_EQ(message.category, converted.category);
     ASSERT_EQ(message.message, converted.message);
 }
 
 TEST(base, NetworkObject_createAccountResponse) {
-    using CreateAccountRequest = NetworkObject::CreateAccountRequest;
-    using CreateAccountResponse = NetworkObject::CreateAccountResponse;
-
     const CreateAccountRequest request{ "1", "2", "3", "4", "5", "6", "7" };
     const CreateAccountResponse response{ 1, "What interesting tastes you have..." };
     const qint32 ticketNumber = 14;
@@ -104,19 +181,16 @@ TEST(base, NetworkObject_createAccountResponse) {
 
     NetworkObject netObjResponse = netObj.createResponse(response);
 
-    CreateAccountResponse converted = netObjResponse.getCreateAccountResponse();
+    CreateAccountResponse converted = netObjResponse.convert<CreateAccountResponse>();
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
 }
 
 TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
-    using LoginRequest = NetworkObject::LoginRequest;
-    using LoginResponse = NetworkObject::LoginResponse;
-
     // Set up state
     const LoginRequest request{ "muah", "hahaha!!!" };
-    const LoginResponse response{ 0, "User password is wrong" };
+    const LoginResponse response{ 0, "User password is wrong", 0 };
     const qint32 ticketNumber = 11;
 
     NetworkObject netObj(request);
@@ -126,39 +200,174 @@ TEST(base, NetworkObject_loginResponseCtor_isnotvalid) {
     NetworkObject netObjResponse = netObj.createResponse(response);
 
     // The all seeing Oracle
-    LoginResponse converted = netObjResponse.getLoginResponse();
+    LoginResponse converted = netObjResponse.convert<LoginResponse>();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+    ASSERT_EQ(response.isHost, converted.isHost);
+}
+
+TEST(base, NetworkObject_loginResponseCtor_isvalid) {
+    // Set up state
+    const LoginRequest request{ "oh", "dear" };
+    const LoginResponse response{ 1, "", 1 };
+    const qint32 ticketNumber = 11;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Method being tested
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    // The all seeing Oracle
+    LoginResponse converted = netObjResponse.convert<LoginResponse>();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+    ASSERT_EQ(response.isHost, converted.isHost);
+}
+
+TEST(base, NetworkObject_createEventResponseCtor) {
+    const CreateEventRequest request{ event("Jade's Salon", 5, "Drink up...", "Jade") };
+    const CreateEventResponse response{ 1, "success" };
+    const qint32 ticketNumber = 324;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    NetworkObject netObjResponse = netObj.createResponse(response);
+
+    CreateEventResponse converted = netObjResponse.convert<CreateEventResponse>();
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, 1);
+}
+
+TEST(base, NetworkObject_suggestEventsResponseCtor) {
+    // Set up state
+    const SuggestEventsRequest request { 2 };
+    const SuggestEventsResponse response {{
+        event("Bob's Emporium", 12, "Fun!"),
+        event("Middle Earth", 232, "Dangerous!")
+    }};
+    const qint32 ticketNumber = 89;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    SuggestEventsResponse converted = netObjResponse.convert<SuggestEventsResponse>();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.events.size(), converted.events.size());
+    ASSERT_EQ(response.events, converted.events);
+}
+
+TEST(base, NetworkObject_createHostResponse) {
+    // Set up state
+    const CreateHostRequest request {
+        "bob", "baileyR0K2",
+        "Bob",
+        "Wonderman",
+        "Tight ropes are cool. So are you. Why don't we rope our way to a bar together?"
+    };
+    const CreateHostResponse response { 1 };
+    const qint32 ticketNumber = 42;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    CreateHostResponse converted = netObjResponse.convert<CreateHostResponse>();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+}
+
+TEST(base, NetworkObject_joinEventResponse) {
+    // Setup state
+    const JoinEventRequest request{ 829 };
+    const JoinEventResponse response { 1, "You got it!!!" };
+    const qint32 ticketNumber = 46;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    JoinEventResponse converted = netObjResponse.convert<JoinEventResponse>();
+
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
 }
 
-TEST(base, NetworkObject_loginResponseCtor_isvalid) {
-    using LoginRequest = NetworkObject::LoginRequest;
-    using LoginResponse = NetworkObject::LoginResponse;
-
+TEST(base, NetworkObject_retrieveMyEventsResponse) {
     // Set up state
-    const LoginRequest request{ "oh", "dear" };
-    const LoginResponse response{ 1, "" };
-    const qint32 ticketNumber = 11;
+    const RetrieveMyEventsRequest request { 2 };
+    const RetrieveMyEventsResponse response {{
+        event("Bob's Funner Emporium", 799, "Fun!"),
+        event("Earth", 92, "Nuclear waste!")
+    }};
+    const qint32 ticketNumber = 31;
 
     NetworkObject netObj(request);
     netObj.setTicket(ticketNumber);
 
-    // Method being tested
+    // Test
     NetworkObject netObjResponse = netObj.createResponse(response);
+    RetrieveMyEventsResponse converted = netObjResponse.convert<RetrieveMyEventsResponse>();
 
-    // The all seeing Oracle
-    LoginResponse converted = netObjResponse.getLoginResponse();
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.events.size(), converted.events.size());
+    ASSERT_EQ(response.events, converted.events);
+}
+
+TEST(base, NetworkObject_setInterestsResponse) {
+    // Set up state
+    const SetInterestsRequest request {{ "Romance", "Love", "Heartbreak"}};
+    const SetInterestsResponse response { IsValid, "Hahaha!" };
+    const qint32 ticketNumber = 999999999;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    SetInterestsResponse converted = netObjResponse.convert<SetInterestsResponse>();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.valid, converted.valid);
+    ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_findMatchResponse) {
+    // Set up state
+    const FindMatchRequest request { 168924 };
+    const FindMatchResponse response { IsValid, "You have been matched with TheGrinch!" };
+    const qint32 ticketNumber = 9314;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    auto converted = netObjResponse.convert<FindMatchResponse>();
+
+    // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
 }
 
 TEST(base, NetworkObject_write) {
-    using Message = NetworkObject::Message;
-
     // Set up state
-    const Message msg{ "random", "You won!!!" };
+    const base::Message msg{ "random", "You won!!!" };
     NetworkObject netObj(msg);
 
     // Set up test device
@@ -173,10 +382,8 @@ TEST(base, NetworkObject_write) {
 }
 
 TEST(base, NetworkObject_read) {
-    using Message = NetworkObject::Message;
-
     // Set up state
-    const Message msg{ "billy", "He's playing hooky!" };
+    const base::Message msg{ "billy", "He's playing hooky!" };
     const qint32 ticketNum = 5;
 
     NetworkObject netObj(msg);
@@ -197,17 +404,15 @@ TEST(base, NetworkObject_read) {
     ASSERT_TRUE(outputObj.tryRead(&buffer));
     buffer.close();
 
-    Message output = outputObj.getMessage();
+    base::Message output = outputObj.convert<base::Message>();
     ASSERT_EQ(outputObj.getTicket(), ticketNum);
     ASSERT_EQ(msg.category, output.category);
     ASSERT_EQ(msg.message, output.message);
 }
 
 TEST(base, NetworkObject_partialRead) {
-    using Message = NetworkObject::Message;
-
     // Set up state
-    const Message msg{ "billy", "He's gone fishing!" };
+    const base::Message msg{ "billy", "He's gone fishing!" };
     NetworkObject netObj(msg);
 
     NetworkObject outputObj;
@@ -243,10 +448,8 @@ TEST(base, NetworkObject_invalidDevice) {
     bool done = false;
 
     std::thread child([&](){
-        using Message = NetworkObject::Message;
-
         // Set up state
-        const Message msg{ "billy", "He's gone fishing!" };
+        const base::Message msg{ "billy", "He's gone fishing!" };
         NetworkObject netObj(msg);
 
         // Set up test device
@@ -281,10 +484,8 @@ TEST(base, NetworkObject_invalidSocket) {
     bool done = false;
 
     std::thread child([&](){
-        using Message = NetworkObject::Message;
-
         // Set up state
-        const Message msg{ "billy", "He's gone fishing!" };
+        const base::Message msg{ "billy", "He's gone fishing!" };
         NetworkObject netObj(msg);
 
         // Set up test device

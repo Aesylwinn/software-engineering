@@ -27,7 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="eventNameEd"/>
      </item>
     </layout>
    </item>
@@ -226,6 +226,24 @@
            <property name="checkState">
             <enum>Unchecked</enum>
            </property>
+           <property name="text">
+            <string>Hockey</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+           <property name="text">
+            <string>Mexican</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+           <property name="text">
+            <string>Programming</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
           </item>
          </widget>
         </item>
@@ -264,8 +282,8 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>88</width>
-            <height>21</height>
+            <width>102</width>
+            <height>24</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">

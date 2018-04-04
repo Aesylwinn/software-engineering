@@ -57,7 +57,7 @@ TEST(base, ClientNetworkMgr_sendRequest) {
     int Port = 1984;
 
     // What gets sent
-    NetworkObject request(NetworkObject::Message{ "TST", "Hello world!" });
+    NetworkObject request(base::Message{ "TST", "Hello world!" });
 
     // Set up an event loop
     int argc = 1;

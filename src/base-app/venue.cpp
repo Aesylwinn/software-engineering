@@ -1,30 +1,39 @@
 /* Implemented by Yianni and Jake */
 
+#include <QVector>
+#include <QStringList>
+#include <QDebug> // for iterator
 #include "venue.h"
 
 namespace base {
     venue::venue(){
         initialize("", "", "", -1);
     }
-    venue::venue(QString n, QString addr){
-        initialize(n, addr, "", -1);
-    }
-    venue::venue(QString n, QString addr, QString phone){
-        initialize(n, addr, phone, -1);
-    }
-    venue::venue(QString n, QString addr, double fee){
-        initialize(n, addr, "", fee);
-    }
     venue::venue(QString n, QString addr, QString phone, double fee){
         initialize(n, addr, phone, fee);
     }
-    venue::venue(QString data){ //Data means "name,address,phone,fee"
-        name = data;
-    }    //conversion constructor
+
+    venue::venue(QString data){
+        // assumes data == "name, address, phone, fee" in order
+        QStringList list = data.split(',');
+        int i = 0;
+        for(QStringList::iterator it = list.begin(); it != list.end(); it++) {
+            QString temp = *it;
+            temp = temp.simplified();
+            switch(i++) {
+                case 0: name = temp;
+                case 1: address = temp;
+                case 2: phoneNumber = temp;
+                case 3: entryFee = temp.toDouble();
+            }
+        }
+    }   //conversion constructor
 
     //utility
     QString venue::toString(){
-        return name;
+        QString theString;
+        theString = name + ", " + address + ", " + phoneNumber + ", " + QString::number(entryFee);
+        return theString;
     }
 
     //setters
@@ -54,17 +63,40 @@ namespace base {
     }
 
     //getters
-    QString venue::getAddress(){
+    QString venue::getAddress() const{
         return address;
     }
-    QString venue::getPhoneNumber(){
+    QString venue::getPhoneNumber() const{
         return phoneNumber;
     }
-    QString venue::getName(){
+    QString venue::getName() const{
         return name;
     }
-    double venue::getEntryFee(){
+    double venue::getEntryFee() const{
         return entryFee;
+    }
+
+    venue venue::operator=(const QString& data){ //data = "name,address,phone,fee"
+        venue newVenue(data);
+        setName(newVenue.getName());
+        setAddress(newVenue.getAddress());
+        setPhoneNumber(newVenue.getPhoneNumber());
+        setEntryFee(newVenue.getEntryFee());
+        return *this;
+    }
+
+    bool venue::operator==(const venue &rhs) const
+    {
+        bool isEqual = true;
+        if (name != rhs.getName())
+            isEqual = false;
+        if (address != rhs.getAddress())
+            isEqual = false;
+        if (phoneNumber != rhs.getPhoneNumber())
+            isEqual = false;
+        if (entryFee != rhs.getEntryFee())
+            isEqual = false;
+        return isEqual;
     }
 
     //helper class
