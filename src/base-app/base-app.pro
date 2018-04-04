@@ -20,7 +20,8 @@ SOURCES += \
     simpleclass.cpp \
     venue.cpp \
     timepoint.cpp \
-    mytime.cpp
+    mytime.cpp \
+    eventlist.cpp
 
 !android:SOURCES += servernetworkmgr.cpp databaseconnection.cpp
 
@@ -36,7 +37,8 @@ HEADERS += \
     venue.h \
     timepoint.h \
     mytime.h \
-    networkpackets.h
+    networkpackets.h \
+    eventlist.h
 
 !android:HEADERS += servernetworkmgr.h databaseconnection.h
 
