@@ -227,7 +227,7 @@
             <enum>Unchecked</enum>
            </property>
            <property name="text">
-            <string>Hockey</string>
+            <string>Soccer</string>
            </property>
            <property name="checkState">
             <enum>Unchecked</enum>
@@ -239,7 +239,7 @@
             <enum>Unchecked</enum>
            </property>
            <property name="text">
-            <string>Programming</string>
+            <string>Video Games</string>
            </property>
            <property name="checkState">
             <enum>Unchecked</enum>

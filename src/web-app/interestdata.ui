@@ -34,7 +34,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="sizePolicy">
@@ -988,6 +988,24 @@ Get Verified and share an experience with someone whose interests are cohesive w
                    <item>
                     <property name="text">
                      <string>Classic Rock</string>
+                    </property>
+                    <property name="checkState">
+                     <enum>Unchecked</enum>
+                    </property>
+                    <property name="text">
+                     <string>Soccer</string>
+                    </property>
+                    <property name="checkState">
+                     <enum>Unchecked</enum>
+                    </property>
+                    <property name="text">
+                     <string>Mexican</string>
+                    </property>
+                    <property name="checkState">
+                     <enum>Unchecked</enum>
+                    </property>
+                    <property name="text">
+                     <string>Video Games</string>
                     </property>
                     <property name="checkState">
                      <enum>Unchecked</enum>
