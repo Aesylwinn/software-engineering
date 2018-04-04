@@ -162,6 +162,18 @@ TEST(base, NetworkObject_findMatchRequest) {
     ASSERT_EQ(request.event_id, converted.event_id);
 }
 
+TEST(base, NetworkObject_retrieveMatchesRequest) {
+    // State
+    const RetrieveMatchesRequest request = { 827 };
+
+    // Test
+    NetworkObject netObj(request);
+    auto converted = netObj.convert<RetrieveMatchesRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.unused, converted.unused);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -363,6 +375,24 @@ TEST(base, NetworkObject_findMatchResponse) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_retrieveMatchesResponse) {
+    // Set up state
+    const RetrieveMatchesRequest request { 998 };
+    const RetrieveMatchesResponse response { 9 };
+    const qint32 ticketNumber = 555;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    auto converted = netObjResponse.convert<RetrieveMatchesResponse>();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.todo, converted.todo);
 }
 
 TEST(base, NetworkObject_write) {
