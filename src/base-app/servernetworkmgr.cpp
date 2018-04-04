@@ -29,16 +29,16 @@ namespace base {
         try {
             const char* DbName = "se";
             switch (obj.getPayloadType()) {
-                case NetworkObject::PT_Message:
+                case PT_Message:
                     {
-                        Message msg = obj.getMessage();
+                        Message msg = obj.convert<Message>();
                         qInfo("%s: %s", qUtf8Printable(msg.category),
                                 qUtf8Printable(msg.message));
                     }
                     break;
-                case NetworkObject::PT_CreateAccountRequest:
+                case PT_CreateAccountRequest:
                     {
-                        CreateAccountRequest request = obj.getCreateAccountRequest();
+                        CreateAccountRequest request = obj.convert<CreateAccountRequest>();
                         CreateAccountResponse response = { NotValid, "DB error" };
                         qInfo("create account request for username: %s", qUtf8Printable(request.username));
                         // Add to database
@@ -57,9 +57,9 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
-                case NetworkObject::PT_LoginRequest:
+                case PT_LoginRequest:
                     {
-                        LoginRequest request = obj.getLoginRequest();
+                        LoginRequest request = obj.convert<LoginRequest>();
                         LoginResponse response = { NotValid, "DB Error", 0};
 
                         qInfo("%s: is trying to login", qUtf8Printable(request.username));
@@ -83,9 +83,9 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
-                case NetworkObject::PT_CreateEventRequest:
+                case PT_CreateEventRequest:
                     {
-                        CreateEventRequest request = obj.getCreateEventRequest();
+                        CreateEventRequest request = obj.convert<CreateEventRequest>();
                         CreateEventResponse response = { NotValid, "Event was not created" };
 
                         qInfo("create event: %s", qUtf8Printable(request.data.getName()));
@@ -98,7 +98,7 @@ namespace base {
                                 qint64 venueId;
 
                                 // Handle venue
-                                if (dbConnection.getOrCreateVenue(request.data.getLocation(), venueId)) {
+                                if (dbConnection.getOrCreateVenueId(request.data.getLocation(), venueId)) {
                                     // Event
                                     if (dbConnection.createEvent(request.data, userData->getUserId(), venueId)) {
                                         response = { IsValid, "Event created" };
@@ -118,9 +118,9 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
-                case NetworkObject::PT_CreateHostRequest:
+                case PT_CreateHostRequest:
                     {
-                        CreateHostRequest request = obj.getCreateHostRequest();
+                        CreateHostRequest request = obj.convert<CreateHostRequest>();
                         CreateHostResponse response = { NotValid };
 
                         qInfo("create host: %s", qUtf8Printable(request.username));
@@ -129,7 +129,7 @@ namespace base {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.checkPassword(request.username, request.password)) {
                                 qint64 id = 0;
-                                if (dbConnection.getId(request.username, id)) {
+                                if (dbConnection.getUserId(request.username, id)) {
                                     if (dbConnection.createHost(id, request.displayName, request.businessName, request.bio)) {
                                         response = { IsValid };
                                     }
@@ -142,9 +142,9 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
-                case NetworkObject::PT_SuggestEventsRequest:
+                case PT_SuggestEventsRequest:
                     {
-                        SuggestEventsRequest request = obj.getSuggestEventsRequest();
+                        SuggestEventsRequest request = obj.convert<SuggestEventsRequest>();
                         SuggestEventsResponse response = {};
 
                         qInfo("suggest events: %d", request.count);
@@ -160,6 +160,50 @@ namespace base {
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_JoinEventRequest:
+                    {
+                        JoinEventRequest request = obj.convert<JoinEventRequest>();
+                        JoinEventResponse response = { NotValid, "Failed to join the event" };
+
+                        qInfo("join event: %lld", request.eventId);
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection dbConnection(DbName);
+                                if (dbConnection.joinEvent(userData->getUserId(), request.eventId)) {
+                                    response = { IsValid, "Event joint" };
+                                }
+                            } else {
+                                response = { NotValid, "Not logged in" };
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("db error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_RetrieveMyEventsRequest:
+                    {
+                        RetrieveMyEventsRequest request = obj.convert<RetrieveMyEventsRequest>();
+                        RetrieveMyEventsResponse response;
+
+                        qInfo("my events: %d", request.count);
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection dbConnection(DbName);
+                                dbConnection.getMyEvents(userData->getUserId(), response.events);
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("DB error: %s", e.what());
                         }
 
                         sendResponse(socket, obj.createResponse(response));

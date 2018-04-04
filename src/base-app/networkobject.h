@@ -15,27 +15,6 @@ namespace base {
     /* Implemented by Kyle and Anthony */
     class BASEAPPSHARED_EXPORT NetworkObject {
     public:
-        // The types of payloads
-        enum PayloadType {
-            PT_None=0,
-
-            PT_CreateAccountRequest=0x1,
-            PT_LoginRequest,
-            PT_CreateEventRequest,
-            PT_SuggestEventsRequest,
-            PT_CreateHostRequest,
-            PT_JoinEventRequest,
-
-            PT_CreateAccountResponse=0x200,
-            PT_LoginResponse,
-            PT_CreateEventResponse,
-            PT_SuggestEventsResponse,
-            PT_CreateHostResponse,
-            PT_JointEventResponse,
-
-            PT_Message=0x400
-        };
-
 
         // Default ctor, PT_None
         NetworkObject();
@@ -46,27 +25,16 @@ namespace base {
         // Parameterized ctor, only use this if you know what you are doing
         NetworkObject(PayloadType type, QByteArray payload);
 
-        // Message packet ctor
-        NetworkObject(const Message& message);
+        template <typename Request>
+        explicit NetworkObject(const Request& request)  {
+            init((PayloadType)Request::Type);
 
-        // CreateAccountRequest packet ctor
-        NetworkObject(const CreateAccountRequest& request);
+            // Combine into a single object
+            QDataStream stream;
+            setupWrite(stream);
 
-        // LoginRequest packet ctor
-        NetworkObject(const LoginRequest& request);
-
-        // CreateEventRequest packet ctor
-        NetworkObject(const CreateEventRequest& request);
-
-        // SuggestEventsRequest packet ctor
-        NetworkObject(const SuggestEventsRequest& request);
-
-        // CreateHostRequest packet ctor
-        NetworkObject(const CreateHostRequest& request);
-
-        // JoinEventRequest packet ctor
-        NetworkObject(const JoinEventRequest& request);
-
+            stream << request;
+        }
 
         // Type and raw data retrieval
         PayloadType getPayloadType() const;
@@ -85,89 +53,33 @@ namespace base {
         // Reads the IO device in a nonblocking manner.
         bool tryRead(QIODevice* device);
 
+        template <typename Packet>
+        Packet convert() const {
+            mustMatch((PayloadType)Packet::Type);
 
-        // Converts payload to a Message packet
-        Message getMessage() const;
+            // Convert
+            QDataStream stream;
+            setupRead(stream);
 
-        // Converts payload to a LoginRequest packet
-        LoginRequest getLoginRequest() const;
+            Packet result;
+            stream >> result;
+            return result;
+        }
 
-        // Converts payload to a CreateAccountRequest packet
-        CreateAccountRequest getCreateAccountRequest() const;
+        template <typename Response>
+        NetworkObject createResponse(const Response& response) {
+            mustMatch((PayloadType)Response::RequestType);
 
-        // Converts a payload to a CreateEventRequest packet
-        CreateEventRequest getCreateEventRequest() const;
-
-        // Converts a payload to a SuggestEventsRequest packet
-        SuggestEventsRequest getSuggestEventsRequest() const;
-
-        // Converts a payload to a CreateHostRequest packet
-        CreateHostRequest getCreateHostRequest() const;
-
-        // Converts a payload to a JoinEventRequest packet
-        JoinEventRequest getJoinEventRequest() const;
-
-
-        // Converts payload to a LoginResponse packet
-        LoginResponse getLoginResponse() const;
-
-        // Converts payload to a CreateAccountResponse packet
-        CreateAccountResponse getCreateAccountResponse() const;
-
-        // Converts payload to a CreateEventResponse packet
-        CreateEventResponse getCreateEventResponse() const;
-
-        // Converts payload to a SuggestEventsResponse packet
-        SuggestEventsResponse getSuggestEventsResponse() const;
-
-        // Converts payload to a CreateHostResponse packet
-        CreateHostResponse getCreateHostResponse() const;
-
-        // Converts payload to a JoinEventResponse packet
-        JoinEventResponse getJoinEventResponse() const;
-
-
-        // Creates a NetworkObject containing a LoginResponse packet
-        NetworkObject createResponse(const LoginResponse& data);
-
-        // Creates a NetworkObject containing a CreateAccountResponse packet
-        NetworkObject createResponse(const CreateAccountResponse& data);
-
-        // Creates a NetworkObject containing a CreateEventResponse packet
-        NetworkObject createResponse(const CreateEventResponse& data);
-
-        // Creates a NetworkObject containing a SuggestEventsResponse packet
-        NetworkObject createResponse(const SuggestEventsResponse& data);
-
-        // Creates a NetworkObject containing a CreateHostResponse packet
-        NetworkObject createResponse(const CreateHostResponse& data);
-
-        // Create a NetworkObject containing a JoinEventResponse packet
-        NetworkObject createResponse(const JoinEventResponse& data);
+            // Construct response and match the ticket
+            NetworkObject obj(response);
+            obj.setTicket(getTicket());
+            return obj;
+        }
 
     private:
 
-        // LoginResponse packet ctor
-        NetworkObject(const LoginResponse& response);
-
-        // CreateAccountResponse packet ctor
-        NetworkObject(const CreateAccountResponse& response);
-
-        // CreateEventResponse packet ctor
-        NetworkObject(const CreateEventResponse& response);
-
-        // SuggestEventsResponse packet ctor
-        NetworkObject(const SuggestEventsResponse& response);
-
-        // CreateHostResponse packet ctor
-        NetworkObject(const CreateHostResponse& response);
-
-        // JoinEventResponse packet ctor
-        NetworkObject(const JoinEventResponse& response);
-
-
         // Ctor helper function
-        void init(PayloadType type, QByteArray payload);
+        void init(PayloadType type, QByteArray payload=QByteArray());
 
         // Buffer setup helper functions
         void setupRead(QDataStream& stream) const;

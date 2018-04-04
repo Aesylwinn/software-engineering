@@ -27,6 +27,8 @@ private:
     base::ClientNetworkMgr* mNetworkMgr;
 
     qint32 mSuggestTicket;
+    qint32 mJoinTicket;
+    qint32 mMyEventsTicket;
 
 private slots:
     void onResponseReceived(base::NetworkObject obj);

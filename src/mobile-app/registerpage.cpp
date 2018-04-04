@@ -60,9 +60,9 @@ void RegisterPage::onCancelClicked(bool)
 
 void RegisterPage::onResponseRecieved(base::NetworkObject response) {
     switch (response.getPayloadType()) {
-    case base::NetworkObject::PT_CreateAccountResponse:
+    case base::PT_CreateAccountResponse:
         if (response.getTicket() == mRegisterTicket) {
-            base::CreateAccountResponse info = response.getCreateAccountResponse();
+            base::CreateAccountResponse info = response.convert<base::CreateAccountResponse>();
             qInfo("Account created: %d msg: %s", info.valid, qUtf8Printable(info.details));
 
             if (info.valid) {

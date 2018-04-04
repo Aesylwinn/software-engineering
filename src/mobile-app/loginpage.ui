@@ -44,6 +44,16 @@
     </spacer>
    </item>
    <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="utilities.qrc">:/Utilities/party-istock-resize-600x338.jpg</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="usernameLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinAndMaxSize</enum>
@@ -163,6 +173,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="utilities.qrc"/>
+ </resources>
  <connections/>
 </ui>
