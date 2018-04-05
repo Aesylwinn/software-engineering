@@ -39,10 +39,14 @@ public slots:
     void getMyInterests();
     void requestEvents();
     void requestMyEvents();
+    void findMatches();
+    void joiningEvents(int row, int col);
 
 private:
     Ui::interestData *ui;
     base::ClientNetworkMgr *mNetworkMgr;
+    QVector<base::event> globalMyEvents;
+    QVector<base::event> globalInterest;
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
     qint32 mCreateEventRequest;
@@ -51,6 +55,7 @@ private:
     qint32 mJoinEventRequest;
     qint32 mRetrieveMyEvents;
     qint32 mSetInterestsRequest;
+    qint32 mFindMatchesRequest;
 };
 
 #endif // INTERESTDATA_H

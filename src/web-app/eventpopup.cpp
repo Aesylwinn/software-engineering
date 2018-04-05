@@ -10,7 +10,7 @@ eventPopUp::eventPopUp(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->yes, SIGNAL(clicked()), this, SLOT(openingCalendar()));
     connect(ui->no, SIGNAL(clicked()), this, SLOT(openingCalendar()));
-    
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(setHostInfo()));
 }
 
 eventPopUp::~eventPopUp()

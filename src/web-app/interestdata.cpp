@@ -14,7 +14,10 @@ interestData::interestData(QWidget *parent) :
     mCreateEventRequest(-1),
     mCreateHostRequest(-1),
     mSuggestEventsRequest(-1),
-    mJoinEventRequest(-1)
+    mJoinEventRequest(-1),
+    mRetrieveMyEvents(-1),
+    mSetInterestsRequest(-1),
+    mFindMatchesRequest(-1)
 {
     // Connect to the server
     mNetworkMgr->connect(QString(SERVER_ADDRESS), SERVER_PORT);
@@ -44,6 +47,11 @@ interestData::interestData(QWidget *parent) :
     connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
     connect(ui->logoutHost, SIGNAL(clicked()), this, SLOT(logout()));
     connect(ui->refreshInterests, SIGNAL(clicked()), this, SLOT(requestEvents()));
+    connect(ui->accept, SIGNAL(clicked()), this, SLOT(getMyInterests()));
+    connect(ui->refreshInterests, SIGNAL(clicked()), this, SLOT(requestEvents()));
+    connect(ui->refreshMyEvents, SIGNAL(clicked()), this, SLOT(requestMyEvents()));
+    connect(ui->matchB, SIGNAL(clicked()), this, SLOT(findMatches()));
+    connect(ui->interestStream, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(joiningEvents(int,int)));
 
 
     base::venue tempVenue;
@@ -337,6 +345,23 @@ void interestData::requestMyEvents() {
     mRetrieveMyEvents = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
+void interestData::findMatches()
+{
+    FindMatchRequest data;
+    data.event_id = globalMyEvents[0].getID();    //what if they have no matches for the first but do for the second??
+
+    mFindMatchesRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
+void interestData::joiningEvents(int row, int col)
+{
+    (void)col;
+    JoinEventRequest data;
+    data.eventId = globalInterest[row].getID();
+
+    mJoinEventRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
 void interestData::checkResponse(NetworkObject response) {
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
@@ -419,8 +444,9 @@ void interestData::checkResponse(NetworkObject response) {
         mSuggestEventsRequest = -1;
         if (response.getPayloadType() == PT_SuggestEventsRequest) {
             SuggestEventsResponse info = response.convert<SuggestEventsResponse>();
-            qInfo("events recieved: %d", info.events.count());      //i before e except after c :)
+            qInfo("events received: %d", info.events.count());
             displayEvents(info.events);
+            globalInterest = info.events;
         }
     }
     else if (response.getTicket() == mJoinEventRequest) {
@@ -446,6 +472,7 @@ void interestData::checkResponse(NetworkObject response) {
             RetrieveMyEventsResponse info = response.convert<RetrieveMyEventsResponse>();
             qInfo("events received: %d", info.events.count());
             displayMyEvents(info.events);
+            globalMyEvents = info.events;
         }
 
     }
@@ -454,6 +481,14 @@ void interestData::checkResponse(NetworkObject response) {
         if(response.getPayloadType() == PT_SetInterestsRequest){
             SetInterestsResponse info = response.convert<SetInterestsResponse>();
             qInfo("interests received: %d", info.valid, qUtf8Printable(info.details));
+        }
+    }
+    else if (response.getTicket() == mFindMatchesRequest){
+        mFindMatchesRequest = -1;
+        if (response.getPayloadType() == PT_FindMatchRequest){
+            FindMatchResponse info = response.convert<FindMatchResponse>();
+            qInfo("matches received: %d", info.valid, qPrintable(info.details));
+            //How do we get the names of the matches??
         }
     }
 }
