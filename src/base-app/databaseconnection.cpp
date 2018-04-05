@@ -85,7 +85,7 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
         QCryptographicHash qchash(QCryptographicHash::Sha512);
         qchash.addData(password.toUtf8());
         QString actualHashedPassword = query.value("password").toString();
-        QString hashedAttemptPassword(qchash.result());
+        QString hashedAttemptPassword(qchash.result().toBase64());
         return actualHashedPassword == hashedAttemptPassword;
     }
 
@@ -178,7 +178,7 @@ bool DatabaseConnection::createAccount(QString username, QString password)
 
     QCryptographicHash qchash(QCryptographicHash::Sha512);
     qchash.addData(password.toUtf8());
-    QString hashedPassword(qchash.result());
+    QString hashedPassword(qchash.result().toBase64());
 
     if (!query.prepare("INSERT INTO User_basic (username, password) VALUES ( :usern, :passw )"))
         throw std::runtime_error("Unable to create account, unable to prepare query");

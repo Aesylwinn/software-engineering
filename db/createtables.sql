@@ -3,7 +3,7 @@ create table User_basic(		-- unverified access profile
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	userType ENUM('BASIC','PROFILE','HOST') NOT NULL,
 	username CHAR(20) NOT NULL UNIQUE,
-	password CHAR(20) NOT NULL,
+	password CHAR(90) NOT NULL,
 	verified BOOLEAN NOT NULL
 );
 
@@ -17,7 +17,7 @@ create table User_Profile(		-- std profile
 	otherGender VARCHAR(40),
 	orientation VARCHAR(3),		-- space for 3 char flags, m,f,o. used to say interest in male, female, and or other
 	bio TEXT
-	
+
 );
 
 create table User_Host(			-- business/host profile
@@ -32,7 +32,7 @@ create table Event(				-- previously titled interest, changed for clarity
 	id_host INT NOT NULL,
 	standardOperation BOOLEAN NOT NULL,	-- if true, this event represents the business' normal hours and procedure
 	recurring BOOLEAN NOT NULL,
-	displayName VARCHAR(20) NOT NULL,	
+	displayName VARCHAR(20) NOT NULL,
 	id_category INT NOT NULL,
 	id_venue INT NOT NULL,
 	dateStart DATE NOT NULL,
@@ -40,11 +40,11 @@ create table Event(				-- previously titled interest, changed for clarity
 	timeStart TIME NOT NULL,
 	timeEnd TIME NOT NULL,
 	recurringType ENUM('DAILY','WEEKLY','MONTHLY','FIRST','SECOND','THIRD','FOURTH','LAST'), 	--first,last etc used for first friday, last tuesday, etc
-	recurringDay INT,	   /*	changes based on recurType: 
+	recurringDay INT,	   /*	changes based on recurType:
 							*		daily, first-last: 1-7 to signify day of week (starting sunday as 1), 0 unused
 							*		monthly day 1-(29/30/31) to signify day of month
 							*/
-	description TEXT			
+	description TEXT
 );
 
 create table Event_Exceptions(
