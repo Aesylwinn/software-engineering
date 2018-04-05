@@ -7,6 +7,7 @@
 #include <QDataStream>
 
 #include "databaseconnection.h"
+#include "eventchooser.h"
 
 namespace base {
     ServerNetworkMgr::ServerNetworkMgr(QObject* parent)
@@ -153,8 +154,7 @@ namespace base {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.getEvents(response.events)) {
                                 // Trim count, eventually choose best fit
-                                if (response.events.count() > request.count)
-                                    response.events.resize(request.count);
+                                response.events = EventChooser().narrow(response.events, request.count);
                             } else {
                                 qInfo("failed to retrieve any events");
                             }
