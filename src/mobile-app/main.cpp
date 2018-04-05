@@ -15,6 +15,12 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    app.setStyleSheet(
+        "QWidget { background-color: #c2f2fc } "
+        "QLineEdit { background-color: #e6f4f7 } "
+        "QTextEdit { background-color: #e6f4f7 } "
+    );
+
     // Communicate with server
     base::ClientNetworkMgr networkMgr;
     networkMgr.connect(SERVER_ADDRESS, SERVER_PORT);
