@@ -35,7 +35,7 @@ public slots:
     void displayEvents(QVector<base::event> interest);
     void displayMyEvents(QVector<base::event> myEvent);
     void createHost();
-    void createEvent(QString eName, QVector<QString> categories, QString desc);
+    void createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end);
     void requestEvents();
     void requestMyEvents();
 
@@ -44,7 +44,6 @@ private:
     base::ClientNetworkMgr *mNetworkMgr;
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
-	//qint32 mEventRequest;
     qint32 mCreateEventRequest;
     qint32 mCreateHostRequest;
     qint32 mSuggestEventsRequest;
