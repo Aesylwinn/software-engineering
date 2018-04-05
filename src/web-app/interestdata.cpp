@@ -43,6 +43,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
     connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
     connect(ui->logoutHost, SIGNAL(clicked()), this, SLOT(logout()));
+    connect(ui->refreshInterests, SIGNAL(clicked()), this, SLOT(requestEvents()));
 
 
     base::venue tempVenue;
@@ -304,6 +305,24 @@ void interestData::createEvent(QString eName, QString categories, QString desc, 
     mCreateEventRequest = mNetworkMgr->sendRequest(NetworkObject(request));
 }
 
+void interestData::getMyInterests()
+{
+    QVector<QString> categories;
+    QString item;
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < 5; j++){
+            if(ui->interestSelect->itemAt(i,j)->isSelected())
+            {
+                item = ui->interestSelect->itemAt(i,j)->text(i);
+                categories.push_back(item);
+            }
+        }
+    SetInterestsRequest data;
+    data.interests = categories;
+
+    mSetInterestsRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
 void interestData::requestEvents() {
     SuggestEventsRequest data;
     data.count = 10;
@@ -312,7 +331,10 @@ void interestData::requestEvents() {
 }
 
 void interestData::requestMyEvents() {
-    // TODO
+    RetrieveMyEventsRequest data;
+    data.count = 10;
+
+    mRetrieveMyEvents = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
 void interestData::checkResponse(NetworkObject response) {
@@ -397,7 +419,7 @@ void interestData::checkResponse(NetworkObject response) {
         mSuggestEventsRequest = -1;
         if (response.getPayloadType() == PT_SuggestEventsRequest) {
             SuggestEventsResponse info = response.convert<SuggestEventsResponse>();
-            qInfo("events recieved: %d", info.events.count());
+            qInfo("events recieved: %d", info.events.count());      //i before e except after c :)
             displayEvents(info.events);
         }
     }
@@ -406,7 +428,32 @@ void interestData::checkResponse(NetworkObject response) {
         if (response.getPayloadType() == PT_JoinEventRequest) {
             JoinEventResponse info = response.convert<JoinEventResponse>();
             qInfo("event joined: %d", info.valid, qUtf8Printable(info.details));
+            if (info.valid) {
+                QMessageBox messageBox;
+                messageBox.information(0, "Success", "Thanks for joining!");
+                messageBox.setFixedSize(500, 200);
+            }
+            else {
+                QMessageBox messageBox;
+                messageBox.critical(0, "Error", "Unable to join event :(");
+                messageBox.setFixedSize(500, 200);
+            }
+        }
+    }
+    else if(response.getTicket() == mRetrieveMyEvents){
+        mRetrieveMyEvents = -1;
+        if(response.getPayloadType() == PT_RetrieveMyEventsRequest){
+            RetrieveMyEventsResponse info = response.convert<RetrieveMyEventsResponse>();
+            qInfo("events received: %d", info.events.count());
+            displayMyEvents(info.events);
+        }
 
+    }
+    else if(response.getTicket() == mSetInterestsRequest){
+        mSetInterestsRequest = -1;
+        if(response.getPayloadType() == PT_SetInterestsRequest){
+            SetInterestsResponse info = response.convert<SetInterestsResponse>();
+            qInfo("interests received: %d", info.valid, qUtf8Printable(info.details));
         }
     }
 }

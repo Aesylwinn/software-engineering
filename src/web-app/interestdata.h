@@ -36,6 +36,7 @@ public slots:
     void displayMyEvents(QVector<base::event> myEvent);
     void createHost();
     void createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end);
+    void getMyInterests();
     void requestEvents();
     void requestMyEvents();
 
@@ -48,6 +49,8 @@ private:
     qint32 mCreateHostRequest;
     qint32 mSuggestEventsRequest;
     qint32 mJoinEventRequest;
+    qint32 mRetrieveMyEvents;
+    qint32 mSetInterestsRequest;
 };
 
 #endif // INTERESTDATA_H
