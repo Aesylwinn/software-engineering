@@ -34,7 +34,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="sizePolicy">
@@ -1191,17 +1191,17 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  </column>
                  <column>
                   <property name="text">
-                   <string>Date</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Time</string>
+                   <string>Date/Time</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Description</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Attend</string>
                   </property>
                  </column>
                  <item row="0" column="0">
@@ -1217,11 +1217,6 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  <item row="0" column="2">
                   <property name="text">
                    <string>1/1/2018</string>
-                  </property>
-                 </item>
-                 <item row="0" column="3">
-                  <property name="text">
-                   <string>12am</string>
                   </property>
                  </item>
                 </widget>
@@ -1299,12 +1294,12 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  </column>
                  <column>
                   <property name="text">
-                   <string>Time</string>
+                   <string>Description</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>Description</string>
+                   <string>Attend</string>
                   </property>
                  </column>
                  <item row="0" column="0">
@@ -1320,11 +1315,6 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  <item row="0" column="2">
                   <property name="text">
                    <string>2/14/2018</string>
-                  </property>
-                 </item>
-                 <item row="0" column="3">
-                  <property name="text">
-                   <string>12am</string>
                   </property>
                  </item>
                 </widget>

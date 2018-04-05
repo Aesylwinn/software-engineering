@@ -47,6 +47,7 @@ private:
     qint32 mCreateEventRequest;
     qint32 mCreateHostRequest;
     qint32 mSuggestEventsRequest;
+    qint32 mJoinEventRequest;
 };
 
 #endif // INTERESTDATA_H

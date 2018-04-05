@@ -13,7 +13,8 @@ interestData::interestData(QWidget *parent) :
     mCreateAccountRequest(-1),
     mCreateEventRequest(-1),
     mCreateHostRequest(-1),
-    mSuggestEventsRequest(-1)
+    mSuggestEventsRequest(-1),
+    mJoinEventRequest(-1)
 {
     // Connect to the server
     mNetworkMgr->connect(QString(SERVER_ADDRESS), SERVER_PORT);
@@ -42,6 +43,31 @@ interestData::interestData(QWidget *parent) :
     connect(ui->logout, SIGNAL(clicked()), this, SLOT(logout()));
     connect(ui->createHost, SIGNAL(clicked()), this, SLOT(switchLowTabs()));
     connect(ui->logoutHost, SIGNAL(clicked()), this, SLOT(logout()));
+
+
+    base::venue tempVenue;
+    tempVenue.setAddress(tr("411 Electric Avenue"));
+
+    base::event tempEvent;
+    tempEvent.setName(tr("Wine Night"));
+    tempEvent.setStartTime(ui->dateEdit->dateTime());
+    tempEvent.setDescription(tr("Come get toasty at Primetime for $2!"));
+    tempEvent.setLocation(tempVenue);
+
+    QVector<base::event> tempVector;
+    tempVector.push_back(tempEvent);
+
+    base::venue tempVenue1;
+    tempVenue.setAddress(tr("420 Blazin Road"));
+
+    base::event tempEvent1;
+    tempEvent1.setName(tr("Burnin Herb"));
+    tempEvent1.setStartTime(ui->dateEdit->dateTime());
+    tempEvent1.setDescription(tr("Come get toasty at Primetime for $2!"));
+    tempEvent1.setLocation(tempVenue1);
+    tempVector.push_back(tempEvent1);
+
+    displayEvents(tempVector);
 }
 
 interestData::~interestData()
@@ -230,13 +256,12 @@ void interestData::displayEvents(QVector<base::event> interest)
     ui->interestStream->setRowCount(interest.size());
     for (int i = 0; i < interest.size(); i++)
     {
-            ui->interestStream->setItem(i, temp, new QTableWidgetItem(interest[i].getName()));
-            ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation().getAddress()));
-            ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getName()));        //date
-            ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getName()));        //time
-            ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(interest[i].getDescription()));
+        ui->interestStream->setItem(i, temp, new QTableWidgetItem(interest[i].getName()));
+        ui->interestStream->setItem(i, temp+1, new QTableWidgetItem(interest[i].getLocation().getAddress()));
+        ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getStartTime().toString()));
+        ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getDescription()));
+        ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(tr("Join")));
     }
-
 }
 
 void interestData::displayMyEvents(QVector<base::event> myEvent)
@@ -247,9 +272,8 @@ void interestData::displayMyEvents(QVector<base::event> myEvent)
     {
         ui->eventStream->setItem(i, temp, new QTableWidgetItem(myEvent[i].getName()));
         ui->eventStream->setItem(i, temp+1, new QTableWidgetItem(myEvent[i].getLocation().getAddress()));
-        ui->eventStream->setItem(i, temp+2, new QTableWidgetItem(myEvent[i].getName()));            //date
-        ui->eventStream->setItem(i, temp+3, new QTableWidgetItem(myEvent[i].getName()));            //time
-        ui->eventStream->setItem(i, temp+4, new QTableWidgetItem(myEvent[i].getDescription()));
+        ui->eventStream->setItem(i, temp+2, new QTableWidgetItem(myEvent[i].getStartTime().toString()));
+        ui->eventStream->setItem(i, temp+3, new QTableWidgetItem(myEvent[i].getDescription()));
     }
 }
 
@@ -375,6 +399,14 @@ void interestData::checkResponse(NetworkObject response) {
             SuggestEventsResponse info = response.convert<SuggestEventsResponse>();
             qInfo("events recieved: %d", info.events.count());
             displayEvents(info.events);
+        }
+    }
+    else if (response.getTicket() == mJoinEventRequest) {
+        mJoinEventRequest = -1;
+        if (response.getPayloadType() == PT_JoinEventRequest) {
+            JoinEventResponse info = response.convert<JoinEventResponse>();
+            qInfo("event joined: %d", info.valid, qUtf8Printable(info.details));
+
         }
     }
 }
