@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <thread>
+#include <QCryptographicHash>
 
 namespace base {
 
@@ -81,8 +82,11 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
     if( query.isSelect() && query.first() )
     {
-        QString actualPassword = query.value("password").toString();
-        return actualPassword == password;
+        QCryptographicHash qchash(QCryptographicHash::Sha512);
+        qchash.addData(password.toUtf8());
+        QString actualHashedPassword = query.value("password").toString();
+        QString hashedAttemptPassword(qchash.result());
+        return actualHashedPassword == hashedAttemptPassword;
     }
 
     return false;
@@ -172,11 +176,15 @@ bool DatabaseConnection::createAccount(QString username, QString password)
 {
     QSqlQuery query(*db);
 
+    QCryptographicHash qchash(QCryptographicHash::Sha512);
+    qchash.addData(password.toUtf8());
+    QString hashedPassword(qchash.result());
+
     if (!query.prepare("INSERT INTO User_basic (username, password) VALUES ( :usern, :passw )"))
         throw std::runtime_error("Unable to create account, unable to prepare query");
 
     query.bindValue(":usern",username);
-    query.bindValue(":passw",password);
+    query.bindValue(":passw",hashedPassword);
 
     if (!query.exec()) {
         // Username is already taken

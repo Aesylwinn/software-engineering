@@ -22,7 +22,7 @@ create table User_Profile(		-- std profile
 
 create table User_Host(			-- business/host profile
 	id_user INT NOT NULL UNIQUE,
-	displayName VARCHAR(80) NOT NULL,
+	displayName VARCHAR(80) NOT NULL UNIQUE,
 	businessName VARCHAR(40) NOT NULL,
 	bio TEXT
 );
