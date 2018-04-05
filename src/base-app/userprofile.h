@@ -1,6 +1,7 @@
 #ifndef USERPROFILE_H
 #define USERPROFILE_H
 
+#include <QDataStream>
 #include <QDate>
 #include <QString>
 
@@ -36,6 +37,10 @@ namespace base {
             return mBio;
         }
 
+        qint64 getUserId() const {
+            return mId;
+        }
+
         void setFirstName(QString name) {
             mFirstName = name;
         }
@@ -60,6 +65,10 @@ namespace base {
             mBio = bio;
         }
 
+        void setUserId(qint64 id) {
+            mId = id;
+        }
+
     private:
         QString mFirstName;
         QString mLastName;
@@ -67,6 +76,7 @@ namespace base {
         QDate mBirthday;
         QString mGender;
         QString mBio;
+        qint64 mId;
 
         friend BASEAPPSHARED_EXPORT bool operator==(const UserProfile& a, const UserProfile& b);
         friend BASEAPPSHARED_EXPORT bool operator!=(const UserProfile& a, const UserProfile& b);

@@ -386,6 +386,7 @@ TEST(base, NetworkObject_retrieveMatchesResponse) {
     profile1.setBirthday(QDate::currentDate());
     profile1.setGender("Female");
     profile1.setBio("I love super hero flicks!");
+    profile1.setUserId(45);
 
     UserProfile profile2;
     profile2.setFirstName("Anne");
@@ -394,6 +395,7 @@ TEST(base, NetworkObject_retrieveMatchesResponse) {
     profile2.setBirthday(QDate::currentDate());
     profile2.setGender("Male");
     profile2.setBio("I hate super hero flicks!");
+    profile2.setUserId(15);
 
     const RetrieveMatchesRequest request { 998 };
     const RetrieveMatchesResponse response {{ profile1, profile2 }, { base::Event("Yey!!!"), base::Event("Ooohhh!!!") }};

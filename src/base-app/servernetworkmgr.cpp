@@ -220,7 +220,18 @@ namespace base {
                             UserData* userData = getUserData(socket);
                             if (userData && userData->isValid()) {
                                 DatabaseConnection conn(DbName);
-                                // TODO
+                                QVector<UserProfile> potentials;
+
+                                if (conn.findMatches(userData->getUserId(), request.event_id, potentials) && potentials.count() > 0) {
+                                    // Random
+                                    int index = qrand() % potentials.size();
+                                    const UserProfile& match = potentials[index];
+
+                                    conn.addMatch(userData->getUserId(), match.getUserId(), request.event_id);
+                                    response = { IsValid, "Found a match with " + match.getFirstName() + " " + match.getLastName() };
+                                } else {
+                                    response = { NotValid, "No available matches" };
+                                }
                             }
                         } catch (std::exception& e) {
                             qInfo("DB error: %s", e.what());

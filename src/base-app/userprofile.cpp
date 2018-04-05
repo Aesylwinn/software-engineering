@@ -12,7 +12,8 @@ namespace base {
             a.getEmail() == b.getEmail() &&
             a.getBirthday() == b.getBirthday() &&
             a.getGender() == b.getGender() &&
-            a.getBio() == b.getBio();
+            a.getBio() == b.getBio() &&
+            a.getUserId() == b.getUserId();
     }
 
     BASEAPPSHARED_EXPORT bool operator!=(const UserProfile& a, const UserProfile& b) {
@@ -26,6 +27,7 @@ namespace base {
         ds << profile.getBirthday();
         ds << profile.getGender();
         ds << profile.getBio();
+        ds << profile.getUserId();
 
         return ds;
     }
@@ -34,6 +36,7 @@ namespace base {
     {
         QString str;
         QDate date;
+        qint64 val;
 
         ds >> str; profile.setFirstName(str);
         ds >> str; profile.setLastName(str);
@@ -41,6 +44,7 @@ namespace base {
         ds >> date; profile.setBirthday(date);
         ds >> str; profile.setGender(str);
         ds >> str; profile.setBio(str);
+        ds >> val; profile.setUserId(val);
 
         return ds;
     }

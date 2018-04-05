@@ -39,11 +39,14 @@ namespace base {
         bool getEvent(qint64, Event& event);
         bool getEvents(QVector<base::Event>& events);
         bool getMyEvents(qint64 userId, QVector<base::Event>& events);
+        bool findMatches(qint64 userId, qint64 eventId, QVector<UserProfile>& matches);
 
         bool joinEvent(qint64 userId, qint64 eventId);
+        bool addMatch(qint64 userA, qint64 userB, qint64 eventId);
 
     private:
         void SetUp(QString hostname, QString databaseName, QString username, QString password);
+        void readProfile(QSqlQuery& query, UserProfile& profile);
         void readEvent(QSqlQuery& query, Event& evt);
 
         bool validConnect;
