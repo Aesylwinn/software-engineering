@@ -12,7 +12,9 @@ SOURCES += \
     mainpage.cpp \
     createeventpage.cpp \
     eventtablewidget.cpp \
-    myeventtablewidget.cpp
+    myeventtablewidget.cpp \
+    matchespage.cpp \
+    matchitemwidget.cpp
 
 HEADERS += \
     loginpage.h \
@@ -20,7 +22,9 @@ HEADERS += \
     mainpage.h \
     createeventpage.h \
     eventtablewidget.h \
-    myeventtablewidget.h
+    myeventtablewidget.h \
+    matchespage.h \
+    matchitemwidget.h
 
 FORMS += \
     loginpage.ui \
@@ -28,7 +32,9 @@ FORMS += \
     mainpage.ui \
     createeventpage.ui \
     eventtablewidget.ui \
-    myeventtablewidget.ui
+    myeventtablewidget.ui \
+    matchespage.ui \
+    matchitemwidget.ui
 
 # base-app
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app

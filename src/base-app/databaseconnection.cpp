@@ -64,6 +64,7 @@ void DatabaseConnection::readProfile(QSqlQuery& query, UserProfile& profile) {
     profile.setEmail(query.value("email").toString());
     profile.setGender(query.value("gender").toString());
     profile.setBio(query.value("bio").toString());
+    profile.setUserId(query.value("id_user").toInt());
 }
 
 bool DatabaseConnection::checkPassword(QString username, QString password)

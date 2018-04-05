@@ -29,15 +29,21 @@ private:
     qint32 mSuggestTicket;
     qint32 mJoinTicket;
     qint32 mMyEventsTicket;
+    qint32 mFindMatchTicket;
 
 private slots:
     void onResponseReceived(base::NetworkObject obj);
+
     void onCreateEventClicked(bool);
     void onLogoutClicked(bool);
+    void onViewMatchesClicked(bool);
+
     void onJoinEvent(base::Event evt);
+    void onFindMatch(base::Event evt);
 
 signals:
     void onCreateEvent();
+    void onViewMatches();
     void onLogout();
 };
 
