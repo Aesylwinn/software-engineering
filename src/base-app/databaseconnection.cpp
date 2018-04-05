@@ -194,6 +194,29 @@ bool DatabaseConnection::createAccount(QString username, QString password)
     return true;
 }
 
+bool DatabaseConnection::createProfile(UserProfile profile)
+{
+    QSqlQuery query(*db);
+    QString statement = "INSERT INTO User_Profile (id_user, firstName, lastName, birtday, email, gender, otherGender, orientation, bio)"
+                                          "VALUES (   :usr,    :fname,   :lname,   :bday,:email,:gender,        NULL,        NULL,:bio)";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to create profile, unable to prepare query");
+
+    query.bindValue(":usr", profile.getUserId());
+    query.bindValue(":fname", profile.getFirstName());
+    query.bindValue(":lname", profile.getLastName());
+    query.bindValue(":bday", profile.getBirthday());
+    query.bindValue(":email", profile.getEmail());
+    query.bindValue(":gender", profile.getGender());
+    query.bindValue(":bio", profile.getBio());
+
+    if (!query.exec())
+        return false;
+
+    return true;
+}
+
 bool DatabaseConnection::createHost(qint64 userId, QString displayName, QString businessName, QString bio) {
     // Start transaction
     db->transaction();

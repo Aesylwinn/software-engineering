@@ -38,22 +38,18 @@ TEST(base, NetworkObject_createAccountRequestCtor) {
     CreateAccountRequest request;
     request.username = "WillyWonka";
     request.password = "chocolate";
-    request.email = "thegreatestchocolatier@delicious.com";
-    request.firstName = "Willy";
-    request.lastName = "Wonka";
-    request.gender = "Male";
-    request.birthDate = "01/24/1950";
+    request.profile.setEmail("thegreatestchocolatier@delicious.com");
+    request.profile.setFirstName("Willy");
+    request.profile.setLastName("Wonka");
+    request.profile.setGender("Male");
+    request.profile.setBirthday(QDate(1,24,1950));
 
     NetworkObject netObj((const CreateAccountRequest) request);
 
     CreateAccountRequest converted = netObj.convert<CreateAccountRequest>();
     ASSERT_EQ(request.username, converted.username);
     ASSERT_EQ(request.password, converted.password);
-    ASSERT_EQ(request.email, converted.email);
-    ASSERT_EQ(request.firstName, converted.firstName);
-    ASSERT_EQ(request.lastName, converted.lastName);
-    ASSERT_EQ(request.gender, converted.gender);
-    ASSERT_EQ(request.birthDate, converted.birthDate);
+    ASSERT_EQ(request.profile, converted.profile);
 }
 
 TEST(base, NetworkObject_loginRequestCtor) {
@@ -184,7 +180,7 @@ TEST(base, NetworkObject_messageCtor) {
 }
 
 TEST(base, NetworkObject_createAccountResponse) {
-    const CreateAccountRequest request{ "1", "2", "3", "4", "5", "6", "7" };
+    const CreateAccountRequest request{ "1", "2", UserProfile() };
     const CreateAccountResponse response{ 1, "What interesting tastes you have..." };
     const qint32 ticketNumber = 14;
 

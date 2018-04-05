@@ -58,11 +58,7 @@ namespace base {
 
         QString username;
         QString password;
-        QString email;
-        QString firstName;
-        QString lastName;
-        QString gender;
-        QString birthDate;
+        UserProfile profile;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateAccountRequest& req);

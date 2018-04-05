@@ -25,6 +25,7 @@ namespace base {
         bool checkPassword(QString username, QString password); //can throw run-time error if server unavailable
 
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
+        bool createProfile(UserProfile profile);
         bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
         bool createEvent(base::Event event, qint64 hostId, qint64 venueId);
 

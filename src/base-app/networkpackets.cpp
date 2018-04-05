@@ -13,20 +13,14 @@ namespace base {
     // CreateAccountRequest
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateAccountRequest& req) {
         ds << req.username << req.password;
-        ds << req.email;
-        ds << req.firstName << req.lastName;
-        ds << req.gender;
-        ds << req.birthDate;
+        ds << req.profile;
 
         return ds;
     }
 
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, CreateAccountRequest& req) {
         ds >> req.username >> req.password;
-        ds >> req.email;
-        ds >> req.firstName >> req.lastName;
-        ds >> req.gender;
-        ds >> req.birthDate;
+        ds >> req.profile;
 
         return ds;
     }

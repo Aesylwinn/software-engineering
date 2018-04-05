@@ -46,6 +46,12 @@ namespace base {
                         try {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.createAccount(request.username, request.password)) {
+                                // User profile
+                                qint64 id;
+                                dbConnection.getUserId(request.username, id);
+                                request.profile.setUserId(id);
+                                dbConnection.createProfile(request.profile);
+
                                 response = { IsValid, "Account created" };
                             }
                             else {
