@@ -5,6 +5,7 @@
 #include <QVector>
 
 #include "event.h"
+#include "userprofile.h"
 
 namespace base {
     // Constants used to ensure consistency between the server and clients
@@ -274,7 +275,8 @@ namespace base {
         static const size_t Type = PT_RetrieveMatchesResponse;
         static const size_t RequestType = PT_RetrieveMatchesRequest;
 
-        qint64 todo;
+        QVector<UserProfile> matches;
+        QVector<base::event> events;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMatchesResponse& resp);

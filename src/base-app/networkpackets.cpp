@@ -210,10 +210,10 @@ namespace base {
 
     // RetrieveMatchesResponse
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMatchesResponse& resp) {
-        return ds << resp.todo;
+        return ds << resp.matches << resp.events;
     }
 
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMatchesResponse& resp) {
-        return ds >> resp.todo;
+        return ds >> resp.matches >> resp.events;
     }
 }

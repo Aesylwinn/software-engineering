@@ -68,12 +68,17 @@ namespace base {
         QString mGender;
         QString mBio;
 
+        friend BASEAPPSHARED_EXPORT bool operator==(const UserProfile& a, const UserProfile& b);
+        friend BASEAPPSHARED_EXPORT bool operator!=(const UserProfile& a, const UserProfile& b);
         friend BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const UserProfile& profile);
-        friend BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, UserProfile profile);
+        friend BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, UserProfile& profile);
     };
 
+    BASEAPPSHARED_EXPORT bool operator==(const UserProfile& a, const UserProfile& b);
+    BASEAPPSHARED_EXPORT bool operator!=(const UserProfile& a, const UserProfile& b);
+
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const UserProfile& profile);
-    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, UserProfile profile);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, UserProfile& profile);
 }
 
 #endif // USERPROFILE_H

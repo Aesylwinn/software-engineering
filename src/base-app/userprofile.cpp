@@ -5,6 +5,20 @@ namespace base {
     {
     }
 
+    BASEAPPSHARED_EXPORT bool operator==(const UserProfile& a, const UserProfile& b) {
+        return
+            a.getFirstName() == b.getFirstName() &&
+            a.getLastName() == b.getLastName() &&
+            a.getEmail() == b.getEmail() &&
+            a.getBirthday() == b.getBirthday() &&
+            a.getGender() == b.getGender() &&
+            a.getBio() == b.getBio();
+    }
+
+    BASEAPPSHARED_EXPORT bool operator!=(const UserProfile& a, const UserProfile& b) {
+        return !(a == b);
+    }
+
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream &ds, const UserProfile &profile)
     {
         ds << profile.getFirstName() << profile.getLastName();
@@ -16,7 +30,7 @@ namespace base {
         return ds;
     }
 
-    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream &ds, UserProfile profile)
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream &ds, UserProfile& profile)
     {
         QString str;
         QDate date;

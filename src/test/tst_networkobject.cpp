@@ -379,8 +379,24 @@ TEST(base, NetworkObject_findMatchResponse) {
 
 TEST(base, NetworkObject_retrieveMatchesResponse) {
     // Set up state
+    UserProfile profile1;
+    profile1.setFirstName("Bob");
+    profile1.setLastName("Jones");
+    profile1.setEmail("wondergirl@hero.com");
+    profile1.setBirthday(QDate::currentDate());
+    profile1.setGender("Female");
+    profile1.setBio("I love super hero flicks!");
+
+    UserProfile profile2;
+    profile2.setFirstName("Anne");
+    profile2.setLastName("Redguard");
+    profile2.setEmail("joinus@bob.com");
+    profile2.setBirthday(QDate::currentDate());
+    profile2.setGender("Male");
+    profile2.setBio("I hate super hero flicks!");
+
     const RetrieveMatchesRequest request { 998 };
-    const RetrieveMatchesResponse response { 9 };
+    const RetrieveMatchesResponse response {{ profile1, profile2 }, { base::event("Yey!!!"), base::event("Ooohhh!!!") }};
     const qint32 ticketNumber = 555;
 
     NetworkObject netObj(request);
@@ -392,7 +408,8 @@ TEST(base, NetworkObject_retrieveMatchesResponse) {
 
     // Oracle
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
-    ASSERT_EQ(response.todo, converted.todo);
+    ASSERT_EQ(response.matches, converted.matches);
+    ASSERT_EQ(response.events, converted.events);
 }
 
 TEST(base, NetworkObject_write) {
