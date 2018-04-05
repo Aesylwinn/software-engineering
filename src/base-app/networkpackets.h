@@ -83,7 +83,7 @@ namespace base {
     struct CreateEventRequest{
         static const size_t Type = PT_CreateEventRequest;
 
-        event data;
+        Event data;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateEventRequest& req);
@@ -206,7 +206,7 @@ namespace base {
         static const size_t Type = PT_SuggestEventsResponse;
         static const size_t RequestType = PT_SuggestEventsRequest;
 
-        QVector<event> events;
+        QVector<Event> events;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SuggestEventsResponse& resp);
@@ -240,7 +240,7 @@ namespace base {
         static const size_t Type = PT_RetrieveMyEventsResponse;
         static const size_t RequestType = PT_RetrieveMyEventsRequest;
 
-        QVector<base::event> events;
+        QVector<base::Event> events;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMyEventsResponse& resp);
@@ -276,7 +276,7 @@ namespace base {
         static const size_t RequestType = PT_RetrieveMatchesRequest;
 
         QVector<UserProfile> matches;
-        QVector<base::event> events;
+        QVector<base::Event> events;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMatchesResponse& resp);

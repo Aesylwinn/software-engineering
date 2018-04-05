@@ -224,7 +224,7 @@ void interestData::createAccount()
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-void interestData::displayEvents(QVector<base::event> interest)
+void interestData::displayEvents(QVector<base::Event> interest)
 {
     int temp = 0;
     ui->interestStream->setRowCount(interest.size());
@@ -239,7 +239,7 @@ void interestData::displayEvents(QVector<base::event> interest)
 
 }
 
-void interestData::displayMyEvents(QVector<base::event> myEvent)
+void interestData::displayMyEvents(QVector<base::Event> myEvent)
 {
     int temp = 0;
     ui->eventStream->setRowCount(myEvent.size());

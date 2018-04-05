@@ -12,11 +12,11 @@
 #include "base-app_global.h"
 
 namespace  base{
-    class BASEAPPSHARED_EXPORT event
+    class BASEAPPSHARED_EXPORT Event
     {
     public:
         //constructors
-        event(QString n = "", qint32 a = 0, QString des = "", QString theHost = "", bool standardOp = false, QVector<QString> theUsers = {""}, venue theVenue = venue(QString("name,address,8675-309,0.00")), QString cat = "");
+        Event(QString n = "", qint32 a = 0, QString des = "", QString theHost = "", bool standardOp = false, QVector<QString> theUsers = {""}, venue theVenue = venue(QString("name,address,8675-309,0.00")), QString cat = "");
 
         //setters
         bool setHost(QString theHost);
@@ -76,18 +76,18 @@ namespace  base{
 
         void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
 
-        friend BASEAPPSHARED_EXPORT bool operator==(const event&, const event&);
-        friend BASEAPPSHARED_EXPORT bool operator!=(const event&, const event&);
-        friend BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream&, const event&);
-        friend BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, event&);
+        friend BASEAPPSHARED_EXPORT bool operator==(const Event&, const Event&);
+        friend BASEAPPSHARED_EXPORT bool operator!=(const Event&, const Event&);
+        friend BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream&, const Event&);
+        friend BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, Event&);
     };
 
     // Equality
-    BASEAPPSHARED_EXPORT bool operator==(const event&, const event&);
-    BASEAPPSHARED_EXPORT bool operator!=(const event&, const event&);
+    BASEAPPSHARED_EXPORT bool operator==(const Event&, const Event&);
+    BASEAPPSHARED_EXPORT bool operator!=(const Event&, const Event&);
 
     // Stream output
-    BASEAPPSHARED_EXPORT QDataStream&  operator<<(QDataStream&, const event&);
-    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, event&);
+    BASEAPPSHARED_EXPORT QDataStream&  operator<<(QDataStream&, const Event&);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, Event&);
 }
 #endif // EVENT_H

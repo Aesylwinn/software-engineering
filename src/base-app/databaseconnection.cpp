@@ -60,7 +60,7 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
 }
 
-bool DatabaseConnection::createEvent(base::event evt, qint64 hostID, qint64 venueID)
+bool DatabaseConnection::createEvent(base::Event evt, qint64 hostID, qint64 venueID)
 {
     QSqlQuery query(*db);
 
@@ -250,7 +250,7 @@ bool DatabaseConnection::isHost(QString username) {
     return false;
 }
 
-bool DatabaseConnection::getEvents(QVector<base::event>& events) {
+bool DatabaseConnection::getEvents(QVector<base::Event>& events) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * FROM Event";
@@ -265,7 +265,7 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
 
     if (query.isSelect() && query.first()) {
         do {
-            base::event evt;
+            base::Event evt;
             QDateTime dateTime;
 
             evt.setName(query.value("displayName").toString());
@@ -291,7 +291,7 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
     return false;
 }
 
-bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::event>& events) {
+bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
@@ -308,7 +308,7 @@ bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::event>& events
 
     if (query.isSelect() && query.first()) {
         do {
-            base::event evt;
+            base::Event evt;
             QDateTime dateTime;
 
             evt.setName(query.value("displayName").toString());

@@ -1,15 +1,15 @@
 /*Implemented by Jake*/
 
-#include "eventlist.h"
+#include "eventchooser.h"
 
 namespace base{
-    EventList::EventList(){}
+    EventChooser::EventChooser(){}
 
-    QVector<event> EventList::narrow(QVector<event> list, qint32 numEvents)
+    QVector<Event> EventChooser::narrow(QVector<Event> list, qint32 numEvents)
     {
         if (numEvents > list.size())
             numEvents = list.size();
-        QVector<event> newList;
+        QVector<Event> newList;
         qint32 index;
         do{
             index = qrand()% numEvents;

@@ -25,7 +25,7 @@ namespace base {
 
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
         bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
-        bool createEvent(base::event event, qint64 hostId, qint64 venueId);
+        bool createEvent(base::Event event, qint64 hostId, qint64 venueId);
 
         bool getVenueId(venue location, qint64& id);
         bool getOrCreateVenueId(venue location, qint64& id);
@@ -33,8 +33,8 @@ namespace base {
         bool getUserId(QString username, qint64& id);
         bool isHost(QString username);
 
-        bool getEvents(QVector<base::event>& events);
-        bool getMyEvents(qint64 userId, QVector<base::event>& events);
+        bool getEvents(QVector<base::Event>& events);
+        bool getMyEvents(qint64 userId, QVector<base::Event>& events);
 
         bool joinEvent(qint64 userId, qint64 eventId);
 

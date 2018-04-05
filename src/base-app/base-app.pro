@@ -17,7 +17,7 @@ SOURCES += \
     venue.cpp \
     networkpackets.cpp \
     userprofile.cpp \
-    eventlist.cpp
+    eventchooser.cpp
 
 !android:SOURCES += servernetworkmgr.cpp databaseconnection.cpp
 
@@ -30,7 +30,7 @@ HEADERS += \
     venue.h \
     networkpackets.h \
     userprofile.h \
-    eventlist.h
+    eventchooser.h
 
 !android:HEADERS += servernetworkmgr.h databaseconnection.h
 

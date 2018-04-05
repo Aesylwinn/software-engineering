@@ -66,7 +66,7 @@ TEST(base, NetworkObject_loginRequestCtor) {
 }
 
 TEST(base, NetworkObject_EventCreateRequest){
-    const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
+    const CreateEventRequest myEvent{Event("bob", 0, "This event is the best", "Bob's dad")};
     NetworkObject netObj(myEvent);
 
     CreateEventRequest converted = netObj.convert<CreateEventRequest>();
@@ -240,7 +240,7 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
 }
 
 TEST(base, NetworkObject_createEventResponseCtor) {
-    const CreateEventRequest request{ event("Jade's Salon", 5, "Drink up...", "Jade") };
+    const CreateEventRequest request{ Event("Jade's Salon", 5, "Drink up...", "Jade") };
     const CreateEventResponse response{ 1, "success" };
     const qint32 ticketNumber = 324;
 
@@ -258,8 +258,8 @@ TEST(base, NetworkObject_suggestEventsResponseCtor) {
     // Set up state
     const SuggestEventsRequest request { 2 };
     const SuggestEventsResponse response {{
-        event("Bob's Emporium", 12, "Fun!"),
-        event("Middle Earth", 232, "Dangerous!")
+        Event("Bob's Emporium", 12, "Fun!"),
+        Event("Middle Earth", 232, "Dangerous!")
     }};
     const qint32 ticketNumber = 89;
 
@@ -321,8 +321,8 @@ TEST(base, NetworkObject_retrieveMyEventsResponse) {
     // Set up state
     const RetrieveMyEventsRequest request { 2 };
     const RetrieveMyEventsResponse response {{
-        event("Bob's Funner Emporium", 799, "Fun!"),
-        event("Earth", 92, "Nuclear waste!")
+        Event("Bob's Funner Emporium", 799, "Fun!"),
+        Event("Earth", 92, "Nuclear waste!")
     }};
     const qint32 ticketNumber = 31;
 
@@ -396,7 +396,7 @@ TEST(base, NetworkObject_retrieveMatchesResponse) {
     profile2.setBio("I hate super hero flicks!");
 
     const RetrieveMatchesRequest request { 998 };
-    const RetrieveMatchesResponse response {{ profile1, profile2 }, { base::event("Yey!!!"), base::event("Ooohhh!!!") }};
+    const RetrieveMatchesResponse response {{ profile1, profile2 }, { base::Event("Yey!!!"), base::Event("Ooohhh!!!") }};
     const qint32 ticketNumber = 555;
 
     NetworkObject netObj(request);

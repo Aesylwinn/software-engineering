@@ -3,14 +3,14 @@
 #include "event.h"
 
 namespace base{
-    event::event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat)
+    Event::Event(QString n, int a, QString des, QString theHost, bool standardOp, QVector<QString> theUsers, venue theVenue, QString cat)
     {
         initialize(n,a,des,theHost,standardOp,cat);
         setUsers(theUsers);
         setLocation(theVenue);
     }
 
-    bool event::setHost(QString theHost)
+    bool Event::setHost(QString theHost)
     {
         if (theHost.isEmpty())
                 return false;
@@ -18,7 +18,7 @@ namespace base{
         return true;
     }
 
-    bool event::setUsers(QVector<QString> theUsers)
+    bool Event::setUsers(QVector<QString> theUsers)
     {
         if (theUsers.isEmpty())
                 return false;
@@ -27,7 +27,7 @@ namespace base{
         return true;
     }
 
-    bool event::setLocation(base::venue theVenue)
+    bool Event::setLocation(base::venue theVenue)
     {
         if (theVenue.getName().isEmpty() && theVenue.getAddress().isEmpty() && theVenue.getPhoneNumber().isEmpty() && theVenue.getEntryFee() == 0)
             return false;
@@ -38,7 +38,7 @@ namespace base{
         return true;
     }
 
-    bool event::setName(QString n)
+    bool Event::setName(QString n)
     {
         if (n.isEmpty())
             return false;
@@ -46,7 +46,7 @@ namespace base{
         return true;
     }
 
-    bool event::setDescription(QString des)
+    bool Event::setDescription(QString des)
     {
         if (des.isEmpty())
             return false;
@@ -54,7 +54,7 @@ namespace base{
         return true;
     }
 
-    bool event::setOperation(bool standardOp)
+    bool Event::setOperation(bool standardOp)
     {
         if (standardOp != true && standardOp != false)
             return false;
@@ -62,7 +62,7 @@ namespace base{
         return true;
     }
 
-    bool event::setCategory(QString cat)
+    bool Event::setCategory(QString cat)
     {
         if (cat.isEmpty())
             return false;
@@ -70,7 +70,7 @@ namespace base{
         return true;
     }
 
-    bool event::setID(qint32 a)
+    bool Event::setID(qint32 a)
     {
         if (a < 0)
             return false;
@@ -78,68 +78,68 @@ namespace base{
         return true;
     }
 
-    QString event::getName() const
+    QString Event::getName() const
     {
         return name;
     }
 
-    QString event::getCategory() const
+    QString Event::getCategory() const
     {
         return category;
     }
 
-    QString event::getMainHost() const
+    QString Event::getMainHost() const
     {
         return mainHost;
     }
 
-    QVector<QString> event::getAttendingUsers() const
+    QVector<QString> Event::getAttendingUsers() const
     {
         return attendingUsers;
     }
 
-    venue event::getLocation() const
+    venue Event::getLocation() const
     {
         return location;
     }
 
-    QString event::getDescription() const
+    QString Event::getDescription() const
     {
         return description;
     }
 
-    qint32 event::getID() const
+    qint32 Event::getID() const
     {
         return id;
     }
 
-    QVector< QPair<QDateTime, QDateTime> > event::getTimes() {
+    QVector< QPair<QDateTime, QDateTime> > Event::getTimes() {
         return timeSlots;
     }
 
-    QDateTime event::getStartTime() {
+    QDateTime Event::getStartTime() {
         return startTime;
     }
 
-    QDateTime event::getEndTime() {
+    QDateTime Event::getEndTime() {
         return endTime;
     }
 
-    qint64 event::getDaysTo() {
+    qint64 Event::getDaysTo() {
         //no idea how to convert qint64 to QString, but doing
         //QDebug() << getDaysTo(); should show the correct
         //result in the output
         return QDateTime::currentDateTime().daysTo(startTime);
     }
 
-    bool event::addUser(QString newUser)
+    bool Event::addUser(QString newUser)
     {
         if (newUser.isEmpty())
             return false;
         attendingUsers.push_back(newUser);
         return true;
     }
-    void event::initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat)
+    void Event::initialize(QString n, int a, QString des, QString theHost, bool standardOp, QString cat)
     {
         if (n.isEmpty())
             n = "";
@@ -174,7 +174,7 @@ namespace base{
         reoccurring = false;
     }
 
-    bool event::setStartTime(QString date) {
+    bool Event::setStartTime(QString date) {
         QString format = "MM/dd/yyyy.hh:mm";
         QDateTime temp = QDateTime::fromString(date, format);
         // valid input must be current time or greater, might
@@ -189,19 +189,19 @@ namespace base{
         }
     }
 
-    bool event::setStartTime(QDateTime date)
+    bool Event::setStartTime(QDateTime date)
     {
         startTime = date;
         return true;
     }
 
-    bool event::setEndTime(QDateTime date)
+    bool Event::setEndTime(QDateTime date)
     {
         endTime = date;
         return true;
     }
 
-    bool event::setEndTime(QString date) {
+    bool Event::setEndTime(QString date) {
         QString format = "MM/dd/yyyy.hh:mm";
         QDateTime temp = QDateTime::fromString(date, format);
         // valid input must be greater than startTime
@@ -215,7 +215,7 @@ namespace base{
         }
     }
 
-    int event::setReoccurring(int o) {
+    int Event::setReoccurring(int o) {
     /* Assumes that this function can't be called unless
      * there is ONLY 1 element in timeSlots
      *
@@ -257,7 +257,7 @@ namespace base{
         return -2;
     }
 
-    int event::addTimes(QDateTime start, QDateTime end) {
+    int Event::addTimes(QDateTime start, QDateTime end) {
     /*
      * -2: coinciding timeslots
      * -1: timeslot has already been created
@@ -295,7 +295,7 @@ namespace base{
         }
     }
 
-    bool event::delTime(int pos) {
+    bool Event::delTime(int pos) {
         if(timeSlots.size() > 0) {
             timeSlots.erase(timeSlots.begin() + pos);
             return true;
@@ -305,7 +305,7 @@ namespace base{
         }
     }
 
-    bool operator==(const event& right, const event& left) {
+    bool operator==(const Event& right, const Event& left) {
         return
             right.getName() == left.getName() &&
             right.getCategory() == left.getCategory() &&
@@ -316,7 +316,7 @@ namespace base{
             right.getID() == left.getID();
     }
 
-    QDataStream& operator<<(QDataStream& ostream, const event& evt) {
+    QDataStream& operator<<(QDataStream& ostream, const Event& evt) {
         // Write everything
         ostream << evt.getName();
         ostream << evt.getCategory();
@@ -329,7 +329,7 @@ namespace base{
         return ostream;
     }
 
-    QDataStream& operator>>(QDataStream& istream, event& evt) {
+    QDataStream& operator>>(QDataStream& istream, Event& evt) {
         // Read everything
         QString str;
         QVector<QString> users;
@@ -346,7 +346,7 @@ namespace base{
         return istream;
     }
 
-    bool operator!=(const event &right, const event &left)
+    bool operator!=(const Event &right, const Event &left)
     {
         return !(right == left);
     }

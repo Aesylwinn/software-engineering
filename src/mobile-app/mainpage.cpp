@@ -47,7 +47,7 @@ void MainPage::showEvent(QShowEvent *event) {
     mMyEventsTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::RetrieveMyEventsRequest{ NumEvents }));
 }
 
-void MainPage::setMyEvents(QVector<base::event> events)
+void MainPage::setMyEvents(QVector<base::Event> events)
 {
     // Recreate list
     mUi->myEventsListView->clear();
@@ -64,7 +64,7 @@ void MainPage::setMyEvents(QVector<base::event> events)
     }
 }
 
-void MainPage::setEvents(QVector<base::event> events)
+void MainPage::setEvents(QVector<base::Event> events)
 {
     // Update list
     mUi->eventListView->clear();
@@ -134,7 +134,7 @@ void MainPage::onLogoutClicked(bool) {
     hide();
 }
 
-void MainPage::onJoinEvent(base::event evt)
+void MainPage::onJoinEvent(base::Event evt)
 {
     qInfo("Join event: %s", qUtf8Printable(evt.getName()));
     base::NetworkObject request(base::JoinEventRequest{ evt.getID() });
