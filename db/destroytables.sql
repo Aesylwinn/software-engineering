@@ -2,7 +2,7 @@ drop table User_basic;
 drop table User_Profile;
 drop table User_Host;
 drop table Event;
-drop table Event_Exception;
+drop table Event_Exceptions;
 drop table Category;
 drop table Subcategory;
 drop table Venue;
