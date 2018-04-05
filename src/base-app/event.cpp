@@ -345,4 +345,10 @@ namespace base{
 
         return istream;
     }
+
+    bool operator!=(const event &right, const event &left)
+    {
+        return !(right == left);
+    }
+
 }

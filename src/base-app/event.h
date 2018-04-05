@@ -77,12 +77,14 @@ namespace  base{
         void initialize(QString n, qint32 a, QString des, QString theHost, bool standardOp, QString cat);
 
         friend BASEAPPSHARED_EXPORT bool operator==(const event&, const event&);
+        friend BASEAPPSHARED_EXPORT bool operator!=(const event&, const event&);
         friend BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream&, const event&);
         friend BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream&, event&);
     };
 
     // Equality
     BASEAPPSHARED_EXPORT bool operator==(const event&, const event&);
+    BASEAPPSHARED_EXPORT bool operator!=(const event&, const event&);
 
     // Stream output
     BASEAPPSHARED_EXPORT QDataStream&  operator<<(QDataStream&, const event&);
