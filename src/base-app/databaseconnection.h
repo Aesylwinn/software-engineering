@@ -4,6 +4,7 @@
 #include "base-app_global.h"
 #include "event.h"
 #include "networkobject.h"
+#include "userprofile.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -32,7 +33,10 @@ namespace base {
 
         bool getUserId(QString username, qint64& id);
         bool isHost(QString username);
+        bool getUserProfile(qint64 userId, UserProfile& profile);
+        bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events);
 
+        bool getEvent(qint64, Event& event);
         bool getEvents(QVector<base::Event>& events);
         bool getMyEvents(qint64 userId, QVector<base::Event>& events);
 
@@ -40,6 +44,7 @@ namespace base {
 
     private:
         void SetUp(QString hostname, QString databaseName, QString username, QString password);
+        void readEvent(QSqlQuery& query, Event& evt);
 
         bool validConnect;
         QSqlDatabase *db;

@@ -209,6 +209,58 @@ namespace base {
                         sendResponse(socket, obj.createResponse(response));
                     }
                     break;
+                case PT_FindMatchRequest:
+                    {
+                        FindMatchRequest request = obj.convert<FindMatchRequest>();
+                        FindMatchResponse response = { NotValid, "DB error" };
+
+                        qInfo("find match: %lld", request.event_id);
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection conn(DbName);
+                                // TODO
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("DB error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_RetrieveMatchesRequest:
+                    {
+                        RetrieveMatchesRequest request = obj.convert<RetrieveMatchesRequest>();
+                        RetrieveMatchesResponse response;
+
+                        qInfo("retrieve matches");
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection conn(DbName);
+                                conn.getMatches(userData->getUserId(), response.matches, response.events);
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("DB error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_SetInterestsRequest:
+                    {
+                        SetInterestsRequest request = obj.convert<SetInterestsRequest>();
+                        SetInterestsResponse response = { IsValid, "Got your interests" };
+
+                        qInfo("set interests: %d", request.interests.count());
+
+                        // TODO
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
                 default:
                     qInfo("Unknown request encountered: %d", obj.getPayloadType());
                     break;
