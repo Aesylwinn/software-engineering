@@ -21,7 +21,8 @@ SOURCES += \
     venue.cpp \
     timepoint.cpp \
     mytime.cpp \
-    networkpackets.cpp
+    networkpackets.cpp \
+    userprofile.cpp
 
 !android:SOURCES += servernetworkmgr.cpp databaseconnection.cpp
 
@@ -37,7 +38,8 @@ HEADERS += \
     venue.h \
     timepoint.h \
     mytime.h \
-    networkpackets.h
+    networkpackets.h \
+    userprofile.h
 
 !android:HEADERS += servernetworkmgr.h databaseconnection.h
 
