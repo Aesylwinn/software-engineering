@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
     QObject::connect(&mainPage, &MainPage::onLogout, &loginPage, &LoginPage::show);
 
     QObject::connect(&createEventPage, &CreateEventPage::onSuccess, &mainPage, &MainPage::show);
+    QObject::connect(&createEventPage, &CreateEventPage::onSuccess, &mainPage, &MainPage::refresh);
     QObject::connect(&createEventPage, &CreateEventPage::onCanceled, &mainPage, &MainPage::show);
 
     QObject::connect(&matchesPage, &MatchesPage::onBack, &mainPage, &MainPage::show);

@@ -28,6 +28,7 @@ MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     connect(mUi->createEventButton, &QPushButton::clicked, this, &MainPage::onCreateEventClicked);
     connect(mUi->matchesButton, &QPushButton::clicked, this, &MainPage::onViewMatchesClicked);
     connect(mUi->logoutButton, &QPushButton::clicked, this, &MainPage::onLogoutClicked);
+    connect(mUi->refreshButton, &QPushButton::clicked, this, &MainPage::onRefreshClicked);
 }
 
 MainPage::~MainPage()
@@ -42,11 +43,7 @@ void MainPage::showEvent(QShowEvent *event) {
         return;
 
     // Update list of events
-    const qint32 NumEvents = 10;
-    mSuggestTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::SuggestEventsRequest{ NumEvents }));
-
-    // My events
-    mMyEventsTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::RetrieveMyEventsRequest{ NumEvents }));
+    refresh();
 }
 
 void MainPage::setMyEvents(QVector<base::Event> events)
@@ -148,6 +145,11 @@ void MainPage::onViewMatchesClicked(bool)
     emit onViewMatches();
 }
 
+void MainPage::onRefreshClicked(bool)
+{
+    refresh();
+}
+
 void MainPage::onJoinEvent(base::Event evt)
 {
     qInfo("Join event: %s", qUtf8Printable(evt.getName()));
@@ -160,4 +162,11 @@ void MainPage::onFindMatch(base::Event evt)
     qInfo("Find match: %s", qUtf8Printable(evt.getName()));
     base::NetworkObject request(base::FindMatchRequest{ evt.getID() });
     mFindMatchTicket = mNetworkMgr->sendRequest(request);
+}
+
+void MainPage::refresh()
+{
+    const qint32 NumEvents = 10;
+    mSuggestTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::SuggestEventsRequest{ NumEvents }));
+    mMyEventsTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::RetrieveMyEventsRequest{ NumEvents }));
 }
