@@ -15,6 +15,7 @@ MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     , mSuggestTicket(-1)
     , mJoinTicket(-1)
     , mMyEventsTicket(-1)
+    , mFindMatchTicket(-1)
 {
     if (!mgr) {
         throw std::runtime_error("MainPage requires network mgr");
@@ -25,6 +26,7 @@ MainPage::MainPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     mUi->setupUi(this);
 
     connect(mUi->createEventButton, &QPushButton::clicked, this, &MainPage::onCreateEventClicked);
+    connect(mUi->matchesButton, &QPushButton::clicked, this, &MainPage::onViewMatchesClicked);
     connect(mUi->logoutButton, &QPushButton::clicked, this, &MainPage::onLogoutClicked);
 }
 
@@ -47,13 +49,14 @@ void MainPage::showEvent(QShowEvent *event) {
     mMyEventsTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::RetrieveMyEventsRequest{ NumEvents }));
 }
 
-void MainPage::setMyEvents(QVector<base::event> events)
+void MainPage::setMyEvents(QVector<base::Event> events)
 {
     // Recreate list
     mUi->myEventsListView->clear();
     for (int i = 0; i < events.count(); ++i) {
         // List item
         MyEventTableWidget* itemWidget = new MyEventTableWidget(events[i]);
+        connect(itemWidget, &MyEventTableWidget::onFindMatch, this, &MainPage::onFindMatch);
 
         // Dummy container
         QListWidgetItem* item = new QListWidgetItem();
@@ -64,7 +67,7 @@ void MainPage::setMyEvents(QVector<base::event> events)
     }
 }
 
-void MainPage::setEvents(QVector<base::event> events)
+void MainPage::setEvents(QVector<base::Event> events)
 {
     // Update list
     mUi->eventListView->clear();
@@ -118,6 +121,12 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
             setMyEvents(info.events);
         }
         break;
+    case base::PT_FindMatchResponse:
+        if (obj.getTicket() == mFindMatchTicket) {
+            // Convert
+            base::FindMatchResponse info = obj.convert<base::FindMatchResponse>();
+            qInfo("match: %d msg: %s", info.valid, qUtf8Printable(info.details));
+        }
 
     default:
         // Do nothing
@@ -134,9 +143,21 @@ void MainPage::onLogoutClicked(bool) {
     hide();
 }
 
-void MainPage::onJoinEvent(base::event evt)
+void MainPage::onViewMatchesClicked(bool)
+{
+    emit onViewMatches();
+}
+
+void MainPage::onJoinEvent(base::Event evt)
 {
     qInfo("Join event: %s", qUtf8Printable(evt.getName()));
     base::NetworkObject request(base::JoinEventRequest{ evt.getID() });
     mJoinTicket = mNetworkMgr->sendRequest(request);
+}
+
+void MainPage::onFindMatch(base::Event evt)
+{
+    qInfo("Find match: %s", qUtf8Printable(evt.getName()));
+    base::NetworkObject request(base::FindMatchRequest{ evt.getID() });
+    mFindMatchTicket = mNetworkMgr->sendRequest(request);
 }

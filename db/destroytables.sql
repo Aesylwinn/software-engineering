@@ -1,0 +1,10 @@
+drop table User_basic;
+drop table User_Profile;
+drop table User_Host;
+drop table Event;
+drop table Event_Exceptions;
+drop table Category;
+drop table Subcategory;
+drop table Venue;
+drop table Join_Date;
+drop table Join_Event;

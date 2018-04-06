@@ -38,22 +38,18 @@ TEST(base, NetworkObject_createAccountRequestCtor) {
     CreateAccountRequest request;
     request.username = "WillyWonka";
     request.password = "chocolate";
-    request.email = "thegreatestchocolatier@delicious.com";
-    request.firstName = "Willy";
-    request.lastName = "Wonka";
-    request.gender = "Male";
-    request.birthDate = "01/24/1950";
+    request.profile.setEmail("thegreatestchocolatier@delicious.com");
+    request.profile.setFirstName("Willy");
+    request.profile.setLastName("Wonka");
+    request.profile.setGender("Male");
+    request.profile.setBirthday(QDate(1,24,1950));
 
     NetworkObject netObj((const CreateAccountRequest) request);
 
     CreateAccountRequest converted = netObj.convert<CreateAccountRequest>();
     ASSERT_EQ(request.username, converted.username);
     ASSERT_EQ(request.password, converted.password);
-    ASSERT_EQ(request.email, converted.email);
-    ASSERT_EQ(request.firstName, converted.firstName);
-    ASSERT_EQ(request.lastName, converted.lastName);
-    ASSERT_EQ(request.gender, converted.gender);
-    ASSERT_EQ(request.birthDate, converted.birthDate);
+    ASSERT_EQ(request.profile, converted.profile);
 }
 
 TEST(base, NetworkObject_loginRequestCtor) {
@@ -66,7 +62,7 @@ TEST(base, NetworkObject_loginRequestCtor) {
 }
 
 TEST(base, NetworkObject_EventCreateRequest){
-    const CreateEventRequest myEvent{event("bob", 0, "This event is the best", "Bob's dad")};
+    const CreateEventRequest myEvent{Event("bob", 0, "This event is the best", "Bob's dad")};
     NetworkObject netObj(myEvent);
 
     CreateEventRequest converted = netObj.convert<CreateEventRequest>();
@@ -162,6 +158,18 @@ TEST(base, NetworkObject_findMatchRequest) {
     ASSERT_EQ(request.event_id, converted.event_id);
 }
 
+TEST(base, NetworkObject_retrieveMatchesRequest) {
+    // State
+    const RetrieveMatchesRequest request = { 827 };
+
+    // Test
+    NetworkObject netObj(request);
+    auto converted = netObj.convert<RetrieveMatchesRequest>();
+
+    // Oracle
+    ASSERT_EQ(request.unused, converted.unused);
+}
+
 TEST(base, NetworkObject_messageCtor) {
     const base::Message message = { "general", "Hello!!!" };
     NetworkObject netObj(message);
@@ -172,7 +180,7 @@ TEST(base, NetworkObject_messageCtor) {
 }
 
 TEST(base, NetworkObject_createAccountResponse) {
-    const CreateAccountRequest request{ "1", "2", "3", "4", "5", "6", "7" };
+    const CreateAccountRequest request{ "1", "2", UserProfile() };
     const CreateAccountResponse response{ 1, "What interesting tastes you have..." };
     const qint32 ticketNumber = 14;
 
@@ -228,7 +236,7 @@ TEST(base, NetworkObject_loginResponseCtor_isvalid) {
 }
 
 TEST(base, NetworkObject_createEventResponseCtor) {
-    const CreateEventRequest request{ event("Jade's Salon", 5, "Drink up...", "Jade") };
+    const CreateEventRequest request{ Event("Jade's Salon", 5, "Drink up...", "Jade") };
     const CreateEventResponse response{ 1, "success" };
     const qint32 ticketNumber = 324;
 
@@ -246,8 +254,8 @@ TEST(base, NetworkObject_suggestEventsResponseCtor) {
     // Set up state
     const SuggestEventsRequest request { 2 };
     const SuggestEventsResponse response {{
-        event("Bob's Emporium", 12, "Fun!"),
-        event("Middle Earth", 232, "Dangerous!")
+        Event("Bob's Emporium", 12, "Fun!"),
+        Event("Middle Earth", 232, "Dangerous!")
     }};
     const qint32 ticketNumber = 89;
 
@@ -309,8 +317,8 @@ TEST(base, NetworkObject_retrieveMyEventsResponse) {
     // Set up state
     const RetrieveMyEventsRequest request { 2 };
     const RetrieveMyEventsResponse response {{
-        event("Bob's Funner Emporium", 799, "Fun!"),
-        event("Earth", 92, "Nuclear waste!")
+        Event("Bob's Funner Emporium", 799, "Fun!"),
+        Event("Earth", 92, "Nuclear waste!")
     }};
     const qint32 ticketNumber = 31;
 
@@ -363,6 +371,43 @@ TEST(base, NetworkObject_findMatchResponse) {
     ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
     ASSERT_EQ(response.valid, converted.valid);
     ASSERT_EQ(response.details, converted.details);
+}
+
+TEST(base, NetworkObject_retrieveMatchesResponse) {
+    // Set up state
+    UserProfile profile1;
+    profile1.setFirstName("Bob");
+    profile1.setLastName("Jones");
+    profile1.setEmail("wondergirl@hero.com");
+    profile1.setBirthday(QDate::currentDate());
+    profile1.setGender("Female");
+    profile1.setBio("I love super hero flicks!");
+    profile1.setUserId(45);
+
+    UserProfile profile2;
+    profile2.setFirstName("Anne");
+    profile2.setLastName("Redguard");
+    profile2.setEmail("joinus@bob.com");
+    profile2.setBirthday(QDate::currentDate());
+    profile2.setGender("Male");
+    profile2.setBio("I hate super hero flicks!");
+    profile2.setUserId(15);
+
+    const RetrieveMatchesRequest request { 998 };
+    const RetrieveMatchesResponse response {{ profile1, profile2 }, { base::Event("Yey!!!"), base::Event("Ooohhh!!!") }};
+    const qint32 ticketNumber = 555;
+
+    NetworkObject netObj(request);
+    netObj.setTicket(ticketNumber);
+
+    // Test
+    NetworkObject netObjResponse = netObj.createResponse(response);
+    auto converted = netObjResponse.convert<RetrieveMatchesResponse>();
+
+    // Oracle
+    ASSERT_EQ(netObjResponse.getTicket(), ticketNumber);
+    ASSERT_EQ(response.matches, converted.matches);
+    ASSERT_EQ(response.events, converted.events);
 }
 
 TEST(base, NetworkObject_write) {

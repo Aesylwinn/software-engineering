@@ -13,20 +13,14 @@ namespace base {
     // CreateAccountRequest
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateAccountRequest& req) {
         ds << req.username << req.password;
-        ds << req.email;
-        ds << req.firstName << req.lastName;
-        ds << req.gender;
-        ds << req.birthDate;
+        ds << req.profile;
 
         return ds;
     }
 
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, CreateAccountRequest& req) {
         ds >> req.username >> req.password;
-        ds >> req.email;
-        ds >> req.firstName >> req.lastName;
-        ds >> req.gender;
-        ds >> req.birthDate;
+        ds >> req.profile;
 
         return ds;
     }
@@ -115,6 +109,18 @@ namespace base {
         return ds >> req.event_id;
     }
 
+    // RetrieveMatchesRequest
+    BASEAPPSHARED_EXPORT QDataStream &operator<<(QDataStream &ds, const RetrieveMatchesRequest &req)
+    {
+        return ds << req.unused;
+    }
+
+    BASEAPPSHARED_EXPORT QDataStream &operator>>(QDataStream &ds, RetrieveMatchesRequest &req)
+    {
+        return ds >> req.unused;
+    }
+
+
     // CreateAccountResponse
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateAccountResponse& resp) {
         return ds << resp.valid << resp.details;
@@ -194,5 +200,14 @@ namespace base {
 
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, FindMatchResponse& req) {
         return ds >> req.valid >> req.details;
+    }
+
+    // RetrieveMatchesResponse
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMatchesResponse& resp) {
+        return ds << resp.matches << resp.events;
+    }
+
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMatchesResponse& resp) {
+        return ds >> resp.matches >> resp.events;
     }
 }

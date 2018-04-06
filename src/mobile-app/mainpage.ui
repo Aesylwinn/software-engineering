@@ -81,6 +81,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="matchesButton">
+           <property name="text">
+            <string>Matches</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>

@@ -34,3 +34,6 @@
 # Qt Creator
 *.pro.user
 build-*
+
+#Autosave files
+*.autosave

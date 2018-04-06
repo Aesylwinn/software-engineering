@@ -247,19 +247,20 @@ void interestData::createAccount()
     data.username = ui->newUsrName->text();
     data.password = ui->confirmPass->text();
     // the other fields filled out
-    data.email = ui->newEmail->text();
-    data.firstName = ui->lineEdit_FN->text();
-    data.lastName = ui->lineEdit_LN->text();
+    data.profile.setEmail(ui->newEmail->text());
+    data.profile.setFirstName(ui->lineEdit_FN->text());
+    data.profile.setLastName(ui->lineEdit_LN->text());
     if (ui->malebutt->isChecked())
-        data.gender = ui->malebutt->text();
+        data.profile.setGender(ui->malebutt->text());
     else
-        data.gender = ui->febutt->text();
+        data.profile.setGender(ui->febutt->text());
+    data.profile.setBirthday(ui->dateEdit->date());
 
     NetworkObject request(data);
     mCreateAccountRequest = mNetworkMgr->sendRequest(request);
 }
 
-void interestData::displayEvents(QVector<base::event> interest)
+void interestData::displayEvents(QVector<base::Event> interest)
 {
     int temp = 0;
     ui->interestStream->setRowCount(interest.size());
@@ -273,7 +274,7 @@ void interestData::displayEvents(QVector<base::event> interest)
     }
 }
 
-void interestData::displayMyEvents(QVector<base::event> myEvent)
+void interestData::displayMyEvents(QVector<base::Event> myEvent)
 {
     int temp = 0;
     ui->eventStream->setRowCount(myEvent.size());
@@ -414,7 +415,7 @@ void interestData::checkResponse(NetworkObject response) {
             CreateHostResponse info = response.convert<CreateHostResponse>();
             qInfo("host created: %d", info.valid);
             if (info.valid) {
-                ui->tabWidget->setCurrentWidget(ui->tab_5);	
+                ui->tabWidget->setCurrentWidget(ui->tab_5);
                 ui->tabWidget->setTabEnabled(3, true);
                 ui->tabWidget->setTabEnabled(1, false);
             } else {

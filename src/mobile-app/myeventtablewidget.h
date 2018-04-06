@@ -14,18 +14,18 @@ class MyEventTableWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MyEventTableWidget(base::event evt, QWidget *parent = 0);
+    explicit MyEventTableWidget(base::Event evt, QWidget *parent = 0);
     ~MyEventTableWidget();
 
 private:
     Ui::MyEventTableWidget *mUi;
-    base::event mEvent;
+    base::Event mEvent;
 
 private slots:
     void onFindMatchClicked(bool);
 
 signals:
-    void onFindMatch(base::event event);
+    void onFindMatch(base::Event event);
 };
 
 #endif // MYEVENTTABLEWIDGET_H

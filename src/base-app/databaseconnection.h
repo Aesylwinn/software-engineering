@@ -4,6 +4,7 @@
 #include "base-app_global.h"
 #include "event.h"
 #include "networkobject.h"
+#include "userprofile.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -24,22 +25,30 @@ namespace base {
         bool checkPassword(QString username, QString password); //can throw run-time error if server unavailable
 
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
+        bool createProfile(UserProfile profile);
         bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
-        bool createEvent(base::event event, qint64 hostId, qint64 venueId);
+        bool createEvent(base::Event event, qint64 hostId, qint64 venueId);
 
         bool getVenueId(venue location, qint64& id);
         bool getOrCreateVenueId(venue location, qint64& id);
 
         bool getUserId(QString username, qint64& id);
         bool isHost(QString username);
+        bool getUserProfile(qint64 userId, UserProfile& profile);
+        bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events);
 
-        bool getEvents(QVector<base::event>& events);
-        bool getMyEvents(qint64 userId, QVector<base::event>& events);
+        bool getEvent(qint64, Event& event);
+        bool getEvents(QVector<base::Event>& events);
+        bool getMyEvents(qint64 userId, QVector<base::Event>& events);
+        bool findMatches(qint64 userId, qint64 eventId, QVector<UserProfile>& matches);
 
         bool joinEvent(qint64 userId, qint64 eventId);
+        bool addMatch(qint64 userA, qint64 userB, qint64 eventId);
 
     private:
         void SetUp(QString hostname, QString databaseName, QString username, QString password);
+        void readProfile(QSqlQuery& query, UserProfile& profile);
+        void readEvent(QSqlQuery& query, Event& evt);
 
         bool validConnect;
         QSqlDatabase *db;

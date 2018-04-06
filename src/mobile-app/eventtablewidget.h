@@ -14,18 +14,18 @@ class EventTableWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit EventTableWidget(base::event evt, QWidget *parent = 0);
+    explicit EventTableWidget(base::Event evt, QWidget *parent = 0);
     ~EventTableWidget();
 
 private:
     Ui::EventTableWidget *mUi;
-    base::event mEvent;
+    base::Event mEvent;
 
 private slots:
     void onJoinClicked(bool);
 
 signals:
-    void onJoinEvent(base::event evt);
+    void onJoinEvent(base::Event evt);
 };
 
 #endif // EVENTTABLEWIDGET_H

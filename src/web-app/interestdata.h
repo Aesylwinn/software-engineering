@@ -32,8 +32,8 @@ public slots:
     void login(QString username, QString password);
     void checkResponse(base::NetworkObject response);
     void createAccount();
-    void displayEvents(QVector<base::event> interest);
-    void displayMyEvents(QVector<base::event> myEvent);
+    void displayEvents(QVector<base::Event> interest);
+    void displayMyEvents(QVector<base::Event> myEvent);
     void createHost();
     void createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end);
     void getMyInterests();
