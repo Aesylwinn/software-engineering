@@ -34,7 +34,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="sizePolicy">
@@ -233,7 +233,7 @@ p, li { white-space: pre-wrap; }
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget_2">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_2">
               <attribute name="title">
@@ -258,7 +258,7 @@ p, li { white-space: pre-wrap; }
                      <item>
                       <widget class="QLabel" name="LEmail">
                        <property name="text">
-                        <string>Email or Username</string>
+                        <string>Username</string>
                        </property>
                       </widget>
                      </item>
@@ -1201,7 +1201,7 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  </column>
                  <column>
                   <property name="text">
-                   <string>Attend</string>
+                   <string>Find Match</string>
                   </property>
                  </column>
                  <item row="0" column="0">
@@ -1217,6 +1217,14 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  <item row="0" column="2">
                   <property name="text">
                    <string>1/1/2018</string>
+                  </property>
+                 </item>
+                 <item row="0" column="4">
+                  <property name="text">
+                   <string>Click Here</string>
+                  </property>
+                  <property name="textAlignment">
+                   <set>AlignCenter</set>
                   </property>
                  </item>
                 </widget>
@@ -1322,6 +1330,11 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  <item row="0" column="2">
                   <property name="text">
                    <string>2/14/2018</string>
+                  </property>
+                 </item>
+                 <item row="0" column="4">
+                  <property name="textAlignment">
+                   <set>AlignCenter</set>
                   </property>
                  </item>
                 </widget>

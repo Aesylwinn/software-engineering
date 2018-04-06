@@ -11,6 +11,9 @@ eventPopUp::eventPopUp(QWidget *parent) :
     connect(ui->yes, SIGNAL(clicked()), this, SLOT(openingCalendar()));
     connect(ui->no, SIGNAL(clicked()), this, SLOT(openingCalendar()));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(setHostInfo()));
+
+    ui->fromDate->setDateTime(QDateTime::currentDateTime());
+    ui->toDate->setDateTime(QDateTime::currentDateTime());
 }
 
 eventPopUp::~eventPopUp()
@@ -29,8 +32,10 @@ void eventPopUp::openingCalendar()
 
 void eventPopUp::setHostInfo()
 {
-    interestData *info = new interestData(this);
+    interestData *info = (interestData*)parent();
     QString categories;
+    base::Event tempEvent;
+    base::venue tempVenue;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 5; j++){
             if(ui->category->itemAt(i,j)->isSelected())
@@ -38,6 +43,14 @@ void eventPopUp::setHostInfo()
                 categories = ui->category->itemAt(i,j)->text(i);
             }
         }
+    tempEvent.setName(ui->eventNameEd->text());
+    tempEvent.setDescription(ui->descriptionText->toPlainText());
+    tempEvent.setCategory(categories);
+    tempEvent.setStartTime(ui->fromDate->dateTime());
+    tempEvent.setEndTime(ui->toDate->dateTime());
+    tempVenue.setAddress(ui->eventAddress->text());
+    tempVenue.setPhoneNumber(ui->eventPhone->text());
+    tempEvent.setLocation(tempVenue);
 
-    info->createEvent(ui->eventNameEd->text(), categories ,ui->descriptionText->toPlainText(), ui->fromDate->dateTime(), ui->toDate->dateTime());
+    info->createEvent(tempEvent);
 }

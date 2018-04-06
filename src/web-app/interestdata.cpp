@@ -50,7 +50,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->accept, SIGNAL(clicked()), this, SLOT(getMyInterests()));
     connect(ui->refreshInterests, SIGNAL(clicked()), this, SLOT(requestEvents()));
     connect(ui->refreshMyEvents, SIGNAL(clicked()), this, SLOT(requestMyEvents()));
-    connect(ui->matchB, SIGNAL(clicked()), this, SLOT(findMatches()));
+    connect(ui->eventStream, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(findMatches(int,int)));
     connect(ui->interestStream, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(joiningEvents(int,int)));
 }
 
@@ -123,19 +123,19 @@ void interestData::switchLowTabs()
 
 void interestData::reverseLowTab()
 {
-    QObject* button = QObject::sender();
-
     //just lets us grey out certain tabs that do not need to be used at that time
-    if(button == ui->accept){
-        ui->tabWidget->setCurrentWidget(ui->tab_4);
-        ui->tabWidget->setTabEnabled(2, true);
-        ui->tabWidget->setTabEnabled(1, false);
-    }
-    else{
-        ui->tabWidget_2->setTabEnabled(0, true);
-        ui->tabWidget_2->setCurrentWidget(ui->tab_2);
-        ui->tabWidget_2->setTabEnabled(1, false);
-    }
+    ui->usrName->clear();
+    ui->password->clear();
+    ui->lineEdit_FN->clear();
+    ui->lineEdit_LN->clear();
+    ui->newEmail->clear();
+    ui->newUsrName->clear();
+    ui->newPass->clear();
+    ui->confirmPass->clear();
+
+    ui->tabWidget_2->setTabEnabled(0, true);
+    ui->tabWidget_2->setCurrentWidget(ui->tab_2);
+    ui->tabWidget_2->setTabEnabled(1,false);
 }
 
 void interestData::togglePassword()
@@ -179,7 +179,7 @@ void interestData::popUpWindow()
 
     if (button == ui->matchB)
     {
-        matches* popInstance = new matches(this);
+        matches* popInstance = new matches(this, mNetworkMgr);
         popInstance->show();
 
     }
@@ -205,8 +205,6 @@ void interestData::logout()
     ui->hostDisplay->clear();
     ui->hostBusiness->clear();
     ui->hostBio->clear();
-    ui->interestStream->clear();
-    ui->eventStream->clear();
 }
 
 void interestData::login(QString username, QString password)
@@ -246,6 +244,7 @@ void interestData::displayEvents(QVector<base::Event> interest)
         ui->interestStream->setItem(i, temp+2, new QTableWidgetItem(interest[i].getStartTime().toString()));
         ui->interestStream->setItem(i, temp+3, new QTableWidgetItem(interest[i].getDescription()));
         ui->interestStream->setItem(i, temp+4, new QTableWidgetItem(tr("Join")));
+        ui->interestStream->item(i, temp+4)->setTextAlignment(Qt::AlignCenter);
     }
 }
 
@@ -259,6 +258,8 @@ void interestData::displayMyEvents(QVector<base::Event> myEvent)
         ui->eventStream->setItem(i, temp+1, new QTableWidgetItem(myEvent[i].getLocation().getAddress()));
         ui->eventStream->setItem(i, temp+2, new QTableWidgetItem(myEvent[i].getStartTime().toString()));
         ui->eventStream->setItem(i, temp+3, new QTableWidgetItem(myEvent[i].getDescription()));
+        ui->eventStream->setItem(i, temp+4, new QTableWidgetItem("Click Here"));
+        ui->eventStream->item(i, temp+4)->setTextAlignment(Qt::AlignCenter);
     }
 }
 
@@ -274,17 +275,9 @@ void interestData::createHost()
     mCreateHostRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
-void interestData::createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end) {
+void interestData::createEvent(Event newEvent) {
     CreateEventRequest request;
-    request.data.setName(eName);
-    if (ui->usrName->text().isEmpty())
-        request.data.setHost(ui->userNameHostEd->text());
-    else
-        request.data.setHost(ui->usrName->text());
-    request.data.setDescription(desc);
-    request.data.setCategory(categories);
-    request.data.setStartTime(start);
-    request.data.setEndTime(end);
+    request.data = newEvent;
 
     mCreateEventRequest = mNetworkMgr->sendRequest(NetworkObject(request));
 }
@@ -321,10 +314,11 @@ void interestData::requestMyEvents() {
     mRetrieveMyEvents = mNetworkMgr->sendRequest(NetworkObject(data));
 }
 
-void interestData::findMatches()
+void interestData::findMatches(int row, int col)
 {
+    (void)col;
     FindMatchRequest data;
-    data.event_id = globalMyEvents[0].getID();    //what if they have no matches for the first but do for the second??
+    data.event_id = globalMyEvents[row].getID();
 
     mFindMatchesRequest = mNetworkMgr->sendRequest(NetworkObject(data));
 }
@@ -339,6 +333,7 @@ void interestData::joiningEvents(int row, int col)
 }
 
 void interestData::checkResponse(NetworkObject response) {
+    qInfo("Packet Received");
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
         mLoginRequest = -1;
@@ -348,6 +343,8 @@ void interestData::checkResponse(NetworkObject response) {
             qInfo("authenticated: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid && info.isHost)
             {
+                requestEvents();
+                requestMyEvents();
                 ui->tabWidget->setCurrentWidget(ui->tab_4);
                 ui->tabWidget->setTabEnabled(2,true);
                 ui->tabWidget->setTabEnabled(3, true);
@@ -355,6 +352,8 @@ void interestData::checkResponse(NetworkObject response) {
             }
             else if (info.valid)
             {
+                requestEvents();
+                requestMyEvents();
                 ui->tabWidget->setCurrentWidget(ui->tab_4);
                 ui->tabWidget->setTabEnabled(2, true);
                 ui->tabWidget->setTabEnabled(1, false);
@@ -390,10 +389,19 @@ void interestData::checkResponse(NetworkObject response) {
             CreateHostResponse info = response.convert<CreateHostResponse>();
             qInfo("host created: %d", info.valid);
             if (info.valid) {
-                ui->tabWidget->setCurrentWidget(ui->tab_5);
-                ui->tabWidget->setTabEnabled(3, true);
-                ui->tabWidget->setTabEnabled(1, false);
-            } else {
+                QMessageBox messageBox;
+                messageBox.information(0, "Success", "Host successfully created!");
+                messageBox.setFixedSize(500, 200);
+
+                ui->userNameHostEd->clear();
+                ui->passwordHostEd->clear();
+                ui->hostDisplay->clear();
+                ui->hostBusiness->clear();
+                ui->hostBio->clear();
+
+                ui->tabWidget->setTabEnabled(2, false);
+            }
+            else {
                 QMessageBox messageBox;
                 messageBox.critical(0, "Error", "Unable to create host account\nYou must first create a regular account and use THAT username and password for the new host account");
                 messageBox.setFixedSize(500, 200);
@@ -402,7 +410,7 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mCreateEventRequest) {
         mCreateEventRequest = -1;
-        if (response.getPayloadType() == PT_CreateEventRequest) {
+        if (response.getPayloadType() == PT_CreateEventResponse) {
             CreateEventResponse info = response.convert<CreateEventResponse>();
             qInfo("event created: %d msg %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
@@ -418,7 +426,7 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mSuggestEventsRequest) {
         mSuggestEventsRequest = -1;
-        if (response.getPayloadType() == PT_SuggestEventsRequest) {
+        if (response.getPayloadType() == PT_SuggestEventsResponse) {
             SuggestEventsResponse info = response.convert<SuggestEventsResponse>();
             qInfo("events received: %d", info.events.count());
             displayEvents(info.events);
@@ -427,7 +435,7 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if (response.getTicket() == mJoinEventRequest) {
         mJoinEventRequest = -1;
-        if (response.getPayloadType() == PT_JoinEventRequest) {
+        if (response.getPayloadType() == PT_JoinEventResponse) {
             JoinEventResponse info = response.convert<JoinEventResponse>();
             qInfo("event joined: %d", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
@@ -444,7 +452,7 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if(response.getTicket() == mRetrieveMyEvents){
         mRetrieveMyEvents = -1;
-        if(response.getPayloadType() == PT_RetrieveMyEventsRequest){
+        if(response.getPayloadType() == PT_RetrieveMyEventsResponse){
             RetrieveMyEventsResponse info = response.convert<RetrieveMyEventsResponse>();
             qInfo("events received: %d", info.events.count());
             displayMyEvents(info.events);
@@ -454,14 +462,14 @@ void interestData::checkResponse(NetworkObject response) {
     }
     else if(response.getTicket() == mSetInterestsRequest){
         mSetInterestsRequest = -1;
-        if(response.getPayloadType() == PT_SetInterestsRequest){
+        if(response.getPayloadType() == PT_SetInterestsResponse){
             SetInterestsResponse info = response.convert<SetInterestsResponse>();
             qInfo("interests received: %d", info.valid, qUtf8Printable(info.details));
         }
     }
     else if (response.getTicket() == mFindMatchesRequest){
         mFindMatchesRequest = -1;
-        if (response.getPayloadType() == PT_FindMatchRequest){
+        if (response.getPayloadType() == PT_FindMatchResponse){
             FindMatchResponse info = response.convert<FindMatchResponse>();
             qInfo("matches received: %d", info.valid, qPrintable(info.details));
             //How do we get the names of the matches??

@@ -35,11 +35,11 @@ public slots:
     void displayEvents(QVector<base::Event> interest);
     void displayMyEvents(QVector<base::Event> myEvent);
     void createHost();
-    void createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end);
+    void createEvent(base::Event newEvent);
     void getMyInterests();
     void requestEvents();
     void requestMyEvents();
-    void findMatches();
+    void findMatches(int row, int col);
     void joiningEvents(int row, int col);
 
 private:
