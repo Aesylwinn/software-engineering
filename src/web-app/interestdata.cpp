@@ -57,19 +57,19 @@ interestData::interestData(QWidget *parent) :
     base::venue tempVenue;
     tempVenue.setAddress(tr("411 Electric Avenue"));
 
-    base::event tempEvent;
+    base::Event tempEvent;
     tempEvent.setName(tr("Wine Night"));
     tempEvent.setStartTime(ui->dateEdit->dateTime());
     tempEvent.setDescription(tr("Come get toasty at Primetime for $2!"));
     tempEvent.setLocation(tempVenue);
 
-    QVector<base::event> tempVector;
+    QVector<base::Event> tempVector;
     tempVector.push_back(tempEvent);
 
     base::venue tempVenue1;
     tempVenue.setAddress(tr("420 Blazin Road"));
 
-    base::event tempEvent1;
+    base::Event tempEvent1;
     tempEvent1.setName(tr("Burnin Herb"));
     tempEvent1.setStartTime(ui->dateEdit->dateTime());
     tempEvent1.setDescription(tr("Come get toasty at Primetime for $2!"));

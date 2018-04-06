@@ -45,8 +45,8 @@ public slots:
 private:
     Ui::interestData *ui;
     base::ClientNetworkMgr *mNetworkMgr;
-    QVector<base::event> globalMyEvents;
-    QVector<base::event> globalInterest;
+    QVector<base::Event> globalMyEvents;
+    QVector<base::Event> globalInterest;
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
     qint32 mCreateEventRequest;
