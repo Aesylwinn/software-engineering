@@ -14,7 +14,7 @@
 using namespace testing;
 using namespace base;
 
-TEST(base, event_startTime) {
+TEST(Event, startTime) {
     Event obj;
 
     QString startStr;
@@ -27,7 +27,7 @@ TEST(base, event_startTime) {
     ASSERT_EQ(obj.addTimes(obj.getStartTime(), obj.getEndTime()), 0);
 }
 
-TEST(base, event_endTime) {
+TEST(Event, endTime) {
     Event obj;
 
     QString endStr;
@@ -40,7 +40,7 @@ TEST(base, event_endTime) {
     ASSERT_EQ(obj.addTimes(obj.getStartTime(), obj.getEndTime()), 0);
 }
 
-TEST(base, event_checkStartAndEndTimes) {
+TEST(Event, checkStartAndEndTimes) {
     Event obj;
 
     QString startStr;
@@ -55,7 +55,7 @@ TEST(base, event_checkStartAndEndTimes) {
     ASSERT_EQ(endStr, QString("05/20/2018.16:20"));
 }
 
-TEST(base, event_addTimes) {
+TEST(Event, addTimes) {
     Event obj;
 
     // make sure timeSlots is empty
@@ -105,7 +105,7 @@ TEST(base, event_addTimes) {
     ASSERT_EQ(obj.getTimes().size(), 3);
 }
 
-TEST(base, event_setReoccurring) {
+TEST(Event, setReoccurring) {
     Event obj;
 
     QDateTime start;
@@ -148,7 +148,7 @@ TEST(base, event_setReoccurring) {
     ASSERT_EQ(obj.getTimes().size(), 1);
 }
 
-TEST(base, event_delTime) {
+TEST(Event, delTime) {
     Event obj;
 
     // add and delete object
