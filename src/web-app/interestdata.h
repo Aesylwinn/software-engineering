@@ -35,18 +35,27 @@ public slots:
     void displayEvents(QVector<base::Event> interest);
     void displayMyEvents(QVector<base::Event> myEvent);
     void createHost();
-    void createEvent(QString eName, QString categories, QString desc, QDateTime start, QDateTime end);
+    void createEvent(base::Event newEvent);
+    void getMyInterests();
     void requestEvents();
     void requestMyEvents();
+    void findMatches(int row, int col);
+    void joiningEvents(int row, int col);
 
 private:
     Ui::interestData *ui;
     base::ClientNetworkMgr *mNetworkMgr;
+    QVector<base::Event> globalMyEvents;
+    QVector<base::Event> globalInterest;
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
     qint32 mCreateEventRequest;
     qint32 mCreateHostRequest;
     qint32 mSuggestEventsRequest;
+    qint32 mJoinEventRequest;
+    qint32 mRetrieveMyEvents;
+    qint32 mSetInterestsRequest;
+    qint32 mFindMatchesRequest;
 };
 
 #endif // INTERESTDATA_H

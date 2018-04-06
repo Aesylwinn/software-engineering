@@ -258,7 +258,7 @@ p, li { white-space: pre-wrap; }
                      <item>
                       <widget class="QLabel" name="LEmail">
                        <property name="text">
-                        <string>Email or Username</string>
+                        <string>Username</string>
                        </property>
                       </widget>
                      </item>
@@ -854,7 +854,7 @@ Get Verified and share an experience with someone whose interests are cohesive w
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_14">
                  <item>
-                  <widget class="QTreeWidget" name="treeWidget">
+                  <widget class="QTreeWidget" name="interestSelect">
                    <property name="lineWidth">
                     <number>1</number>
                    </property>
@@ -1191,17 +1191,17 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  </column>
                  <column>
                   <property name="text">
-                   <string>Date</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Time</string>
+                   <string>Date/Time</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Description</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Find Match</string>
                   </property>
                  </column>
                  <item row="0" column="0">
@@ -1219,11 +1219,21 @@ Get Verified and share an experience with someone whose interests are cohesive w
                    <string>1/1/2018</string>
                   </property>
                  </item>
-                 <item row="0" column="3">
+                 <item row="0" column="4">
                   <property name="text">
-                   <string>12am</string>
+                   <string>Click Here</string>
+                  </property>
+                  <property name="textAlignment">
+                   <set>AlignCenter</set>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="refreshMyEvents">
+                 <property name="text">
+                  <string>Refresh My Events</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -1299,12 +1309,12 @@ Get Verified and share an experience with someone whose interests are cohesive w
                  </column>
                  <column>
                   <property name="text">
-                   <string>Time</string>
+                   <string>Description</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>Description</string>
+                   <string>Attend</string>
                   </property>
                  </column>
                  <item row="0" column="0">
@@ -1322,11 +1332,18 @@ Get Verified and share an experience with someone whose interests are cohesive w
                    <string>2/14/2018</string>
                   </property>
                  </item>
-                 <item row="0" column="3">
-                  <property name="text">
-                   <string>12am</string>
+                 <item row="0" column="4">
+                  <property name="textAlignment">
+                   <set>AlignCenter</set>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="refreshInterests">
+                 <property name="text">
+                  <string>Refresh Interests</string>
+                 </property>
                 </widget>
                </item>
               </layout>
