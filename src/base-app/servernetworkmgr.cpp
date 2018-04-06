@@ -158,7 +158,14 @@ namespace base {
 
                         try {
                             DatabaseConnection dbConnection(DbName);
-                            if (dbConnection.getEvents(response.events)) {
+                            QVector<qint64> venueIds;
+
+                            if (dbConnection.getEvents(response.events, venueIds)) {
+                                for (int i = 0; i < response.events.count() && i < venueIds.count(); ++i) {
+                                    venue tmpVenue;
+                                    dbConnection.getVenue(venueIds[i], tmpVenue);
+                                    response.events[i].setLocation(tmpVenue);
+                                }
                                 // Trim count, eventually choose best fit
                                 response.events = EventChooser().narrow(response.events, request.count);
                             } else {
@@ -206,7 +213,15 @@ namespace base {
                             UserData* userData = getUserData(socket);
                             if (userData && userData->isValid()) {
                                 DatabaseConnection dbConnection(DbName);
-                                dbConnection.getMyEvents(userData->getUserId(), response.events);
+                                QVector<qint64> venueIds;
+
+                                dbConnection.getMyEvents(userData->getUserId(), response.events, venueIds);
+
+                                for (int i = 0; i < response.events.count() && i < venueIds.count(); ++i) {
+                                    venue tmpVenue;
+                                    dbConnection.getVenue(venueIds[i], tmpVenue);
+                                    response.events[i].setLocation(tmpVenue);
+                                }
                             }
                         } catch (std::exception& e) {
                             qInfo("DB error: %s", e.what());

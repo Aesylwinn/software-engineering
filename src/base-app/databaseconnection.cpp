@@ -368,9 +368,13 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
     // Process events and matches
     for (const TempData& data : matchData) {
         Event evt;
+        venue ven;
         UserProfile profile;
+        qint64 venId;
 
-        getEvent(data.eventId, evt);
+        getEvent(data.eventId, evt, venId);
+        getVenue(venId, ven);
+        evt.setLocation(ven);
         events.push_back(evt);
 
         getUserProfile(data.userId, profile);
@@ -380,7 +384,7 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
     return true;
 }
 
-bool DatabaseConnection::getEvent(qint64 eventId, Event &evt)
+bool DatabaseConnection::getEvent(qint64 eventId, Event &evt, qint64& venueId)
 {
     QSqlQuery query(*db);
     QString statement = "SELECT * FROM Event WHERE id = :id";
@@ -395,13 +399,38 @@ bool DatabaseConnection::getEvent(qint64 eventId, Event &evt)
 
     if (query.isSelect() && query.first()) {
         readEvent(query, evt);
+        venueId = query.value("id_venue").toInt();
         return true;
     }
 
     return false;
 }
 
-bool DatabaseConnection::getEvents(QVector<base::Event>& events) {
+bool DatabaseConnection::getVenue(qint64 venueId, venue& ven) {
+    QSqlQuery query(*db);
+    QString statement = "SELECT * FROM Venue WHERE id = :id";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Failed to get event, failed to prepare");
+
+    query.bindValue(":id", venueId);
+
+    if (!query.exec())
+        return false;
+
+    if (query.isSelect() && query.first()) {
+        ven.setName(query.value("displayName").toString());
+        ven.setAddress(query.value("address").toString());
+        ven.setPhoneNumber(query.value("phoneNumber").toString());
+        ven.setEntryFee(query.value("entryFee").toDouble());
+
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::getEvents(QVector<base::Event>& events, QVector<qint64>& venueIds) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * FROM Event";
@@ -417,9 +446,13 @@ bool DatabaseConnection::getEvents(QVector<base::Event>& events) {
     if (query.isSelect() && query.first()) {
         do {
             base::Event evt;
+            qint64 venueId;
 
             readEvent(query, evt);
+            venueId = query.value("id_venue").toInt();
+
             events.push_back(evt);
+            venueIds.push_back(venueId);
         } while (query.next());
 
         return true;
@@ -428,7 +461,7 @@ bool DatabaseConnection::getEvents(QVector<base::Event>& events) {
     return false;
 }
 
-bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events) {
+bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64> venueIds) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
@@ -446,10 +479,14 @@ bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events
     if (query.isSelect() && query.first()) {
         do {
             base::Event evt;
+            qint64 venue;
             QDateTime dateTime;
 
             readEvent(query, evt);
+            venue = query.value("id_venue").toInt();
+
             events.push_back(evt);
+            venueIds.push_back(venue);
         } while (query.next());
 
         return true;
