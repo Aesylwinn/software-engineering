@@ -11,7 +11,7 @@
 using namespace testing;
 using namespace base;
 
-TEST(base, venue_defaultCtor) {
+TEST(venue, defaultCtor) {
     venue obj;
     ASSERT_EQ(obj.getName(), QString(""));
     ASSERT_EQ(obj.getAddress(), QString(""));
@@ -19,7 +19,7 @@ TEST(base, venue_defaultCtor) {
     ASSERT_EQ(obj.getEntryFee(), 0);
 }
 
-TEST(base, venue_fullCtor) {
+TEST(venue, fullCtor) {
     venue obj("name", "123 place", "456", 7.89);
     ASSERT_EQ(obj.getName(), QString("name"));
     ASSERT_EQ(obj.getAddress(), QString("123 place"));
@@ -27,7 +27,7 @@ TEST(base, venue_fullCtor) {
     ASSERT_EQ(obj.getEntryFee(), 7.89);
 }
 
-TEST(base, venue_conversionCtor) {
+TEST(venue, conversionCtor) {
     venue obj("name, 123 place, 456, 7.89");
     ASSERT_EQ(obj.getName(), QString("name"));
     ASSERT_EQ(obj.getAddress(), QString("123 place"));

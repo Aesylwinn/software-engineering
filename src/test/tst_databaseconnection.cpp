@@ -19,7 +19,7 @@ bool testDbIsAvailable() {
     }
 }
 
-TEST(base, dbconnection) {
+TEST(DatabaseConnection, default) {
     char AppName[] = { 'a', 'b' , 'c', '\0'};
     int argc = 1;
     char* argv[] = {AppName, nullptr};
@@ -36,7 +36,7 @@ TEST(base, dbconnection) {
 
 }
 
-TEST(base, createAccount){
+TEST(DatabaseConnection, createAccount){
     if (!testDbIsAvailable()) {
         std::cerr << "!!!Warning!!! Unable to run database tests!\n";
         return;
@@ -60,7 +60,7 @@ TEST(base, createAccount){
     app.exec();
 }
 
-TEST(base, createHost) {
+TEST(DatabaseConnection, createHost) {
     if (!testDbIsAvailable()) {
         std::cerr << "!!!Warning!!! Unable to run database tests!\n";
         return;

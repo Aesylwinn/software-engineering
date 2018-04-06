@@ -14,7 +14,7 @@
 using namespace testing;
 using namespace base;
 
-TEST(base, ClientNetworkMgr_connection) {
+TEST(ClientNetworkMgr, connection) {
     // Workaround for const char* to char* issue
     char AppName[] = { 'T', 'S', 'T', '\n' };
     int Port = 1923;
@@ -51,7 +51,7 @@ TEST(base, ClientNetworkMgr_connection) {
     ASSERT_TRUE(wasConnected);
 }
 
-TEST(base, ClientNetworkMgr_sendRequest) {
+TEST(ClientNetworkMgr, sendRequest) {
     // Workaround for const char* to char* issue
     char AppName[] = { 'T', 'S', 'T', '\n' };
     int Port = 1984;
