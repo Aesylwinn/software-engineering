@@ -20,8 +20,8 @@ public:
 private:
     void showEvent(QShowEvent* event) override;
 
-    void setMyEvents(QVector<base::event> events);
-    void setEvents(QVector<base::event> events);
+    void setMyEvents(QVector<base::Event> events);
+    void setEvents(QVector<base::Event> events);
 
     Ui::MainPage *mUi;
     base::ClientNetworkMgr* mNetworkMgr;
@@ -29,15 +29,25 @@ private:
     qint32 mSuggestTicket;
     qint32 mJoinTicket;
     qint32 mMyEventsTicket;
+    qint32 mFindMatchTicket;
+
+public slots:
+    void refresh();
 
 private slots:
     void onResponseReceived(base::NetworkObject obj);
+
     void onCreateEventClicked(bool);
     void onLogoutClicked(bool);
-    void onJoinEvent(base::event evt);
+    void onViewMatchesClicked(bool);
+    void onRefreshClicked(bool);
+
+    void onJoinEvent(base::Event evt);
+    void onFindMatch(base::Event evt);
 
 signals:
     void onCreateEvent();
+    void onViewMatches();
     void onLogout();
 };
 

@@ -1,7 +1,7 @@
 #include "eventtablewidget.h"
 #include "ui_eventtablewidget.h"
 
-EventTableWidget::EventTableWidget(base::event evt, QWidget *parent)
+EventTableWidget::EventTableWidget(base::Event evt, QWidget *parent)
     : QWidget(parent)
     , mUi(new Ui::EventTableWidget)
     , mEvent(evt)

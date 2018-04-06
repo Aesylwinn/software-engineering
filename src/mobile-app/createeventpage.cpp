@@ -18,6 +18,8 @@ CreateEventPage::CreateEventPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     }
 
     mUi->setupUi(this);
+    mUi->startTime->setDateTime(QDateTime::currentDateTime());
+    mUi->endTime->setDateTime(QDateTime::currentDateTime());
 
     connect(mUi->submitButton, &QPushButton::clicked, this, &CreateEventPage::onSubmitClicked);
     connect(mUi->cancelButton, &QPushButton::clicked, this, &CreateEventPage::onCancelClicked);
@@ -64,6 +66,9 @@ void CreateEventPage::onSubmitClicked(bool)
     venue.setAddress(mUi->venueAddressField->text());
     venue.setPhoneNumber(mUi->venuePhoneField->text());
     request.data.setLocation(venue);
+
+    request.data.setStartTime(mUi->startTime->dateTime());
+    request.data.setEndTime(mUi->endTime->dateTime());
 
     request.data.setDescription(mUi->descriptionField->toPlainText());
 

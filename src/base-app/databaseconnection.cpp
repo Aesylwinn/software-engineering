@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <thread>
+#include <QCryptographicHash>
 
 namespace base {
 
@@ -38,6 +39,35 @@ void DatabaseConnection::SetUp(QString hostname, QString databaseName, QString u
 
 }
 
+void DatabaseConnection::readEvent(QSqlQuery &query, Event &evt)
+{
+    QDateTime dateTime;
+
+    evt.setName(query.value("displayName").toString());
+    evt.setDescription(query.value("description").toString());
+    evt.setID(query.value("id").toInt());
+
+    dateTime.setDate(query.value("dateStart").toDate());
+    dateTime.setTime(query.value("timeStart").toTime());
+    evt.setStartTime(dateTime);
+
+    dateTime.setDate(query.value("dateEnd").toDate());
+    dateTime.setTime(query.value("timeEnd").toTime());
+    evt.setEndTime(dateTime);
+
+    // TODO others
+}
+
+void DatabaseConnection::readProfile(QSqlQuery& query, UserProfile& profile) {
+    profile.setFirstName(query.value("firstName").toString());
+    profile.setLastName(query.value("lastName").toString());
+    profile.setBirthday(query.value("birtday").toDate());
+    profile.setEmail(query.value("email").toString());
+    profile.setGender(query.value("gender").toString());
+    profile.setBio(query.value("bio").toString());
+    profile.setUserId(query.value("id_user").toInt());
+}
+
 bool DatabaseConnection::checkPassword(QString username, QString password)
 {
     QSqlQuery query(*db);
@@ -52,15 +82,18 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
     if( query.isSelect() && query.first() )
     {
-        QString actualPassword = query.value("password").toString();
-        return actualPassword == password;
+        QCryptographicHash qchash(QCryptographicHash::Sha512);
+        qchash.addData(password.toUtf8());
+        QString actualHashedPassword = query.value("password").toString();
+        QString hashedAttemptPassword(qchash.result().toBase64());
+        return actualHashedPassword == hashedAttemptPassword;
     }
 
     return false;
 
 }
 
-bool DatabaseConnection::createEvent(base::event evt, qint64 hostID, qint64 venueID)
+bool DatabaseConnection::createEvent(base::Event evt, qint64 hostID, qint64 venueID)
 {
     QSqlQuery query(*db);
 
@@ -143,16 +176,43 @@ bool DatabaseConnection::createAccount(QString username, QString password)
 {
     QSqlQuery query(*db);
 
+    QCryptographicHash qchash(QCryptographicHash::Sha512);
+    qchash.addData(password.toUtf8());
+    QString hashedPassword(qchash.result().toBase64());
+
     if (!query.prepare("INSERT INTO User_basic (username, password) VALUES ( :usern, :passw )"))
         throw std::runtime_error("Unable to create account, unable to prepare query");
 
     query.bindValue(":usern",username);
-    query.bindValue(":passw",password);
+    query.bindValue(":passw",hashedPassword);
 
     if (!query.exec()) {
         // Username is already taken
         return false;
     }
+
+    return true;
+}
+
+bool DatabaseConnection::createProfile(UserProfile profile)
+{
+    QSqlQuery query(*db);
+    QString statement = "INSERT INTO User_Profile (id_user, firstName, lastName, birtday, email, gender, otherGender, orientation, bio)"
+                                          "VALUES (   :usr,    :fname,   :lname,   :bday,:email,:gender,        NULL,        NULL,:bio)";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to create profile, unable to prepare query");
+
+    query.bindValue(":usr", profile.getUserId());
+    query.bindValue(":fname", profile.getFirstName());
+    query.bindValue(":lname", profile.getLastName());
+    query.bindValue(":bday", profile.getBirthday());
+    query.bindValue(":email", profile.getEmail());
+    query.bindValue(":gender", profile.getGender());
+    query.bindValue(":bio", profile.getBio());
+
+    if (!query.exec())
+        return false;
 
     return true;
 }
@@ -250,7 +310,98 @@ bool DatabaseConnection::isHost(QString username) {
     return false;
 }
 
-bool DatabaseConnection::getEvents(QVector<base::event>& events) {
+bool DatabaseConnection::getUserProfile(qint64 userId, UserProfile &profile) {
+    // Setup
+    QSqlQuery query(*db);
+    QString statement = "SELECT * FROM User_Profile WHERE id_user = :id";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to get user profile, prepare failed");
+
+    query.bindValue(":id", userId);
+
+    // Run
+    if (!query.exec()) {
+        return false;
+    }
+
+    if (query.isSelect() && query.first()) {
+        readProfile(query, profile);
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profiles, QVector<Event> &events)
+{
+    struct TempData {
+        qint64 eventId;
+        qint64 userId;
+    };
+
+    // Retrieve matches
+    QVector<TempData> matchData;
+    {
+        QSqlQuery query(*db);
+        QString statement = "SELECT * FROM Join_Date WHERE id_userA = :id OR id_userB = :id";
+
+        if (!query.prepare(statement))
+            throw std::runtime_error("Failed to get matches, Join_Date select statement did not prepare");
+
+        query.bindValue(":id", userId);
+
+        if (!query.exec())
+            return false;
+
+        if (query.isSelect() && query.first()) {
+            do {
+                qint64 eventId = query.value("id_event").toInt();
+                qint64 user1 = query.value("id_userA").toInt();
+                qint64 user2 = query.value("id_userB").toInt();
+
+                matchData.push_back(TempData{ eventId, (user1 == userId) ? user2 : user1 });
+            } while (query.next());
+        }
+    }
+
+    // Process events and matches
+    for (const TempData& data : matchData) {
+        Event evt;
+        UserProfile profile;
+
+        getEvent(data.eventId, evt);
+        events.push_back(evt);
+
+        getUserProfile(data.userId, profile);
+        profiles.push_back(profile);
+    }
+
+    return true;
+}
+
+bool DatabaseConnection::getEvent(qint64 eventId, Event &evt)
+{
+    QSqlQuery query(*db);
+    QString statement = "SELECT * FROM Event WHERE id = :id";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Failed to get event, failed to prepare");
+
+    query.bindValue(":id", eventId);
+
+    if (!query.exec())
+        return false;
+
+    if (query.isSelect() && query.first()) {
+        readEvent(query, evt);
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::getEvents(QVector<base::Event>& events) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * FROM Event";
@@ -265,23 +416,9 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
 
     if (query.isSelect() && query.first()) {
         do {
-            base::event evt;
-            QDateTime dateTime;
+            base::Event evt;
 
-            evt.setName(query.value("displayName").toString());
-            evt.setDescription(query.value("description").toString());
-            evt.setID(query.value("id").toInt());
-
-            dateTime.setDate(query.value("dateStart").toDate());
-            dateTime.setTime(query.value("timeStart").toTime());
-            evt.setStartTime(dateTime);
-
-            dateTime.setDate(query.value("dateEnd").toDate());
-            dateTime.setTime(query.value("timeEnd").toTime());
-            evt.setEndTime(dateTime);
-
-            // TODO other fields
-
+            readEvent(query, evt);
             events.push_back(evt);
         } while (query.next());
 
@@ -291,7 +428,7 @@ bool DatabaseConnection::getEvents(QVector<base::event>& events) {
     return false;
 }
 
-bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::event>& events) {
+bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
@@ -308,24 +445,37 @@ bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::event>& events
 
     if (query.isSelect() && query.first()) {
         do {
-            base::event evt;
+            base::Event evt;
             QDateTime dateTime;
 
-            evt.setName(query.value("displayName").toString());
-            evt.setDescription(query.value("description").toString());
-            evt.setID(query.value("id").toInt());
-
-            dateTime.setDate(query.value("dateStart").toDate());
-            dateTime.setTime(query.value("timeStart").toTime());
-            evt.setStartTime(dateTime);
-
-            dateTime.setDate(query.value("dateEnd").toDate());
-            dateTime.setTime(query.value("timeEnd").toTime());
-            evt.setEndTime(dateTime);
-
-            // TODO other fields
-
+            readEvent(query, evt);
             events.push_back(evt);
+        } while (query.next());
+
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::findMatches(qint64 userId, qint64 eventId, QVector<UserProfile>& matches) {
+    QSqlQuery query(*db);
+    QString statement = "SELECT * FROM User_Profile WHERE id_user IN (SELECT id_user FROM Join_Event where id_event = :evtId AND id_user != :userId)";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to find matches, failed to prepare");
+
+    query.bindValue(":evtId", eventId);
+    query.bindValue(":userId", userId);
+
+    if (!query.exec())
+        return false;
+
+    if (query.isSelect() && query.first()) {
+        do {
+            UserProfile profile;
+            readProfile(query, profile);
+            matches.push_back(profile);
         } while (query.next());
 
         return true;
@@ -344,6 +494,21 @@ bool DatabaseConnection::joinEvent(qint64 userId, qint64 eventId)
 
     query.bindValue(":user", userId);
     query.bindValue(":event", eventId);
+
+    return query.exec();
+}
+
+bool DatabaseConnection::addMatch(qint64 userA, qint64 userB, qint64 eventId) {
+    QSqlQuery query(*db);
+    QString statement = "INSERT INTO Join_Date (id_event, id_userA, id_userB, confirmedA, confirmedB)"
+                                       "VALUES (    :evt,    :usrA,    :usrB,      FALSE,      FALSE)";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to add match, unable to prepare query");
+
+    query.bindValue(":evt", eventId);
+    query.bindValue(":usrA", userA);
+    query.bindValue(":usrB", userB);
 
     return query.exec();
 }

@@ -7,6 +7,7 @@
 #include <QDataStream>
 
 #include "databaseconnection.h"
+#include "eventchooser.h"
 
 namespace base {
     ServerNetworkMgr::ServerNetworkMgr(QObject* parent)
@@ -45,6 +46,12 @@ namespace base {
                         try {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.createAccount(request.username, request.password)) {
+                                // User profile
+                                qint64 id;
+                                dbConnection.getUserId(request.username, id);
+                                request.profile.setUserId(id);
+                                dbConnection.createProfile(request.profile);
+
                                 response = { IsValid, "Account created" };
                             }
                             else {
@@ -153,8 +160,7 @@ namespace base {
                             DatabaseConnection dbConnection(DbName);
                             if (dbConnection.getEvents(response.events)) {
                                 // Trim count, eventually choose best fit
-                                if (response.events.count() > request.count)
-                                    response.events.resize(request.count);
+                                response.events = EventChooser().narrow(response.events, request.count);
                             } else {
                                 qInfo("failed to retrieve any events");
                             }
@@ -205,6 +211,69 @@ namespace base {
                         } catch (std::exception& e) {
                             qInfo("DB error: %s", e.what());
                         }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_FindMatchRequest:
+                    {
+                        FindMatchRequest request = obj.convert<FindMatchRequest>();
+                        FindMatchResponse response = { NotValid, "DB error" };
+
+                        qInfo("find match: %lld", request.event_id);
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection conn(DbName);
+                                QVector<UserProfile> potentials;
+
+                                if (conn.findMatches(userData->getUserId(), request.event_id, potentials) && potentials.count() > 0) {
+                                    // Random
+                                    int index = qrand() % potentials.size();
+                                    const UserProfile& match = potentials[index];
+
+                                    conn.addMatch(userData->getUserId(), match.getUserId(), request.event_id);
+                                    response = { IsValid, "Found a match with " + match.getFirstName() + " " + match.getLastName() };
+                                } else {
+                                    response = { NotValid, "No available matches" };
+                                }
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("DB error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_RetrieveMatchesRequest:
+                    {
+                        RetrieveMatchesRequest request = obj.convert<RetrieveMatchesRequest>();
+                        RetrieveMatchesResponse response;
+
+                        qInfo("retrieve matches");
+
+                        try {
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                DatabaseConnection conn(DbName);
+                                conn.getMatches(userData->getUserId(), response.matches, response.events);
+                            }
+                        } catch (std::exception& e) {
+                            qInfo("DB error: %s", e.what());
+                        }
+
+                        sendResponse(socket, obj.createResponse(response));
+                    }
+                    break;
+                case PT_SetInterestsRequest:
+                    {
+                        SetInterestsRequest request = obj.convert<SetInterestsRequest>();
+                        SetInterestsResponse response = { IsValid, "Got your interests" };
+
+                        qInfo("set interests: %d", request.interests.count());
+
+                        // TODO
 
                         sendResponse(socket, obj.createResponse(response));
                     }

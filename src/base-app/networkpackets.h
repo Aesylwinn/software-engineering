@@ -5,6 +5,7 @@
 #include <QVector>
 
 #include "event.h"
+#include "userprofile.h"
 
 namespace base {
     // Constants used to ensure consistency between the server and clients
@@ -24,6 +25,7 @@ namespace base {
         PT_RetrieveMyEventsRequest,
         PT_SetInterestsRequest,
         PT_FindMatchRequest,
+        PT_RetrieveMatchesRequest,
 
         PT_CreateAccountResponse=0x200,
         PT_LoginResponse,
@@ -34,6 +36,7 @@ namespace base {
         PT_RetrieveMyEventsResponse,
         PT_SetInterestsResponse,
         PT_FindMatchResponse,
+        PT_RetrieveMatchesResponse,
 
         PT_Message=0x400
     };
@@ -55,11 +58,7 @@ namespace base {
 
         QString username;
         QString password;
-        QString email;
-        QString firstName;
-        QString lastName;
-        QString gender;
-        QString birthDate;
+        UserProfile profile;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateAccountRequest& req);
@@ -80,7 +79,7 @@ namespace base {
     struct CreateEventRequest{
         static const size_t Type = PT_CreateEventRequest;
 
-        event data;
+        Event data;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const CreateEventRequest& req);
@@ -150,6 +149,15 @@ namespace base {
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const FindMatchRequest& req);
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, FindMatchRequest& req);
 
+    // A packet to store a request for a users's matches
+    struct RetrieveMatchesRequest {
+        static const size_t Type = PT_RetrieveMatchesRequest;
+
+        qint32 unused;
+    };
+
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMatchesRequest& req);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMatchesRequest& req);
 
     // A packet to store a response regarding account creation
     struct CreateAccountResponse {
@@ -194,7 +202,7 @@ namespace base {
         static const size_t Type = PT_SuggestEventsResponse;
         static const size_t RequestType = PT_SuggestEventsRequest;
 
-        QVector<event> events;
+        QVector<Event> events;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const SuggestEventsResponse& resp);
@@ -228,7 +236,7 @@ namespace base {
         static const size_t Type = PT_RetrieveMyEventsResponse;
         static const size_t RequestType = PT_RetrieveMyEventsRequest;
 
-        QVector<base::event> events;
+        QVector<base::Event> events;
     };
 
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMyEventsResponse& resp);
@@ -258,6 +266,17 @@ namespace base {
     BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const FindMatchResponse& req);
     BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, FindMatchResponse& req);
 
+    // A packet to store a response for the users a user is matched with
+    struct RetrieveMatchesResponse {
+        static const size_t Type = PT_RetrieveMatchesResponse;
+        static const size_t RequestType = PT_RetrieveMatchesRequest;
+
+        QVector<UserProfile> matches;
+        QVector<base::Event> events;
+    };
+
+    BASEAPPSHARED_EXPORT QDataStream& operator<<(QDataStream& ds, const RetrieveMatchesResponse& resp);
+    BASEAPPSHARED_EXPORT QDataStream& operator>>(QDataStream& ds, RetrieveMatchesResponse& resp);
 }
 
 #endif

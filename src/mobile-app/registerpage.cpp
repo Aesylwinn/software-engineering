@@ -35,11 +35,11 @@ void RegisterPage::onRegisterClicked(bool)
     data.username = mUi->usernameField->text();
     data.password = mUi->passwordField->text();
     QString confirmedPassword = mUi->confirmPasswordField->text();
-    data.email = mUi->emailField->text();
-    data.firstName = mUi->firstNameField->text();
-    data.lastName = mUi->lastNameField->text();
-    data.gender = mUi->maleButton->isChecked() ? mUi->maleButton->text() : mUi->femaleButton->text();
-    data.birthDate = mUi->dobDatePicker->date().toString();
+    data.profile.setEmail(mUi->emailField->text());
+    data.profile.setFirstName(mUi->firstNameField->text());
+    data.profile.setLastName(mUi->lastNameField->text());
+    data.profile.setGender(mUi->maleButton->isChecked() ? mUi->maleButton->text() : mUi->femaleButton->text());
+    data.profile.setBirthday(mUi->dobDatePicker->date());
 
     // Verify
     if (data.password != confirmedPassword) {

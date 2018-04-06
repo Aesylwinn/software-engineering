@@ -13,70 +13,93 @@
   <property name="windowTitle">
    <string>Create Event</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <property name="rowWrapPolicy">
-    <enum>QFormLayout::DontWrapRows</enum>
-   </property>
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_10">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLabel" name="eventName">
-       <property name="text">
-        <string>Name of Event:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="eventNameEd"/>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout_6">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="eventName">
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
-          <string>From:</string>
+          <string>Name of Event:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QDateTimeEdit" name="fromDate"/>
+        <widget class="QLineEdit" name="eventNameEd">
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QLabel" name="label_3">
-         <property name="enabled">
-          <bool>true</bool>
+        <widget class="QLabel" name="eventAddress">
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>16777215</height>
+          </size>
          </property>
          <property name="text">
-          <string>To:</string>
+          <string>Address:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QDateTimeEdit" name="toDate"/>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QLabel" name="eventPhone">
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Phone Number:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_2">
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
     </layout>
    </item>
-   <item row="3" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0">
      <item>
       <widget class="QGroupBox" name="groupBox">
@@ -227,7 +250,7 @@
             <enum>Unchecked</enum>
            </property>
            <property name="text">
-            <string>Hockey</string>
+            <string>Soccer</string>
            </property>
            <property name="checkState">
             <enum>Unchecked</enum>
@@ -239,7 +262,7 @@
             <enum>Unchecked</enum>
            </property>
            <property name="text">
-            <string>Programming</string>
+            <string>Video Games</string>
            </property>
            <property name="checkState">
             <enum>Unchecked</enum>
@@ -321,6 +344,65 @@
       </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>From:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDateTimeEdit" name="fromDate">
+         <property name="maximumSize">
+          <size>
+           <width>125</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>To:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDateTimeEdit" name="toDate">
+         <property name="maximumSize">
+          <size>
+           <width>125</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
