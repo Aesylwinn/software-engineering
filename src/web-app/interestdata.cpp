@@ -52,31 +52,6 @@ interestData::interestData(QWidget *parent) :
     connect(ui->refreshMyEvents, SIGNAL(clicked()), this, SLOT(requestMyEvents()));
     connect(ui->matchB, SIGNAL(clicked()), this, SLOT(findMatches()));
     connect(ui->interestStream, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(joiningEvents(int,int)));
-
-
-    base::venue tempVenue;
-    tempVenue.setAddress(tr("411 Electric Avenue"));
-
-    base::Event tempEvent;
-    tempEvent.setName(tr("Wine Night"));
-    tempEvent.setStartTime(ui->dateEdit->dateTime());
-    tempEvent.setDescription(tr("Come get toasty at Primetime for $2!"));
-    tempEvent.setLocation(tempVenue);
-
-    QVector<base::Event> tempVector;
-    tempVector.push_back(tempEvent);
-
-    base::venue tempVenue1;
-    tempVenue.setAddress(tr("420 Blazin Road"));
-
-    base::Event tempEvent1;
-    tempEvent1.setName(tr("Burnin Herb"));
-    tempEvent1.setStartTime(ui->dateEdit->dateTime());
-    tempEvent1.setDescription(tr("Come get toasty at Primetime for $2!"));
-    tempEvent1.setLocation(tempVenue1);
-    tempVector.push_back(tempEvent1);
-
-    displayEvents(tempVector);
 }
 
 interestData::~interestData()
