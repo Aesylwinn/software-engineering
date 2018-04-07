@@ -48,8 +48,8 @@ void eventPopUp::setHostInfo()
     tempEvent.setCategory(categories);
     tempEvent.setStartTime(ui->fromDate->dateTime());
     tempEvent.setEndTime(ui->toDate->dateTime());
-    tempVenue.setAddress(ui->eventAddress->text());
-    tempVenue.setPhoneNumber(ui->eventPhone->text());
+    tempVenue.setAddress(ui->eventAddressEd->text());
+    tempVenue.setPhoneNumber(ui->eventPhoneEd->text());
     tempEvent.setLocation(tempVenue);
 
     info->createEvent(tempEvent);

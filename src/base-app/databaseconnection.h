@@ -40,7 +40,7 @@ namespace base {
         bool getEvent(qint64, Event& event, qint64& venueId);
         bool getVenue(qint64 venueId, venue& ven);
         bool getEvents(QVector<base::Event>& events, QVector<qint64>& venueIds);
-        bool getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64> eventIds);
+        bool getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64>& venueIds);
         bool findMatches(qint64 userId, qint64 eventId, QVector<UserProfile>& matches);
 
         bool joinEvent(qint64 userId, qint64 eventId);

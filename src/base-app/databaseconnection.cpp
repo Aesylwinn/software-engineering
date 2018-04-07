@@ -124,11 +124,11 @@ bool DatabaseConnection::getVenueId(venue location, qint64& id) {
     QSqlQuery query(*db);
 
     // Should never fail
-    if (!query.prepare("SELECT id FROM Venue WHERE displayName = :dispName"))
+    if (!query.prepare("SELECT id FROM Venue WHERE address = :address"))
         throw std::runtime_error("Unable to get venue, preparation failed");
 
     // Try running
-    query.bindValue(":dispName", location.getName());
+    query.bindValue(":address", location.getAddress());
     if (!query.exec()) {
         return false;
     }
@@ -461,7 +461,7 @@ bool DatabaseConnection::getEvents(QVector<base::Event>& events, QVector<qint64>
     return false;
 }
 
-bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64> venueIds) {
+bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64>& venueIds) {
     // Create query
     QSqlQuery query(*db);
     QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
