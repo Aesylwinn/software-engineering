@@ -53,7 +53,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="categoryField"/>
+          <widget class="QComboBox" name="categoryField"/>
          </item>
         </layout>
        </item>

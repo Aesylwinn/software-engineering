@@ -33,11 +33,12 @@ void eventPopUp::openingCalendar()
 void eventPopUp::setHostInfo()
 {
     interestData *info = (interestData*)parent();
-    QString categories;
+    QString categories = "Fun";
     base::Event tempEvent;
     base::venue tempVenue;
+    // TODO: fix this
     for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 5; j++){
+        for(int j = 0; j < 4; j++){
             if(ui->category->itemAt(i,j)->isSelected())
             {
                 categories = ui->category->itemAt(i,j)->text(i);

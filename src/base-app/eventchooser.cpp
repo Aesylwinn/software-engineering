@@ -5,7 +5,7 @@
 namespace base{
     EventChooser::EventChooser(){}
 
-    QVector<Event> EventChooser::narrow(QVector<Event> list, qint32 numEvents)
+    QVector<Event> EventChooser::narrow(QVector<QString> interests, QVector<Event> list, qint32 numEvents)
     {
         if (numEvents > list.size()) {
             numEvents = list.size();

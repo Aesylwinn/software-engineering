@@ -133,6 +133,12 @@ bool DatabaseConnection::createEvent(base::Event evt, qint64 hostID, qint64 venu
     return true;
 }
 
+bool DatabaseConnection::setUserInterests(qint64 userId, QVector<QString> interests)
+{
+    // TODO
+    return true;
+}
+
 bool DatabaseConnection::getVenueId(venue location, qint64& id) {
     // Try to retrieve the id from the database
     QSqlQuery query(*db);
@@ -454,6 +460,13 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
         profiles.push_back(profile);
     }
 
+    return true;
+}
+
+bool DatabaseConnection::getUserInterests(qint64 userId, QVector<QString> &interests)
+{
+    // TODO
+    interests.push_back("Fun");
     return true;
 }
 

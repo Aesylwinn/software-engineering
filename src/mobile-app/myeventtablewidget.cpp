@@ -8,7 +8,6 @@ MyEventTableWidget::MyEventTableWidget(base::Event evt, QWidget *parent)
 {
     mUi->setupUi(this);
     mUi->eventName->setText(evt.getName());
-    mUi->venueName->setText(evt.getLocation().getName());
     mUi->venueAddress->setText(evt.getLocation().getAddress());
     mUi->description->setText(evt.getDescription());
 

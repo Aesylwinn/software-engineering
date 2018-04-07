@@ -18,7 +18,10 @@ TEST(EventList, noDuplicates){
     EventChooser list;
     Event event1("1"), event2("2"), event3("3"), event4("4");
     QVector<Event> testVector{event1, event2, event3, event4};
-    QVector<Event> narrowed = list.narrow(testVector, 4);
+    QVector<QString> interests{"Fun", "Country", "Chess"};
+
+    QVector<Event> narrowed = list.narrow(interests, testVector, 4);
+
     ASSERT_TRUE(narrowed[0] != narrowed[1]
             && narrowed[0] != narrowed[2]
             && narrowed[0] != narrowed[3]
@@ -31,6 +34,9 @@ TEST(EventList, sizeTooBig){
     EventChooser list;
     Event event1("1"), event2("2"), event3("3"), event4("4");
     QVector<Event> testVector{event1, event2, event3, event4};
-    QVector<Event> narrowed = list.narrow(testVector, 10);
+    QVector<QString> interests{"Boredom", "Metal", "Dancing"};
+
+    QVector<Event> narrowed = list.narrow(interests, testVector, 10);
+
     ASSERT_TRUE(narrowed.size() == testVector.size());
 }

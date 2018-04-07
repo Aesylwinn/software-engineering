@@ -28,6 +28,7 @@ namespace base {
         bool createProfile(UserProfile profile);
         bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
         bool createEvent(base::Event event, qint64 hostId, qint64 venueId);
+        bool setUserInterests(qint64 userId, QVector<QString> interests);
 
         bool getVenueId(venue location, qint64& id);
         bool getOrCreateVenueId(venue location, qint64& id);
@@ -40,6 +41,7 @@ namespace base {
         bool isHost(QString username);
         bool getUserProfile(qint64 userId, UserProfile& profile);
         bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events);
+        bool getUserInterests(qint64 userId, QVector<QString>& interests);
 
         bool getEvent(qint64, Event& event);
         bool getVenue(qint64 venueId, venue& ven);
