@@ -17,11 +17,12 @@ int main(int argc, char *argv[])
     app.setStyleSheet(
         "QWidget { background-color: #2E86C1 } "
         "QListWidget{ background-color: #7FB3D5 }"
+        "QLabel{background-color: #7FB3D5 }"
         "QLineEdit {"
         "background-color: #E5E8E8;"
         "border: none;"
         "} "
-        "QTextEdit { background-color: #34495E } "
+        "QTextEdit { background-color: #EAEDED } "
         "QPushButton {"
             "background-color: rgb(180, 180, 180);"
             "border-style: inset; "
