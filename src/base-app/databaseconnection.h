@@ -25,19 +25,19 @@ namespace base {
         bool checkPassword(QString username, QString password); //can throw run-time error if server unavailable
 
         bool createAccount(QString username, QString password); //can throw run-time error if server unavailable
-        bool createProfile(UserProfile profile);
-        bool createHost(qint64 userId, QString displayName, QString businessName, QString data);
-        bool createEvent(base::Event event, qint64 hostId, qint64 venueId);
-        bool setUserInterests(qint64 userId, QVector<QString> interests);
+        bool createProfile(UserProfile profile);  //sets user full name, birthday, email, gender and custom bio on database
+        bool createHost(qint64 userId, QString displayName, QString businessName, QString data);  //creates host entry on database
+        bool createEvent(base::Event event, qint64 hostId, qint64 venueId); //creates event entry on database
+        bool setUserInterests(qint64 userId, QVector<QString> interests); //creates seperate interest database entry for each interest in vector
 
-        bool getVenueId(venue location, qint64& id);
-        bool getOrCreateVenueId(venue location, qint64& id);
+        bool getVenueId(venue location, qint64& id);    //retrieves venue id from database
+        bool getOrCreateVenueId(venue location, qint64& id);    //retrieves id from database, creates entry if venue does not have entry
 
-        bool getCategory(qint64 id, QString &category);
-        bool getCategoryId(QString category, qint64& id);
-        bool getOrCreateCategoryId(QString category, qint64& id);
+        bool getCategory(qint64 id, QString &category); //sets category parameter to category displayName string
+        bool getCategoryId(QString category, qint64& id);   //sets id parameter to categoryId for matching category name
+        bool getOrCreateCategoryId(QString category, qint64& id);   //sets id parameter, creating new entry if one does not exist for category parameter
 
-        bool getUserId(QString username, qint64& id);
+        bool getUserId(QString username, qint64& id);   //sets id parameter to id for matching username
         bool isHost(QString username);
         bool getUserProfile(qint64 userId, UserProfile& profile);
         bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events);
