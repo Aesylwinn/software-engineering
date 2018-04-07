@@ -117,11 +117,11 @@ namespace base{
         return timeSlots;
     }
 
-    QDateTime Event::getStartTime() {
+    QDateTime Event::getStartTime() const {
         return startTime;
     }
 
-    QDateTime Event::getEndTime() {
+    QDateTime Event::getEndTime() const {
         return endTime;
     }
 
@@ -325,6 +325,8 @@ namespace base{
         ostream << evt.getLocation().toString();
         ostream << evt.getDescription();
         ostream << evt.getID();
+        ostream << evt.getStartTime();
+        ostream << evt.getEndTime();
 
         return ostream;
     }
@@ -334,6 +336,7 @@ namespace base{
         QString str;
         QVector<QString> users;
         qint32 val;
+        QDateTime dateTime;
 
         istream >> str; evt.setName(str);
         istream >> str; evt.setCategory(str);
@@ -342,6 +345,8 @@ namespace base{
         istream >> str; evt.setLocation(venue(str));
         istream >> str; evt.setDescription(str);
         istream >> val; evt.setID(val);
+        istream >> dateTime; evt.setStartTime(dateTime);
+        istream >> dateTime; evt.setEndTime(dateTime);
 
         return istream;
     }

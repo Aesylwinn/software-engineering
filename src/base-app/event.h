@@ -43,8 +43,8 @@ namespace  base{
         QString getDescription() const;
         qint32 getID() const;
         QVector< QPair<QDateTime, QDateTime> > getTimes();
-        QDateTime getStartTime();
-        QDateTime getEndTime();
+        QDateTime getStartTime() const;
+        QDateTime getEndTime() const;
         qint64 getDaysTo();
 
         //adders
