@@ -293,12 +293,8 @@ void interestData::getMyInterests()
 
 void interestData::setMyInterest(QTreeWidgetItem *item, int col)
 {
-    QString tempItem;
     if(item->checkState(col) == Qt::Checked)
-    {
-        tempItem = item->text(col);
-        categories.push_back(tempItem);
-    }
+        categories.push_back(item->text(col));
 }
 
 void interestData::requestEvents() {
