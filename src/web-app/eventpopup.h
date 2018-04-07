@@ -3,6 +3,7 @@
 #define EVENTPOPUP_H
 
 #include <QDialog>
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class eventPopUp;
@@ -19,10 +20,12 @@ public:
 
 public slots:
     void openingCalendar();
+    void setInterest(QTreeWidgetItem *item, int col);
     void setHostInfo();
 
 private:
     Ui::eventPopUp *ui;
+    QString category;
 };
 
 #endif // EVENTPOPUP_H
