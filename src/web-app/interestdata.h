@@ -37,6 +37,7 @@ public slots:
     void createHost();
     void createEvent(base::Event newEvent);
     void getMyInterests();
+    void setMyInterest(QTreeWidgetItem* item, int col);
     void requestEvents();
     void requestMyEvents();
     void findMatches(int row, int col);
@@ -47,6 +48,7 @@ private:
     base::ClientNetworkMgr *mNetworkMgr;
     QVector<base::Event> globalMyEvents;
     QVector<base::Event> globalInterest;
+    QVector<QString> categories;
     qint32 mLoginRequest;
 	qint32 mCreateAccountRequest;
     qint32 mCreateEventRequest;

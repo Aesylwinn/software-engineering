@@ -204,7 +204,7 @@
             <enum>Unchecked</enum>
            </property>
            <property name="text">
-            <string>Japaniese</string>
+            <string>Japanese</string>
            </property>
            <property name="checkState">
             <enum>Unchecked</enum>
