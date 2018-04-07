@@ -95,27 +95,41 @@ bool DatabaseConnection::checkPassword(QString username, QString password)
 
 bool DatabaseConnection::createEvent(base::Event evt, qint64 hostID, qint64 venueID)
 {
-    QSqlQuery query(*db);
+    db->transaction();
 
-    //set db values
-    if (!query.prepare("INSERT INTO Event (id_host,standardOperation, recurring, displayName, id_category, id_venue, dateStart, dateEnd, timeStart, timeEnd, description)"
-                                 " VALUES (  :host,            FALSE,     FALSE,       :disp,        :cat,     :ven, :dateStrt,:dateEnd, :timeStrt,:timeEnd,        :bio)"))
-        throw std::runtime_error("Unable to create event, unable to prepare query");
-
-    query.bindValue(":host", hostID);
-    query.bindValue(":disp", evt.getName());
-    query.bindValue(":cat", 0);
-    query.bindValue(":ven", venueID);
-    query.bindValue(":dateStrt", evt.getStartTime().date());
-    query.bindValue(":dateEnd", evt.getEndTime().date());
-    query.bindValue(":timeStrt", evt.getStartTime().time());
-    query.bindValue(":timeEnd", evt.getEndTime().time());
-    query.bindValue(":bio", evt.getDescription());
-
-    if (!query.exec()) {
+    // Get category
+    qint64 categoryId = 0;
+    if (!getOrCreateCategoryId(evt.getCategory(), categoryId)) {
+        db->rollback();
         return false;
     }
 
+    // Create event
+    {
+        QSqlQuery query(*db);
+
+        //set db values
+        if (!query.prepare("INSERT INTO Event (id_host,standardOperation, recurring, displayName, id_category, id_venue, dateStart, dateEnd, timeStart, timeEnd, description)"
+                                     " VALUES (  :host,            FALSE,     FALSE,       :disp,        :cat,     :ven, :dateStrt,:dateEnd, :timeStrt,:timeEnd,        :bio)"))
+            throw std::runtime_error("Unable to create event, unable to prepare query");
+
+        query.bindValue(":host", hostID);
+        query.bindValue(":disp", evt.getName());
+        query.bindValue(":cat", categoryId);
+        query.bindValue(":ven", venueID);
+        query.bindValue(":dateStrt", evt.getStartTime().date());
+        query.bindValue(":dateEnd", evt.getEndTime().date());
+        query.bindValue(":timeStrt", evt.getStartTime().time());
+        query.bindValue(":timeEnd", evt.getEndTime().time());
+        query.bindValue(":bio", evt.getDescription());
+
+        if (!query.exec()) {
+            db->rollback();
+            return false;
+        }
+    }
+
+    db->commit();
     return true;
 }
 
@@ -170,6 +184,63 @@ bool DatabaseConnection::getOrCreateVenueId(venue location, qint64& id) {
 
     // Look it up
     return getVenueId(location, id);
+}
+
+bool DatabaseConnection::getCategory(qint64 id, QString& category)
+{
+    QSqlQuery query(*db);
+    QString statement = "SELECT displayName FROM Category where id = :id";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to get category, failed to prepare");
+
+    query.bindValue(":id", id);
+
+    if (query.exec()) {
+        category = query.value("displayName").toString();
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::getCategoryId(QString category, qint64 &id)
+{
+    QSqlQuery query(*db);
+    QString statement = "SELECT id FROM Category WHERE displayName = :cat";
+
+    if (!query.prepare(statement))
+        throw std::runtime_error("Unable to get category id, failed to prepare");
+
+    query.bindValue(":cat", category);
+
+    if (query.exec()) {
+        id = query.value("id").toInt();
+        return true;
+    }
+
+    return false;
+}
+
+bool DatabaseConnection::getOrCreateCategoryId(QString category, qint64 &id)
+{
+    if (getCategoryId(category, id)) {
+        return true;
+    }
+
+    // Add it
+    {
+        QSqlQuery query(*db);
+        QString statement = "INSERT INTO Category (displayName) VALUES (:disp)";
+
+        if (!query.prepare(statement))
+            throw std::runtime_error("Unable to create category, failed to prepare");
+
+        query.bindValue(":disp", category);
+        query.exec();
+    }
+
+    return getCategoryId(category, id);
 }
 
 bool DatabaseConnection::createAccount(QString username, QString password)
@@ -368,13 +439,9 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
     // Process events and matches
     for (const TempData& data : matchData) {
         Event evt;
-        venue ven;
         UserProfile profile;
-        qint64 venId;
 
-        getEvent(data.eventId, evt, venId);
-        getVenue(venId, ven);
-        evt.setLocation(ven);
+        getEvent(data.eventId, evt);
         events.push_back(evt);
 
         getUserProfile(data.userId, profile);
@@ -384,26 +451,43 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
     return true;
 }
 
-bool DatabaseConnection::getEvent(qint64 eventId, Event &evt, qint64& venueId)
+bool DatabaseConnection::getEvent(qint64 eventId, Event &evt)
 {
-    QSqlQuery query(*db);
-    QString statement = "SELECT * FROM Event WHERE id = :id";
+    qint64 venueId;
+    qint64 categoryId;
 
-    if (!query.prepare(statement))
-        throw std::runtime_error("Failed to get event, failed to prepare");
+    // Event
+    {
+        QSqlQuery query(*db);
+        QString statement = "SELECT * FROM Event WHERE id = :id";
 
-    query.bindValue(":id", eventId);
+        if (!query.prepare(statement))
+            throw std::runtime_error("Failed to get event, failed to prepare");
 
-    if (!query.exec())
-        return false;
+        query.bindValue(":id", eventId);
 
-    if (query.isSelect() && query.first()) {
-        readEvent(query, evt);
-        venueId = query.value("id_venue").toInt();
-        return true;
+        if (!query.exec())
+            return false;
+
+        if (query.isSelect() && query.first()) {
+            readEvent(query, evt);
+            venueId = query.value("id_venue").toInt();
+            categoryId = query.value("id_category").toInt();
+        } else
+            return false;
     }
 
-    return false;
+    // Venue
+    venue ven;
+    if (getVenue(venueId, ven))
+        evt.setLocation(ven);
+
+    // Category
+    QString category;
+    if (getCategory(categoryId, category))
+        evt.setCategory(category);
+
+    return true;
 }
 
 bool DatabaseConnection::getVenue(qint64 venueId, venue& ven) {
@@ -430,69 +514,114 @@ bool DatabaseConnection::getVenue(qint64 venueId, venue& ven) {
     return false;
 }
 
-bool DatabaseConnection::getEvents(QVector<base::Event>& events, QVector<qint64>& venueIds) {
-    // Create query
-    QSqlQuery query(*db);
-    QString statement = "SELECT * FROM Event";
+bool DatabaseConnection::getEvents(QVector<base::Event>& events) {
+    QVector<qint64> venueIds;
+    QVector<qint64> categoryIds;
 
-    if (!query.prepare(statement))
-        throw std::runtime_error("Unable to select events, unable to prepare query");
+    // Get events
+    {
+        // Create query
+        QSqlQuery query(*db);
+        QString statement = "SELECT * FROM Event";
 
-    // Run and process
-    if (!query.exec()) {
-        return false;
+        if (!query.prepare(statement))
+            throw std::runtime_error("Unable to select events, unable to prepare query");
+
+        // Run and process
+        if (!query.exec())
+            return false;
+
+        if (query.isSelect() && query.first()) {
+            do {
+                base::Event evt;
+                qint64 venueId, categoryId;
+
+                readEvent(query, evt);
+                venueId = query.value("id_venue").toInt();
+                categoryId = query.value("id_category").toInt();
+
+                events.push_back(evt);
+                venueIds.push_back(venueId);
+                categoryIds.push_back(categoryId);
+            } while (query.next());
+        }
+        else return false;
     }
 
-    if (query.isSelect() && query.first()) {
-        do {
-            base::Event evt;
-            qint64 venueId;
+    // Venues
+    for (int i = 0; i < venueIds.count(); ++i) {
+        venue ven;
 
-            readEvent(query, evt);
-            venueId = query.value("id_venue").toInt();
-
-            events.push_back(evt);
-            venueIds.push_back(venueId);
-        } while (query.next());
-
-        return true;
+        if (getVenue(venueIds[i], ven))
+            events[i].setLocation(ven);
     }
 
-    return false;
+    // Categories
+    for (int i = 0; i < categoryIds.count(); ++i) {
+        QString category;
+
+        if (getCategory(categoryIds[i], category))
+            events[i].setCategory(category);
+    }
+
+    return true;
 }
 
-bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64>& venueIds) {
-    // Create query
-    QSqlQuery query(*db);
-    QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
+bool DatabaseConnection::getMyEvents(qint64 userId, QVector<base::Event>& events) {
+    QVector<qint64> venueIds;
+    QVector<qint64> categoryIds;
 
-    if (!query.prepare(statement))
-        throw std::runtime_error("Unable to select user events, unable to prepare query");
+    // Get my events
+    {
+        // Create query
+        QSqlQuery query(*db);
+        QString statement = "SELECT * from Event where id in (SELECT id_event from Join_Event where id_user = :id)";
 
-    query.bindValue(":id", userId);
+        if (!query.prepare(statement))
+            throw std::runtime_error("Unable to select user events, unable to prepare query");
 
-    // Run and process
-    if (!query.exec()) {
-        return false;
+        query.bindValue(":id", userId);
+
+        // Run and process
+        if (!query.exec())
+            return false;
+
+        if (query.isSelect() && query.first()) {
+            do {
+                base::Event evt;
+                qint64 venueId;
+                qint64 categoryId;
+                QDateTime dateTime;
+
+                readEvent(query, evt);
+                venueId = query.value("id_venue").toInt();
+                categoryId = query.value("id_category").toInt();
+
+                events.push_back(evt);
+                venueIds.push_back(venueId);
+                categoryIds.push_back(categoryId);
+            } while (query.next());
+        }
+        else return false;
     }
 
-    if (query.isSelect() && query.first()) {
-        do {
-            base::Event evt;
-            qint64 venue;
-            QDateTime dateTime;
+    // Venues
+    for (int i = 0; i < venueIds.size(); ++i) {
+        venue ven;
 
-            readEvent(query, evt);
-            venue = query.value("id_venue").toInt();
-
-            events.push_back(evt);
-            venueIds.push_back(venue);
-        } while (query.next());
-
-        return true;
+        if (getVenue(venueIds[i], ven))
+            events[i].setLocation(ven);
     }
 
-    return false;
+    // Categories
+    for (int i = 0; i < categoryIds.size(); ++i) {
+        QString category;
+
+        if (getCategory(categoryIds[i], category))
+            events[i].setCategory(category);
+    }
+
+    return true;
 }
 
 bool DatabaseConnection::findMatches(qint64 userId, qint64 eventId, QVector<UserProfile>& matches) {

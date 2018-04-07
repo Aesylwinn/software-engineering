@@ -32,15 +32,19 @@ namespace base {
         bool getVenueId(venue location, qint64& id);
         bool getOrCreateVenueId(venue location, qint64& id);
 
+        bool getCategory(qint64 id, QString &category);
+        bool getCategoryId(QString category, qint64& id);
+        bool getOrCreateCategoryId(QString category, qint64& id);
+
         bool getUserId(QString username, qint64& id);
         bool isHost(QString username);
         bool getUserProfile(qint64 userId, UserProfile& profile);
         bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events);
 
-        bool getEvent(qint64, Event& event, qint64& venueId);
+        bool getEvent(qint64, Event& event);
         bool getVenue(qint64 venueId, venue& ven);
-        bool getEvents(QVector<base::Event>& events, QVector<qint64>& venueIds);
-        bool getMyEvents(qint64 userId, QVector<base::Event>& events, QVector<qint64>& venueIds);
+        bool getEvents(QVector<base::Event>& events);
+        bool getMyEvents(qint64 userId, QVector<base::Event>& events);
         bool findMatches(qint64 userId, qint64 eventId, QVector<UserProfile>& matches);
 
         bool joinEvent(qint64 userId, qint64 eventId);
