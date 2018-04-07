@@ -514,8 +514,6 @@ bool DatabaseConnection::getUserInterests(qint64 userId, QVector<QString> &inter
             catIds.push_back(query.value("id_category").toInt());
         } while (query.next());
     }
-    else
-        return false;
 
 
     QString categoryName;
