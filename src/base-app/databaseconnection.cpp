@@ -135,7 +135,38 @@ bool DatabaseConnection::createEvent(base::Event evt, qint64 hostID, qint64 venu
 
 bool DatabaseConnection::setUserInterests(qint64 userId, QVector<QString> interests)
 {
-    // TODO
+    int fails = 0;
+
+    for (int i = 0; i< interests.size(); i++)
+    {
+        db->transaction();
+        QSqlQuery query(*db);
+
+        qint64 catId = 0;
+
+        if(!getOrCreateCategoryId(interests[i], catId))
+        {
+            fails++;
+            db->rollback();
+            continue;
+        }
+
+        if(!query.prepare("INSERT INTO Join_Category (id_user, id_category) VALUES (:user, :category"))
+            throw std::runtime_error("Unable to set interest, preparation failed");
+
+        query.bindValue(":user", userId);
+        query.bindValue(":category", catId);
+
+        if(!query.exec())
+        {
+            //fail state response
+            db->rollback();
+        }
+
+        db->commit();
+    }
+
+
     return true;
 }
 
@@ -465,8 +496,35 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
 
 bool DatabaseConnection::getUserInterests(qint64 userId, QVector<QString> &interests)
 {
-    // TODO
-    interests.push_back("Fun");
+    QSqlQuery query(*db);
+
+    QString statement = "SELECT id_category FROM Join_Category WHERE id_user = :id";
+    if(!query.prepare(statement))
+        throw std::runtime_error("Failed to get interests, Join_Category select statement did not prepare");
+
+    query.bindValue(":id", userId);
+
+    if(!query.exec())
+        return false;
+
+    QVector<qint64> catIds;
+
+    if (query.isSelect() && query.first()) {
+        do {
+            catIds.push_back(query.value("id_category").toInt());
+        } while (query.next());
+    }
+    else
+        return false;
+
+
+    QString categoryName;
+    for(int i = 0; i < catIds.size(); i++)
+    {
+        if(getCategory(catIds[i],categoryName))
+            interests.push_back(categoryName);
+    }
+
     return true;
 }
 
@@ -716,6 +774,8 @@ UserData::UserData(QObject *parent, QString dbName, QString username, QString pa
         mUserId = -1;
     }
 }
+
+
 
 
 }
