@@ -38,10 +38,10 @@ namespace base {
         bool getOrCreateCategoryId(QString category, qint64& id);   //sets id parameter, creating new entry if one does not exist for category parameter
 
         bool getUserId(QString username, qint64& id);   //sets id parameter to id for matching username
-        bool isHost(QString username);
-        bool getUserProfile(qint64 userId, UserProfile& profile);
-        bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events);
-        bool getUserInterests(qint64 userId, QVector<QString>& interests);
+        bool isHost(QString username); //checks if user is host
+        bool getUserProfile(qint64 userId, UserProfile& profile);   //set profile parameter object
+        bool getMatches(qint64 userId, QVector<UserProfile>& profiles, QVector<Event>& events); //retrieves vectors of matched profiles and which events they are for
+        bool getUserInterests(qint64 userId, QVector<QString>& interests);  //retreieves vector of interest categories for matching user id
 
         bool getEvent(qint64, Event& event);
         bool getVenue(qint64 venueId, venue& ven);

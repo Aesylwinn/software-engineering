@@ -151,7 +151,7 @@ bool DatabaseConnection::setUserInterests(qint64 userId, QVector<QString> intere
             continue;
         }
 
-        if(!query.prepare("INSERT INTO Join_Category (id_user, id_category) VALUES (:user, :category"))
+        if(!query.prepare("INSERT INTO Join_Category (id_user, id_category) VALUES (:user, :category)"))
             throw std::runtime_error("Unable to set interest, preparation failed");
 
         query.bindValue(":user", userId);
@@ -496,23 +496,27 @@ bool DatabaseConnection::getMatches(qint64 userId, QVector<UserProfile> &profile
 
 bool DatabaseConnection::getUserInterests(qint64 userId, QVector<QString> &interests)
 {
-    QSqlQuery query(*db);
-
-    QString statement = "SELECT id_category FROM Join_Category WHERE id_user = :id";
-    if(!query.prepare(statement))
-        throw std::runtime_error("Failed to get interests, Join_Category select statement did not prepare");
-
-    query.bindValue(":id", userId);
-
-    if(!query.exec())
-        return false;
-
     QVector<qint64> catIds;
 
-    if (query.isSelect() && query.first()) {
-        do {
-            catIds.push_back(query.value("id_category").toInt());
-        } while (query.next());
+    {
+        QSqlQuery query(*db);
+
+        QString statement = "SELECT id_category FROM Join_Category WHERE id_user = :id";
+        if(!query.prepare(statement))
+            throw std::runtime_error("Failed to get interests, Join_Category select statement did not prepare");
+
+        query.bindValue(":id", userId);
+
+        if(!query.exec())
+            return false;
+
+
+
+        if (query.isSelect() && query.first()) {
+            do {
+                catIds.push_back(query.value("id_category").toInt());
+            } while (query.next());
+        }
     }
 
 
