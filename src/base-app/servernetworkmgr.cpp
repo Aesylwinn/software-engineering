@@ -53,15 +53,6 @@ namespace base {
                                 dbConnection.createProfile(request.profile);
 
                                 response = { IsValid, "Account created" };
-
-                                // Login automatically
-
-                                // Get rid of the old
-                                removeUserData(socket);
-
-                                // Add the new
-                                UserData* userData = new UserData(socket, DbName, request.username, request.password);
-                                userData->setObjectName(UserData::ObjectName);
                             }
                             else {
                                 response = { NotValid, "Username taken" };
@@ -69,6 +60,17 @@ namespace base {
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
                         }
+
+
+                        // Login automatically
+
+                        // Get rid of the old
+                        removeUserData(socket);
+
+                        // Add the new
+                        UserData* userData = new UserData(socket, DbName, request.username, request.password);
+                        userData->setObjectName(UserData::ObjectName);
+
                         // Send response
                         sendResponse(socket, obj.createResponse(response));
                     }
