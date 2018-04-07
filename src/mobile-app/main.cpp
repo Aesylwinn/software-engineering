@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
             "border-width:1px;"
             "border-radius:30px;"
             "border-color: white;"
-            "max-width:80px;"
-            "max-height:60px;"
             "min-width:80px;"
             "min-height:60px"
         "}"
