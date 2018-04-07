@@ -196,7 +196,10 @@ bool DatabaseConnection::getCategory(qint64 id, QString& category)
 
     query.bindValue(":id", id);
 
-    if (query.exec()) {
+    if (!query.exec())
+        return false;
+
+    if (query.isSelect() && query.first()) {
         category = query.value("displayName").toString();
         return true;
     }
@@ -214,7 +217,10 @@ bool DatabaseConnection::getCategoryId(QString category, qint64 &id)
 
     query.bindValue(":cat", category);
 
-    if (query.exec()) {
+    if (!query.exec())
+        return false;
+
+    if (query.isSelect() && query.first()) {
         id = query.value("id").toInt();
         return true;
     }
