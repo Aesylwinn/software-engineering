@@ -288,9 +288,9 @@ void interestData::getMyInterests()
     QString item;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 5; j++){
-            if(ui->interestSelect->itemAt(i,j)->isSelected())
+            if(ui->interestSelect->itemAt(i,j)->checkState(j) == Qt::Checked)
             {
-                item = ui->interestSelect->itemAt(i,j)->text(i);
+                item = ui->interestSelect->itemAt(i,j)->text(j);
                 categories.push_back(item);
             }
         }

@@ -39,9 +39,9 @@ void eventPopUp::setHostInfo()
     // TODO: fix this
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 4; j++){
-            if(ui->category->itemAt(i,j)->isSelected())
+            if(ui->category->itemAt(i,j)->checkState(j) == Qt::Checked)
             {
-                categories = ui->category->itemAt(i,j)->text(i);
+                categories = ui->category->itemAt(i,j)->text(j);
             }
         }
     tempEvent.setName(ui->eventNameEd->text());
