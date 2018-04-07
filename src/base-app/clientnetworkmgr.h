@@ -13,9 +13,13 @@ namespace base {
     class BASEAPPSHARED_EXPORT ClientNetworkMgr : public QObject {
         Q_OBJECT
     public:
+        //constructor
         ClientNetworkMgr(QObject* parent=NULL);
 
+        //connects client to server
         void connect(QString address, int port);
+
+        //disconnects client from server
         void disconnect();
 
         // The returned int is the identifier to listen for
@@ -26,7 +30,10 @@ namespace base {
         qint32 mRequestCounter;
 
     private slots:
+        //tries to read a packet from the server
         void readyRead();
+
+        //if the connection encounters an error, disconnect
         void socketError(QAbstractSocket::SocketError err);
 
     signals:
