@@ -22,7 +22,7 @@
         <widget class="QLabel" name="eventName">
          <property name="maximumSize">
           <size>
-           <width>75</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
@@ -49,7 +49,7 @@
         <widget class="QLabel" name="eventAddress">
          <property name="maximumSize">
           <size>
-           <width>75</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
@@ -59,7 +59,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="eventAddressEd">
          <property name="maximumSize">
           <size>
            <width>200</width>
@@ -76,7 +76,7 @@
         <widget class="QLabel" name="eventPhone">
          <property name="maximumSize">
           <size>
-           <width>75</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
@@ -86,7 +86,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_2">
+        <widget class="QLineEdit" name="eventPhoneEd">
          <property name="maximumSize">
           <size>
            <width>150</width>
@@ -204,7 +204,7 @@
             <enum>Unchecked</enum>
            </property>
            <property name="text">
-            <string>Japaniese</string>
+            <string>Japanese</string>
            </property>
            <property name="checkState">
             <enum>Unchecked</enum>
@@ -300,45 +300,33 @@
          <property name="title">
           <string>Reocurring</string>
          </property>
-         <widget class="QWidget" name="layoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>102</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QRadioButton" name="yes">
-             <property name="text">
-              <string>Yes</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="no">
-             <property name="text">
-              <string>No</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QCalendarWidget" name="recurringDate">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>40</y>
-            <width>280</width>
-            <height>156</height>
-           </rect>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QRadioButton" name="yes">
+              <property name="text">
+               <string>Yes</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="no">
+              <property name="text">
+               <string>No</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCalendarWidget" name="recurringDate">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

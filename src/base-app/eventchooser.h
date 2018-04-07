@@ -13,7 +13,7 @@ namespace base{
     {
     public:
         EventChooser();
-        QVector<Event> narrow(QVector<Event> list, qint32 numEvents);
+        QVector<Event> narrow(QVector<QString> interests, QVector<Event> list, qint32 numEvents);
     private:
     };
 }

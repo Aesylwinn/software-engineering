@@ -52,6 +52,7 @@ interestData::interestData(QWidget *parent) :
     connect(ui->refreshMyEvents, SIGNAL(clicked()), this, SLOT(requestMyEvents()));
     connect(ui->eventStream, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(findMatches(int,int)));
     connect(ui->interestStream, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(joiningEvents(int,int)));
+    connect(ui->interestSelect, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(setMyInterest(QTreeWidgetItem*,int)));
 }
 
 interestData::~interestData()
@@ -284,20 +285,20 @@ void interestData::createEvent(Event newEvent) {
 
 void interestData::getMyInterests()
 {
-    QVector<QString> categories;
-    QString item;
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 5; j++){
-            if(ui->interestSelect->itemAt(i,j)->isSelected())
-            {
-                item = ui->interestSelect->itemAt(i,j)->text(i);
-                categories.push_back(item);
-            }
-        }
     SetInterestsRequest data;
     data.interests = categories;
 
     mSetInterestsRequest = mNetworkMgr->sendRequest(NetworkObject(data));
+}
+
+void interestData::setMyInterest(QTreeWidgetItem *item, int col)
+{
+    QString tempItem;
+    if(item->checkState(col) == Qt::Checked)
+    {
+        tempItem = item->text(col);
+        categories.push_back(tempItem);
+    }
 }
 
 void interestData::requestEvents() {

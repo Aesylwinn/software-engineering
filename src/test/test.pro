@@ -15,7 +15,7 @@ SOURCES += \
     tst_venue.cpp \
     tst_databaseconnection.cpp \
     tst_event.cpp \
-    tst_eventlist.cpp
+    tst_eventchooser.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base-app/release/ -lbase-app
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base-app/debug/ -lbase-app

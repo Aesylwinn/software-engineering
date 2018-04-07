@@ -88,3 +88,9 @@ create table Join_Event(
     id_event INT NOT NULL,
     rsvp BOOLEAN
 );
+
+create table Join_Category(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL,
+	id_category INT NOT NULL
+);

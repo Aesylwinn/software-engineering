@@ -46,19 +46,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="venueName">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Venue Name</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QLabel" name="venueAddress">
      <property name="text">
       <string>Venue Address</string>

@@ -7,6 +7,7 @@ MatchItemWidget::MatchItemWidget(base::UserProfile profile, base::Event evt, QWi
 {
     mUi->setupUi(this);
     mUi->userName->setText(profile.getFirstName() + " " + profile.getLastName());
+    mUi->email->setText(profile.getEmail());
     mUi->eventName->setText(evt.getName());
 }
 

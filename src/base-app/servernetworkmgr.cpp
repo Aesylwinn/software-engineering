@@ -60,6 +60,17 @@ namespace base {
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
                         }
+
+
+                        // Login automatically
+
+                        // Get rid of the old
+                        removeUserData(socket);
+
+                        // Add the new
+                        UserData* userData = new UserData(socket, DbName, request.username, request.password);
+                        userData->setObjectName(UserData::ObjectName);
+
                         // Send response
                         sendResponse(socket, obj.createResponse(response));
                     }
@@ -158,11 +169,18 @@ namespace base {
 
                         try {
                             DatabaseConnection dbConnection(DbName);
-                            if (dbConnection.getEvents(response.events)) {
-                                // Trim count, eventually choose best fit
-                                response.events = EventChooser().narrow(response.events, request.count);
-                            } else {
-                                qInfo("failed to retrieve any events");
+                            QVector<QString> interests;
+
+                            UserData* userData = getUserData(socket);
+                            if (userData && userData->isValid()) {
+                                if (dbConnection.getUserInterests(userData->getUserId(), interests)) {
+                                    if (dbConnection.getEvents(response.events)) {
+                                        // Trim count, eventually choose best fit
+                                        response.events = EventChooser().narrow(interests, response.events, request.count);
+                                    } else {
+                                        qInfo("failed to retrieve any events");
+                                    }
+                                }
                             }
                         } catch (std::exception& e) {
                             qInfo("db error: %s", e.what());
@@ -269,11 +287,19 @@ namespace base {
                 case PT_SetInterestsRequest:
                     {
                         SetInterestsRequest request = obj.convert<SetInterestsRequest>();
-                        SetInterestsResponse response = { IsValid, "Got your interests" };
+                        SetInterestsResponse response = { NotValid, "Unable to set interests" };
 
                         qInfo("set interests: %d", request.interests.count());
 
-                        // TODO
+                        UserData* userData = getUserData(socket);
+                        if (userData && userData->isValid()) {
+                            DatabaseConnection conn(DbName);
+                            if (conn.setUserInterests(userData->getUserId(), request.interests)) {
+                                response = { IsValid, "Got your interests" };
+                            }
+                        } else {
+                            response = { NotValid, "Not logged in" };
+                        }
 
                         sendResponse(socket, obj.createResponse(response));
                     }

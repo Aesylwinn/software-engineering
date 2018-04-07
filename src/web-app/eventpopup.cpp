@@ -11,6 +11,7 @@ eventPopUp::eventPopUp(QWidget *parent) :
     connect(ui->yes, SIGNAL(clicked()), this, SLOT(openingCalendar()));
     connect(ui->no, SIGNAL(clicked()), this, SLOT(openingCalendar()));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(setHostInfo()));
+    connect(ui->category, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(setInterest(QTreeWidgetItem*,int)));
 
     ui->fromDate->setDateTime(QDateTime::currentDateTime());
     ui->toDate->setDateTime(QDateTime::currentDateTime());
@@ -30,26 +31,25 @@ void eventPopUp::openingCalendar()
         ui->recurringDate->setEnabled(false);
 }
 
+void eventPopUp::setInterest(QTreeWidgetItem *item, int col)
+{
+    if(item->checkState(col) == Qt::Checked)
+        category = item->text(col);
+}
+
 void eventPopUp::setHostInfo()
 {
     interestData *info = (interestData*)parent();
-    QString categories;
     base::Event tempEvent;
     base::venue tempVenue;
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 5; j++){
-            if(ui->category->itemAt(i,j)->isSelected())
-            {
-                categories = ui->category->itemAt(i,j)->text(i);
-            }
-        }
+
     tempEvent.setName(ui->eventNameEd->text());
     tempEvent.setDescription(ui->descriptionText->toPlainText());
-    tempEvent.setCategory(categories);
+    tempEvent.setCategory(category);
     tempEvent.setStartTime(ui->fromDate->dateTime());
     tempEvent.setEndTime(ui->toDate->dateTime());
-    tempVenue.setAddress(ui->eventAddress->text());
-    tempVenue.setPhoneNumber(ui->eventPhone->text());
+    tempVenue.setAddress(ui->eventAddressEd->text());
+    tempVenue.setPhoneNumber(ui->eventPhoneEd->text());
     tempEvent.setLocation(tempVenue);
 
     info->createEvent(tempEvent);

@@ -11,6 +11,25 @@ CreateEventPage::CreateEventPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     , mNetworkMgr(mgr)
     , mCreateEventTicket(-1)
 {
+    const QStringList Categories = {
+        "Hip-Hop",
+        "Rock",
+        "Country",
+        "Classic Rock",
+        "Football",
+        "Basketball",
+        "Soccer",
+        "Italian",
+        "Japanese",
+        "Thai",
+        "Mexican",
+        "Beaches",
+        "Bar Scene",
+        "Reading",
+        "Video Games",
+        "Fun"
+    };
+
     if (!mgr) {
         throw std::runtime_error("CreateEventPage requires network mgr");
     } else {
@@ -18,6 +37,7 @@ CreateEventPage::CreateEventPage(base::ClientNetworkMgr* mgr, QWidget *parent)
     }
 
     mUi->setupUi(this);
+    mUi->categoryField->addItems(Categories);
     mUi->startTime->setDateTime(QDateTime::currentDateTime());
     mUi->endTime->setDateTime(QDateTime::currentDateTime());
 
@@ -60,7 +80,7 @@ void CreateEventPage::onSubmitClicked(bool)
     base::venue venue;
 
     request.data.setName(mUi->nameField->text());
-    request.data.setCategory(mUi->categoryField->text());
+    request.data.setCategory(mUi->categoryField->currentText());
 
     venue.setName(mUi->venueNameField->text());
     venue.setAddress(mUi->venueAddressField->text());
