@@ -938,7 +938,7 @@ Get Verified and share an experience with someone whose interests are cohesive w
                    </item>
                    <item>
                     <property name="text">
-                     <string>Rock</string>
+                     <string>Pop</string>
                     </property>
                     <property name="checkState">
                      <enum>Unchecked</enum>
@@ -950,7 +950,7 @@ Get Verified and share an experience with someone whose interests are cohesive w
                      <enum>Unchecked</enum>
                     </property>
                     <property name="text">
-                     <string>Japaniese</string>
+                     <string>Japanese</string>
                     </property>
                     <property name="checkState">
                      <enum>Unchecked</enum>
