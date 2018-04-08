@@ -9,6 +9,7 @@ namespace Ui {
 class CreateEventPage;
 }
 
+/* Implemented by Darius and Kyle */
 class CreateEventPage : public QWidget
 {
     Q_OBJECT

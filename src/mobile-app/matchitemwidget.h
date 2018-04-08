@@ -10,6 +10,7 @@ namespace Ui {
 class MatchItemWidget;
 }
 
+/* Implemented by Kyle and Darius */
 class MatchItemWidget : public QWidget
 {
     Q_OBJECT

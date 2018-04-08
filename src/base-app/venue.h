@@ -9,6 +9,7 @@
 #include "base-app_global.h"
 
 namespace base {
+    /* Implemented by Yianni and Anthony */
     class BASEAPPSHARED_EXPORT venue{
         public:
             venue();

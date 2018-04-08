@@ -1,4 +1,3 @@
-/*Written by Darius and Parker*/
 #ifndef INTERESTDATA_H
 #define INTERESTDATA_H
 
@@ -13,6 +12,7 @@ namespace Ui {
 class interestData;
 }
 
+/*Written by Darius and Parker*/
 class interestData : public QDialog
 {
     Q_OBJECT
@@ -50,7 +50,7 @@ private:
     QVector<base::Event> globalInterest;
     QVector<QString> categories;
     qint32 mLoginRequest;
-	qint32 mCreateAccountRequest;
+    qint32 mCreateAccountRequest;
     qint32 mCreateEventRequest;
     qint32 mCreateHostRequest;
     qint32 mSuggestEventsRequest;

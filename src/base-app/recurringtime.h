@@ -6,6 +6,7 @@
 #include <QObject>
 
 namespace base {
+    /* Implemented by Kyle and Yianni */
     // A class to represent times that occur on a weekly basis
     class BASEAPPSHARED_EXPORT RecurringTime : public QObject {
         Q_OBJECT
@@ -29,10 +30,10 @@ namespace base {
         int getMinute();
         QString getDays();
 
-		void setHour(int hour);
-		void setMinute(int minute);
+        void setHour(int hour);
+        void setMinute(int minute);
         // The dayMask can be 0 to all of the days ORed together
-		void setAvailableDays(int dayMask);
+        void setAvailableDays(int dayMask);
 
         void enableDays(int dayMask);
         void disableDays(int dayMask);

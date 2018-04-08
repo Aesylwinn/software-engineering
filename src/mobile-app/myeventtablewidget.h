@@ -9,6 +9,7 @@ namespace Ui {
 class MyEventTableWidget;
 }
 
+/* Implemented by Kyle and Darius */
 class MyEventTableWidget : public QWidget
 {
     Q_OBJECT

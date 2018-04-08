@@ -1,4 +1,4 @@
-/*Implemented by Jake*/
+
 /*Chooses a random list of a certain number of events given a list of events*/
 
 #ifndef EVENTCHOOSER_H
@@ -9,6 +9,7 @@
 #include <QVector>
 
 namespace base{
+    /*Implemented by Jake and Kyle */
     class BASEAPPSHARED_EXPORT EventChooser
     {
     public:
