@@ -19,10 +19,20 @@ matches::~matches()
 
 void matches::displayMatches(QVector<base::UserProfile> match, QVector<base::Event> event)
 {
-    ui->tableWidget->setRowCount(match.size());
-    for (int i = 0; i < match.size(); i++)
+    QVector<base::UserProfile> uniqueMatches;
+    for( int i = 0; i < match.size(); i++ )
     {
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(match[i].getFirstName()+ " " +match[i].getLastName()));
+        if(!uniqueMatches.contains(match[i]))
+        {
+            uniqueMatches.push_back(match[i]);
+        }
+    }
+
+    ui->tableWidget->setRowCount(uniqueMatches.size());
+    for (int i = 0; i < uniqueMatches.size(); i++)
+    {
+
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(uniqueMatches[i].getFirstName()+ " " +uniqueMatches[i].getLastName()));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(event[i].getName()));
     }
 }
