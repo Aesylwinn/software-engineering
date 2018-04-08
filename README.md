@@ -151,17 +151,44 @@ To run the tests (See the Google Test Framework section above to set it up):
 1. The web-app
     * The application opens without crashing when ran
 	* The user can create a new account on the "Sign Up" page by filling in
-	   "Username", "New Password", "Confirm Password" and clicking on
-	   "Create Account"
-	* The user can login to their created account by filling in
-	   "Email or Username" and "Password" and clicking "Login"
+	   the "Sign Up, It's Free!" section and clicking "Create Account"
+	* A new user can choose their interests when first signing up on the
+	   "What Interests You?" page
+	* The user can upgrade to a host account on the "Sign Up" page by filling
+	   in the "Interested in being a host?" section and clicking "Create Host"
+	* The user can login to their created account by filling in "Username" and
+	   "Password" and clicking "Login"
 	* The user can click "Get Verified" to see a popup where they can enter
-	   extra information about themselves.
+	   extra information about themselves
+	* The user can see events they may be interested in attending on the
+	   "Profile" page under "My Interest Stream" after logging in
+	* The user can double click an event to join an event.
+	* The user can see events they have joined on the "Profile" page under
+	   "My Event Stream" after clicking "Refresh My Events"
+	* The user can get matched at an event that others are attending by double
+	   clicking on the event in the "My Event Stream" section
 	* The user can click "See Dates" to see a popup where they can check
-	   what matches are available.
+	   what matches they have after clicking "Refresh"
+	* A host account can create an event by going to the "Host" tab, clicking
+	   "Create Event", and filling out the relevant information
 	   
 2. The mobile-app
     * The application opens without crashing when ran
+	* The user can create a new account on the first page by clicking
+	   "Register" and filling out their information.
+	* The user can login from the first page by filling in the "Username" and
+	   "Password" fields and logging in.
+	* The user can see events they may be interested in attending on the
+	   main page under the "Events" section
+	* The user can join an event by clicking the "Join" button
+	* The user can see what events they have joined on the main page under the
+	   "My Events" section after clicking "Refresh"
+	* The user can find a match at an event by clicking "Find Match" in an event
+	   in the "My Events" section
+	* The user can see what matches they have by clicking "Matches" on the main
+	   page
+	* The user can create a new event by clicking "Create Event" and filling out
+	   the relevant information
 
 # Class diagram
 
