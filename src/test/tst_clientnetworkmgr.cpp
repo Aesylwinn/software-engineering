@@ -14,6 +14,8 @@
 using namespace testing;
 using namespace base;
 
+/* Implemented by Kyle and Anthony */
+
 TEST(ClientNetworkMgr, connection) {
     // Workaround for const char* to char* issue
     char AppName[] = { 'T', 'S', 'T', '\n' };

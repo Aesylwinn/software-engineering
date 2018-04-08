@@ -9,6 +9,7 @@ namespace Ui {
 class RegisterPage;
 }
 
+/* Implemented by Kyle and Darius */
 class RegisterPage : public QWidget
 {
     Q_OBJECT

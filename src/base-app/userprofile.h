@@ -8,6 +8,7 @@
 #include "base-app_global.h"
 
 namespace base {
+    /* Implemented by Kyle and Anthony */
     class BASEAPPSHARED_EXPORT UserProfile
     {
     public:

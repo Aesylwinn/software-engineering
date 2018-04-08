@@ -8,6 +8,7 @@ namespace Ui {
 class matches;
 }
 
+/*Written by Darius and Kyle*/
 class matches : public QDialog
 {
     Q_OBJECT

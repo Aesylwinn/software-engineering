@@ -1,4 +1,3 @@
-/*Written by Darius and Parker*/
 #ifndef EVENTPOPUP_H
 #define EVENTPOPUP_H
 
@@ -9,6 +8,7 @@ namespace Ui {
 class eventPopUp;
 }
 
+/*Written by Darius and Parker*/
 class eventPopUp : public QDialog
 {
     Q_OBJECT

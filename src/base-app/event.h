@@ -1,5 +1,3 @@
-/*Implemented by Jake and Anthony*/
-
 #ifndef EVENT_H
 #define EVENT_H
 
@@ -12,6 +10,8 @@
 #include "base-app_global.h"
 
 namespace  base{
+    /* Implemented by Jake and Anthony */
+    /* Functionality added by Jake and Yianni */
     class BASEAPPSHARED_EXPORT Event
     {
     public:

@@ -8,6 +8,9 @@
 #include "userprofile.h"
 
 namespace base {
+    /* Implemented by Kyle and Anthony */
+    /* Some packets partially implemented by Darius and Parker */
+
     // Constants used to ensure consistency between the server and clients
     const qint32 IsValid = 1;
     const qint32 NotValid = 0;

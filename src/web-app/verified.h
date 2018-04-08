@@ -8,6 +8,7 @@ namespace Ui {
 class Verified;
 }
 
+/*Written by Darius and Parker*/
 class Verified : public QDialog
 {
     Q_OBJECT

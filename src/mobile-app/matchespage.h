@@ -9,6 +9,7 @@ namespace Ui {
 class MatchesPage;
 }
 
+/* Implemented by Kyle and Darius */
 class MatchesPage : public QWidget
 {
     Q_OBJECT

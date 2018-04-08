@@ -14,6 +14,8 @@
 using namespace testing;
 using namespace base;
 
+/* Implemented by Yianni and Jake */
+
 TEST(Event, startTime) {
     Event obj;
 

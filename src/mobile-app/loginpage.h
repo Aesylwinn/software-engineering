@@ -9,6 +9,7 @@ namespace Ui {
 class LoginPage;
 }
 
+/* Implemented by Kyle And Darius */
 class LoginPage : public QWidget
 {
     Q_OBJECT

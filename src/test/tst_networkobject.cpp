@@ -14,6 +14,8 @@
 using namespace testing;
 using namespace base;
 
+/* Implemented by Kyle and Anthony */
+
 TEST(NetworkObject, defaultCtor) {
     NetworkObject netObj;
     ASSERT_EQ(netObj.getPayloadType(), PT_None);

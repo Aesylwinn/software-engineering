@@ -10,6 +10,8 @@
 using namespace testing;
 using namespace base;
 
+/* Implemented by Kyle and Anthony */
+
 bool testDbIsAvailable() {
     try {
         DatabaseConnection db("test");

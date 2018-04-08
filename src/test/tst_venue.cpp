@@ -11,6 +11,8 @@
 using namespace testing;
 using namespace base;
 
+/* Implemented by Yianni and Anthony */
+
 TEST(venue, defaultCtor) {
     venue obj;
     ASSERT_EQ(obj.getName(), QString(""));

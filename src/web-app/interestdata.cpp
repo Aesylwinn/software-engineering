@@ -171,18 +171,20 @@ void interestData::popUpWindow()
     {
         eventPopUp* popInstance = new eventPopUp(this);
         popInstance->show();
+        popInstance->setAttribute(Qt::WA_DeleteOnClose);
     }
     if (button == ui->GetVerifiedB)
     {
         Verified* popInstance = new Verified(this);
         popInstance->show();
+        popInstance->setAttribute(Qt::WA_DeleteOnClose);
     }
 
     if (button == ui->matchB)
     {
         matches* popInstance = new matches(this, mNetworkMgr);
         popInstance->show();
-
+        popInstance->setAttribute(Qt::WA_DeleteOnClose);
     }
 }
 //sets the whole application to the default state
@@ -330,7 +332,7 @@ void interestData::joiningEvents(int row, int col)
 }
 
 void interestData::checkResponse(NetworkObject response) {
-    qInfo("Packet Received");
+    qInfo("Packet Received: %d", response.getPayloadType());
     if (response.getTicket() == mLoginRequest) {
         // Reset ticket
         mLoginRequest = -1;
@@ -434,7 +436,7 @@ void interestData::checkResponse(NetworkObject response) {
         mJoinEventRequest = -1;
         if (response.getPayloadType() == PT_JoinEventResponse) {
             JoinEventResponse info = response.convert<JoinEventResponse>();
-            qInfo("event joined: %d", info.valid, qUtf8Printable(info.details));
+            qInfo("event joined: %d msg: %s", info.valid, qUtf8Printable(info.details));
             if (info.valid) {
                 QMessageBox messageBox;
                 messageBox.information(0, "Success", "Thanks for joining!");
@@ -461,15 +463,20 @@ void interestData::checkResponse(NetworkObject response) {
         mSetInterestsRequest = -1;
         if(response.getPayloadType() == PT_SetInterestsResponse){
             SetInterestsResponse info = response.convert<SetInterestsResponse>();
-            qInfo("interests received: %d", info.valid, qUtf8Printable(info.details));
+            qInfo("interests received: %d msg: %s", info.valid, qUtf8Printable(info.details));
         }
     }
     else if (response.getTicket() == mFindMatchesRequest){
         mFindMatchesRequest = -1;
         if (response.getPayloadType() == PT_FindMatchResponse){
             FindMatchResponse info = response.convert<FindMatchResponse>();
-            qInfo("matches received: %d", info.valid, qPrintable(info.details));
+            qInfo("matches received: %d msg: %s", info.valid, qPrintable(info.details));
             //How do we get the names of the matches??
+            if (info.valid) {
+                QMessageBox::information(this, "Success", "Found a match!");
+            } else {
+                QMessageBox::critical(this, "Error", "Sorry, we were unable to find you a match.");
+            }
         }
     }
 }

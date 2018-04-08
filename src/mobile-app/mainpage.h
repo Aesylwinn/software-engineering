@@ -9,6 +9,7 @@ namespace Ui {
 class MainPage;
 }
 
+/* Implemented by Kyle and Darius */
 class MainPage : public QWidget
 {
     Q_OBJECT

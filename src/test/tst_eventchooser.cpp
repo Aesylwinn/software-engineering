@@ -16,6 +16,8 @@
 using namespace testing;
 using namespace base;
 
+/* Implemented by Jake and Kyle */
+
 TEST(EventChooser, noDuplicates){ //checks for duplicate entries
     EventChooser list;
     Event event1("1"), event2("2"), event3("3"), event4("4");

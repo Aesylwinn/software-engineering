@@ -110,6 +110,18 @@
          </item>
          <item>
           <widget class="QDateTimeEdit" name="startTime">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>175</width>
+             <height>50</height>
+            </size>
+           </property>
            <property name="displayFormat">
             <string>M/d/yyyy h:mm AP</string>
            </property>
@@ -131,6 +143,18 @@
          </item>
          <item>
           <widget class="QDateTimeEdit" name="endTime">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>175</width>
+             <height>50</height>
+            </size>
+           </property>
            <property name="displayFormat">
             <string>M/d/yyyy h:mm AP</string>
            </property>
