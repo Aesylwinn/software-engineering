@@ -1,0 +1,33 @@
+4 Pairs of Glasses and 12 Bad Eyes
+  ________        __     ________       .__              ._.
+ /  _____/  _____/  |_  /  _____/  ____ |__| ____    ____| |
+/   \  ____/ __ \   __\/   \  ___ /  _ \|  |/    \  / ___\ |
+\    \_\  \  ___/|  |  \    \_\  (  <_> )  |   |  \/ /_/  >|
+ \______  /\___  >__|   \______  /\____/|__|___|  /\___  /__
+        \/     \/              \/               \//_____/ \/
+
+1. Installation
+- use windows
+- download and extract 4PairsofGlassesand12BadEyes.zip
+- in the folder, you will see two files, GetGoingDesktop.exe* and GetGoingMobile.exe*
+
+*if windows prevents you from opening the files, click 'More info' and then 'Run anyway'.
+
+2. Functionality
+
+3. A Brief Tutorial
+- Get Started and fill out your information to register for an account.
+- Be sure to fill out all of your interests. This is how you will be matched with other
+users!
+- After you have registered you have the option to login as a regular user or if you are
+on the desktop application, as a host.
+- After logging in as a user you will see your personalized Event Stream at the left,
+and Interest Stream at the right.
+- To join an event, simply double click an event you see in your Interest Stream, after
+clicking 'Refresh My Events', you will see the event show up in the Event Stream.
+- To get matched with a date, double click on the event you want to get matched for. You
+should recieve a message on whether or not the match was a success.
+- To view your dates, click the 'See Dates' button on the right side of the application.
+
+4. Things to Avoid
+- no known issues
