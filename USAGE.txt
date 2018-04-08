@@ -6,32 +6,65 @@
  \______  /\___  >__|   \______  /\____/|__|___|  /\___  /__
         \/     \/              \/               \//_____/ \/
 
-1. Windows Installation
-- download and extract 4PairsofGlassesand12BadEyes.zip
-- in the folder, you will see two files, GetGoingDesktop.exe* and GetGoingMobile.exe*
+1. Installation
 
-*if Windows prevents you from opening the files, click 'More info' and then 'Run anyway'.
+Windows
+ - Download and extract 4PairsofGlassesand12BadEyes.zip
+ - Navigate into the extracted folder. You will see a folder called
+   "windows-x64". Navigate there.
+ - In the folder, you will see two executables, "GetGoingDesktop.exe"* and 
+   "GetGoingMobile.exe"*
+ - Run these files to run the application. You may need to install the
+   Microsoft Visual Studio 2017 runtime libraries available at:
+
+   https://aka.ms/vs/15/release/vc_redist.x64.exe
+
+* if Windows prevents you from opening the files, click 'More info' and then
+  'Run anyway'
+* The executables were compiled for Windows 10 64 bit
+
+Android
+ - Install the application from the Google Play Store:
+
+  https://play.google.com/store/apps/details?id=org.qtproject.example.mobile_app
 
 2. Functionality
-  With Get Going, users can do the following:
-  - Create an account to Get Started
-  - View nearby events and join them
-  - Get matched with other users who are attending the same event
-  - Sign in as a host and create a new event
+With Get Going, users can do the following:
+ - Create an account to Get Started
+ - View suggested events (based on interests selected during account creation)
+   and join them
+ - Get matched with other users who are attending the same event
+ - View matches
+ - Create a host account that is able to create new events
 
-3. A Brief Tutorial
-- Get Started and fill out your information to register for an account.
-- Be sure to fill out all of your interests. This is how you will be matched with other users!
-- After you have registered you have the option to login as a regular user. If you are
-on the desktop application, you can login as a host.
-- After logging in as a user, you will see your personalized Event Stream at the top left,
-and Interest Stream at the bottom left.
-- To join an event, simply double click an event you see in your Interest Stream, after
-clicking 'Refresh My Events', you will see the event show up in the Event Stream.
-- To get matched with a date, double click on the event you want to get matched for. You
-should recieve a message on whether or not the match was a success.
-- To view your dates, click the 'See Dates' button on the right side of the application.
+3. Tutorial
+ - Click "Get Started" and fill out your information under "Sign Up, It's Free!"
+   to register for an account.
+ - Be sure to fill out all of your interests on the "What Interests You?" page.
+   This will influence what events are suggested.
+ - After you have created a regular account, you can upgrade it to a host
+   account in the "Interested in being a host?" section.
+ - You can login to a created account on the "Login or Sign Up" page.
+ - After logging in as a user, you will see events you have joined under
+   "My Event Stream" at the top left. Suggested events will show up under
+   "My Interest Stream" at the bottom left.
+ - To join an event, simply double click an event you see under
+   "My Interest Stream". After clicking "Refresh My Events", you will see the
+   event show up in "My Event Stream".
+ - To get matched with a date, double click on the event in "My Event Stream".
+   You will recieve a message on whether or not the match was a success.
+ - To view your dates, click the "See Dates" button on the right side of the
+   application.
+ - With a host account, you can navigate to the "Host" tab and click
+   "Create Event" to make new events.
+   
+ - The mobile app has very similar functionality to the desktop app.
 
-4. Things to Avoid
-- no known issues
-- Get Verified does not have full functionality
+4. Things to Avoid and Known Issues
+ - "Get Verified" does nothing useful
+ - If your connection with the server gets dropped, you will have to restart the
+   desktop application (the mobile app handles it).
+ - A poor connection can make the make updates/refreshes take a long time.
+ - Do not join events multiple times or find multiple matches for the same event
+ - Android displays some widgets incorrectly, specifically the date choosers
+   (a bug with Qt)
