@@ -24,19 +24,27 @@ MatchesPage::~MatchesPage()
 
 void MatchesPage::showEvent(QShowEvent *evt)
 {
-    if (evt->spontaneous())
-        return;
-
     mMatchesTicket = mNetworkMgr->sendRequest(base::NetworkObject(base::RetrieveMatchesRequest{}));
 }
 
 void MatchesPage::setMatches(QVector<base::UserProfile> profiles, QVector<base::Event> events)
 {
+    QVector<base::UserProfile> uniqueMatches;
+    QVector<base::Event> uniqueEvents;
+    for( int i = 0; i < events.size(); i++ )
+    {
+        if(!uniqueEvents.contains(events[i]))
+        {
+            uniqueMatches.push_back(profiles[i]);
+            uniqueEvents.push_back(events[i]);
+        }
+    }
+
     // Update list of matches
     mUi->matchesList->clear();
-    for (int i = 0; i < profiles.size() && i < events.size(); ++i) {
+    for (int i = 0; i < uniqueMatches.size() && i < uniqueEvents.size(); ++i) {
         // List entry
-        MatchItemWidget* itemWidget = new MatchItemWidget(profiles[i], events[i]);
+        MatchItemWidget* itemWidget = new MatchItemWidget(uniqueMatches[i], uniqueEvents[i]);
         // Dummy container
         QListWidgetItem* item = new QListWidgetItem();
         item->setSizeHint(itemWidget->sizeHint());

@@ -39,9 +39,6 @@ MainPage::~MainPage()
 void MainPage::showEvent(QShowEvent *event) {
     QWidget::showEvent(event);
 
-    if (event->spontaneous())
-        return;
-
     // Update list of events
     refresh();
 }
@@ -123,6 +120,12 @@ void MainPage::onResponseReceived(base::NetworkObject obj) {
             // Convert
             base::FindMatchResponse info = obj.convert<base::FindMatchResponse>();
             qInfo("match: %d msg: %s", info.valid, qUtf8Printable(info.details));
+
+            if (info.valid) {
+                QMessageBox::information(this, "Success", "You've been matched with another attendee!");
+            } else {
+                QMessageBox::critical(this, "Error", "Failed to find a match");
+            }
         }
 
     default:
